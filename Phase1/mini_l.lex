@@ -45,13 +45,31 @@ NEWLINE [\n]
 "-"            printf("SUB\n");
 "+"            printf("ADD\n");
 "*"            printf("MULT\n");
-"/"       printf("DIV\n"); numops++;
+"/"            printf("DIV\n");
+"%"            printf("MOD\n");
 
-{DIGIT}*"."?{DIGIT}+([eE][+-]?{DIGIT}+)?  printf("NUMBER %s\n", yytext); numints++;
-"*"       printf("MULT\n"); numops++;
-"("       printf("L_PAREN\n"); numparens++;
-")"       printf("R_PAREN\n"); numparens++;
-"="       printf("EQUAL\n"); numequals++;
+/* Comparison Operators */
+"=="           printf("EQ\n");
+"<>"           printf("NEQ\n");
+"<"            printf("LT\n");
+">"            printf("GT\n");
+"<="           printf("LTE\n");
+">="           printf("GTE\n");
+
+
+/* Identifiers and Numbers */
+{DIGIT}*"."?{DIGIT}+([eE][+-]?{DIGIT}+)?  printf("NUMBER %s\n", yytext);
+
+/* Other Special Symbols */
+";"            printf("SEMICOLON\n");
+":"            printf("COLON\n");
+","            printf("COMMA\n");
+"("            printf("L_PAREN\n");
+")"            printf("R_PAREN\n");
+"["            printf("L_SQUARE_BRACKET\n");
+"]"            printf("R_SQUARE_BRACKET\n");
+":="           printf("ASSIGN\n");
+
 .         {
   printf("Error! Unrecognized token %s.\n", yytext);
   exit(1);
