@@ -57,7 +57,7 @@ COMMENT    ##.*\n
 "<="           printf("LTE\n"); currLine += yyleng;
 ">="           printf("GTE\n"); currLine += yyleng;
 
-{DIGIT}*"."?{DIGIT}+([eE][+-]?{DIGIT}+)?  printf("NUMBER %s\n", yytext); currLine += yyleng;
+{DIGIT}+ printf("NUMBER %s\n", yytext); currLine += yyleng;
 
 ";"            printf("SEMICOLON\n"); currLine += yyleng;
 ":"            printf("COLON\n"); currLine += yyleng;
