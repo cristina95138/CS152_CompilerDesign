@@ -1,71 +1,72 @@
 /* Include Variables */
 %{
-  int numints = 0, numops = 0, numparens = 0, numequals = 0;
+  int currLine = 0, numops = 0, numparens = 0, numequals = 0;
 %}
 
 /* Define Rules */
-DIGIT [0-9]
-LETTER [a-zA-Z]
+DIGIT      [0-9]
+LETTER     [a-zA-Z]
 WHITESPACE [\t]
-NEWLINE [\n]
+NEWLINE    [\n]
+COMMENT    ##.*\n
 
 /* Define Tokens */
 
 /* Reserved Words */
 %%
 
-"function"     printf("FUNCTION\n");
-"beginparams"  printf("BEGIN_PARAMS\n");
-"endparams"    printf("END_PARAMS\n");
-"beginlocals"  printf("BEGIN_LOCALS\n");
-"endlocals"    printf("END_LOCALS\n");
-"beginbody"    printf("BEGIN_BODY\n");
-"endbody"      printf("END_BODY\n");
-"integer"      printf("INTEGER\n");
-"array"        printf("ARRAY\n");
-"enum"         printf("ENUM\n");
-"of"           printf("OF\n");
-"if"           printf("IF\n");
-"then"         printf("THEN\n");
-"endif"        printf("ENDIF\n");
-"else"         printf("ELSE\n");
-"while"        printf("WHILE\n");
-"do"           printf("DO\n");
-"beginloop"    printf("BEGINLOOP\n");
-"endloop"      printf("ENDLOOP\n");
-"continue"     printf("CONTINUE\n");
-"read"         printf("READ\n");
-"write"        printf("WRITE\n");
-"and"          printf("AND\n");
-"or"           printf("OR\n");
-"not"          printf("NOT\n");
-"true"         printf("TRUE\n");
-"false"        printf("FALSE\n");
-"return"       printf("RETURN\n");
+"function"     printf("FUNCTION\n"); currLine += yyleng;
+"beginparams"  printf("BEGIN_PARAMS\n"); currLine += yyleng;
+"endparams"    printf("END_PARAMS\n"); currLine += yyleng;
+"beginlocals"  printf("BEGIN_LOCALS\n"); currLine += yyleng;
+"endlocals"    printf("END_LOCALS\n"); currLine += yyleng;
+"beginbody"    printf("BEGIN_BODY\n"); currLine += yyleng;
+"endbody"      printf("END_BODY\n"); currLine += yyleng;
+"integer"      printf("INTEGER\n"); currLine += yyleng;
+"array"        printf("ARRAY\n"); currLine += yyleng;
+"enum"         printf("ENUM\n"); currLine += yyleng;
+"of"           printf("OF\n"); currLine += yyleng;
+"if"           printf("IF\n"); currLine += yyleng;
+"then"         printf("THEN\n"); currLine += yyleng;
+"endif"        printf("ENDIF\n"); currLine += yyleng;
+"else"         printf("ELSE\n"); currLine += yyleng;
+"while"        printf("WHILE\n"); currLine += yyleng;
+"do"           printf("DO\n"); currLine += yyleng;
+"beginloop"    printf("BEGINLOOP\n"); currLine += yyleng;
+"endloop"      printf("ENDLOOP\n"); currLine += yyleng;
+"continue"     printf("CONTINUE\n"); currLine += yyleng;
+"read"         printf("READ\n"); currLine += yyleng;
+"write"        printf("WRITE\n"); currLine += yyleng;
+"and"          printf("AND\n"); currLine += yyleng;
+"or"           printf("OR\n"); currLine += yyleng;
+"not"          printf("NOT\n"); currLine += yyleng;
+"true"         printf("TRUE\n"); currLine += yyleng;
+"false"        printf("FALSE\n"); currLine += yyleng;
+"return"       printf("RETURN\n"); currLine += yyleng;
 
-"-"            printf("SUB\n");
-"+"            printf("ADD\n");
-"*"            printf("MULT\n");
-"/"            printf("DIV\n");
-"%"            printf("MOD\n");
+"-"            printf("SUB\n"); currLine += yyleng;
+"+"            printf("ADD\n"); currLine += yyleng;
+"*"            printf("MULT\n"); currLine += yyleng;
+"/"            printf("DIV\n"); currLine += yyleng;
+"%"            printf("MOD\n"); currLine += yyleng;
 
-"=="           printf("EQ\n");
-"<>"           printf("NEQ\n");
-"<"            printf("LT\n");
-">"            printf("GT\n");
-"<="           printf("LTE\n");
-">="           printf("GTE\n");
+"=="           printf("EQ\n"); currLine += yyleng;
+"<>"           printf("NEQ\n"); currLine += yyleng;
+"<"            printf("LT\n"); currLine += yyleng;
+">"            printf("GT\n"); currLine += yyleng;
+"<="           printf("LTE\n"); currLine += yyleng;
+">="           printf("GTE\n"); currLine += yyleng;
 
-{DIGIT}*"."?{DIGIT}+([eE][+-]?{DIGIT}+)?  printf("NUMBER %s\n", yytext);
+{DIGIT}*"."?{DIGIT}+([eE][+-]?{DIGIT}+)?  printf("NUMBER %s\n", yytext); currLine += yyleng;
 
-";"            printf("SEMICOLON\n");
-":"            printf("COLON\n");
-","            printf("COMMA\n");
-"("            printf("L_PAREN\n");
-")"            printf("R_PAREN\n");
-"["            printf("L_SQUARE_BRACKET\n");
-"]"            printf("R_SQUARE_BRACKET\n");
-":="           printf("ASSIGN\n");
+";"            printf("SEMICOLON\n"); currLine += yyleng;
+":"            printf("COLON\n"); currLine += yyleng;
+","            printf("COMMA\n"); currLine += yyleng;
+"("            printf("L_PAREN\n"); currLine += yyleng;
+")"            printf("R_PAREN\n"); currLine += yyleng;
+"["            printf("L_SQUARE_BRACKET\n"); currLine += yyleng;
+"]"            printf("R_SQUARE_BRACKET\n"); currLine += yyleng;
+":="           printf("ASSIGN\n"); currLine += yyleng;
 
 .         {
   printf("Error! Unrecognized token %s.\n", yytext);
