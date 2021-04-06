@@ -1,4 +1,4 @@
-/* Include Stuff */
+/* Include Variables */
 %{
   int numints = 0, numops = 0, numparens = 0, numequals = 0;
 %}
