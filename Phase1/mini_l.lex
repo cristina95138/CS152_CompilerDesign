@@ -9,12 +9,14 @@ LETTER [a-zA-Z]
 WHITESPACE [\t]
 NEWLINE [\n]
 
-/* Define Patterns */
-%%
+/* Define Tokens */
+
 /* Reserved Words */
+%%
+
 "function"     printf("FUNCTION\n");
 "beginparams"  printf("BEGIN_PARAMS\n");
-"endparams"    printf("END_PARAMS"\n);
+"endparams"    printf("END_PARAMS\n");
 "beginlocals"  printf("BEGIN_LOCALS\n");
 "endlocals"    printf("END_LOCALS\n");
 "beginbody"    printf("BEGIN_BODY\n");
@@ -41,14 +43,12 @@ NEWLINE [\n]
 "false"        printf("FALSE\n");
 "return"       printf("RETURN\n");
 
-/* Arithmetic Operators */
 "-"            printf("SUB\n");
 "+"            printf("ADD\n");
 "*"            printf("MULT\n");
 "/"            printf("DIV\n");
 "%"            printf("MOD\n");
 
-/* Comparison Operators */
 "=="           printf("EQ\n");
 "<>"           printf("NEQ\n");
 "<"            printf("LT\n");
@@ -56,11 +56,8 @@ NEWLINE [\n]
 "<="           printf("LTE\n");
 ">="           printf("GTE\n");
 
-
-/* Identifiers and Numbers */
 {DIGIT}*"."?{DIGIT}+([eE][+-]?{DIGIT}+)?  printf("NUMBER %s\n", yytext);
 
-/* Other Special Symbols */
 ";"            printf("SEMICOLON\n");
 ":"            printf("COLON\n");
 ","            printf("COMMA\n");
