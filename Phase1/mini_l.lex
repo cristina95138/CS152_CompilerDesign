@@ -1,6 +1,6 @@
 /* Include Variables */
 %{
-  int currLine = 0, numops = 0, numparens = 0, numequals = 0;
+  int currLine = 0, numops = 0, numparens = 0, numequals = 0, currPos = 0;
 %}
 
 /* Define Rules */
@@ -57,7 +57,7 @@ COMMENT    ##.*\n
 "<="           printf("LTE\n"); currLine += yyleng;
 ">="           printf("GTE\n"); currLine += yyleng;
 
-{DIGIT}+ printf("NUMBER %s\n", yytext); currLine += yyleng;
+{DIGIT}+       printf("NUMBER %s\n", yytext); currLine += yyleng;
 
 ";"            printf("SEMICOLON\n"); currLine += yyleng;
 ":"            printf("COLON\n"); currLine += yyleng;
@@ -68,10 +68,14 @@ COMMENT    ##.*\n
 "]"            printf("R_SQUARE_BRACKET\n"); currLine += yyleng;
 ":="           printf("ASSIGN\n"); currLine += yyleng;
 
-.         {
-  printf("Error! Unrecognized token %s.\n", yytext);
-  exit(1);
-}
+{COMMENT}+     {currPos++; currLine = 0;}
+
+[{DIGIT}_][{LETTER}{DIGIT}_]*[{LETTER}{DIGIT}_]     {printf("Error at line %d, column %d: identifier \"%s\" must begin with a letter\n", currLine, currPos, yytext); exit(0);}
+[{LETTER}{DIGIT}_]*[_]                              {printf("Error at line %d, column %d: identifier \"%s\" cannot end with an underscore\n", currLine, currPos, yytext); exit(0);}
+
+[{LETTER}{DIGIT}_]*[{LETTER}{DIGIT}]*               {printf("IDENT %s\n", yytext); currLine += yyleng;}
+
+.              {printf("Error! Unrecognized token %s.\n", yytext); exit(1);}
 
 %%
 
