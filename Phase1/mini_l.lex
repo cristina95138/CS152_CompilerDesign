@@ -1,6 +1,6 @@
 /* Include Variables */
 %{
-  int currLine = 0, numops = 0, numparens = 0, numequals = 0, currPos = 0;
+  int currLine = 1, numops = 1, numparens = 0, numequals = 0, currPos = 0;
 %}
 
 /* Define Rules */
@@ -69,22 +69,22 @@ COMMENT    ##.*\n
 ":="           printf("ASSIGN\n"); currLine += yyleng;
 
 /* Ignore Comments */
-{COMMENT}+     {currPos++; currLine = 0;}
+{COMMENT}+     {currPos++; currLine = 1;}
 
 /* ID Error Handling */
 [{DIGIT}_][{LETTER}{DIGIT}_]*[{LETTER}{DIGIT}_]     {printf("Error at line %d, column %d: identifier \"%s\" must begin with a letter\n", currLine, currPos, yytext); exit(0);}
 [{LETTER}{DIGIT}_]*[_]                              {printf("Error at line %d, column %d: identifier \"%s\" cannot end with an underscore\n", currLine, currPos, yytext); exit(0);}
 
-/* Identifers */
+/* Valid Identifiers */
 [{LETTER}{DIGIT}_]*[{LETTER}{DIGIT}]*               {printf("IDENT %s\n", yytext); currLine += yyleng;}
 
 /* Unrecognized Symbol */
 .              {printf("Error! Unrecognized token %s.\n", yytext); exit(1);}
 
 /* Space and Tabs */
-[]              {currLine++;}
-[\t]            {currLine++;}
-[\n]            {currPos++; currLine = 0;}
+[]                    {currLine++;}
+{WHITESPACE}+         {currLine++;}
+{NEWLINE}+            {currPos++; currLine = 1;}
 
 %%
 
