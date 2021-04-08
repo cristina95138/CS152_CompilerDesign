@@ -68,14 +68,23 @@ COMMENT    ##.*\n
 "]"            printf("R_SQUARE_BRACKET\n"); currLine += yyleng;
 ":="           printf("ASSIGN\n"); currLine += yyleng;
 
+/* Ignore Comments */
 {COMMENT}+     {currPos++; currLine = 0;}
 
+/* ID Error Handling */
 [{DIGIT}_][{LETTER}{DIGIT}_]*[{LETTER}{DIGIT}_]     {printf("Error at line %d, column %d: identifier \"%s\" must begin with a letter\n", currLine, currPos, yytext); exit(0);}
 [{LETTER}{DIGIT}_]*[_]                              {printf("Error at line %d, column %d: identifier \"%s\" cannot end with an underscore\n", currLine, currPos, yytext); exit(0);}
 
+/* Identifers */
 [{LETTER}{DIGIT}_]*[{LETTER}{DIGIT}]*               {printf("IDENT %s\n", yytext); currLine += yyleng;}
 
+/* Unrecognized Symbol */
 .              {printf("Error! Unrecognized token %s.\n", yytext); exit(1);}
+
+/* Space and Tabs */
+[]              {currLine++;}
+[\t]            {currLine++;}
+[\n]            {currPos++; currLine = 0;}
 
 %%
 
