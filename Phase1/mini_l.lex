@@ -68,7 +68,7 @@ COMMENT    ##.*\n
 "]"            printf("R_SQUARE_BRACKET\n"); currLine += yyleng;
 ":="           printf("ASSIGN\n"); currLine += yyleng;
 
-/* Ignore Comments */
+// Ignore Comments
 {COMMENT}+     {currPos++; currLine = 1;}
 
 /* ID Error Handling */
