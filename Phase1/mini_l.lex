@@ -72,11 +72,22 @@ COMMENT    ##.*\n
 {COMMENT}+     {currPos++; currLine = 1;}
 
 /* ID Error Handling */
+/*
 [{DIGIT}_][{LETTER}{DIGIT}_]*[{LETTER}{DIGIT}_]     {printf("Error at line %d, column %d: identifier \"%s\" must begin with a letter\n", currLine, currPos, yytext); exit(0);}
 [{LETTER}{DIGIT}_]*[_]                              {printf("Error at line %d, column %d: identifier \"%s\" cannot end with an underscore\n", currLine, currPos, yytext); exit(0);}
+*/
+
+[0-9_][a-zA-z0-9_]*[a-zA-z0-9_]               {printf("Error at line %d, column %d: identifier \"%s\" must begin with a letter\n", currLine, currPos, yytext); exit(0);}
+[a-zA-z0-9_]*[_]                              {printf("Error at line %d, column %d: identifier \"%s\" cannot end with an underscore\n", currLine, currPos, yytext); exit(0);}
+
+
 
 /* Valid Identifiers */
+/*
 [{LETTER}{DIGIT}_]*[{LETTER}{DIGIT}]*               {printf("IDENT %s\n", yytext); currLine += yyleng;}
+*/
+[a-zA-z0-9_]*[a-zA-z0-9]*                           {printf("IDENT %s\n", yytext); currLine += yyleng;}
+
 
 /* Unrecognized Symbol */
 .              {printf("Error! Unrecognized token %s.\n", yytext); exit(1);}
