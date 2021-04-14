@@ -79,7 +79,7 @@ COMMENT    ##.*\n
 
 .              {printf("Error! Unrecognized token %s.\n", yytext); exit(1);}
 
-[]                    {currLine++;}
+
 {WHITESPACE}+         {currLine++;}
 {NEWLINE}+            {currPos++; currLine = 1;}
 
