@@ -1,6 +1,6 @@
 /* Include Variables */
 %{
-  int currLine = 1, numops = 1, numparens = 0, numequals = 0, currPos = 0;
+  int currLine = 1, numints = 0, numops = 1, numparens = 0, numequals = 0, currPos = 0;
 %}
 
 /* Define Rules */
