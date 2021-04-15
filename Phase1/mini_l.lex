@@ -8,6 +8,7 @@ DIGIT      [0-9]
 LETTER     [a-zA-Z]
 WHITESPACE [\t]
 NEWLINE    [\n]
+UNDERSCORE [_]
 COMMENT    ##.*\n
 
 /* Define Tokens */
@@ -68,13 +69,13 @@ COMMENT    ##.*\n
 "]"            printf("R_SQUARE_BRACKET\n"); currLine += yyleng;
 ":="           printf("ASSIGN\n"); currLine += yyleng;
 
-
 {COMMENT}+     {currPos++; currLine = 1;}
 
-[0-9_][a-zA-z0-9_]*[a-zA-z0-9_]               {printf("Error at line %d, column %d: identifier \"%s\" must begin with a letter\n", currLine, currPos, yytext); exit(0);}
-[a-zA-z0-9_]*[_]                              {printf("Error at line %d, column %d: identifier \"%s\" cannot end with an underscore\n", currLine, currPos, yytext); exit(0);}
 
-[a-zA-z0-9_]*[a-zA-z0-9]*                           {printf("IDENT %s\n", yytext); currLine += yyleng;}
+({DIGIT}|{UNDERSCORE})({LETTER}|{DIGIT}|{UNDERSCORE})*({LETTER}|{DIGIT}|{UNDERSCORE})     {printf("Error at line %d, column %d: identifier \"%s\" must begin with a letter\n", currLine, currPos, yytext); exit(0);}
+({LETTER}|{DIGIT}|{UNDERSCORE})*{UNDERSCORE}                                            {printf("Error at line %d, column %d: identifier \"%s\" cannot end with an underscore\n", currLine, currPos, yytext); exit(0);}
+
+({LETTER}|{DIGIT}|{UNDERSCORE})*({LETTER}|{DIGIT})*               {printf("IDENT %s\n", yytext); currLine += yyleng;}
 
 
 .              {printf("Error! Unrecognized token %s.\n", yytext); exit(1);}
