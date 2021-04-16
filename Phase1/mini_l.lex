@@ -60,14 +60,14 @@ COMMENT    ##.*
 
 {DIGIT}*"."?{DIGIT}+([eE][+-]?{DIGIT}+)?       printf("NUMBER %s\n", yytext); currLine += yyleng;
 
-";"            printf("SEMICOLON\n"); currLine += yyleng;
-":"            printf("COLON\n"); currLine += yyleng;
-","            printf("COMMA\n"); currLine += yyleng;
-"("            printf("L_PAREN\n"); currLine += yyleng;
-")"            printf("R_PAREN\n"); currLine += yyleng;
-"["            printf("L_SQUARE_BRACKET\n"); currLine += yyleng;
-"]"            printf("R_SQUARE_BRACKET\n"); currLine += yyleng;
-":="           printf("ASSIGN\n"); currLine += yyleng;
+";"            {printf("SEMICOLON\n"); currLine += yyleng;}
+":"            {printf("COLON\n"); currLine += yyleng;}
+","            {printf("COMMA\n"); currLine += yyleng;}
+"("            {printf("L_PAREN\n"); currLine += yyleng;}
+")"            {printf("R_PAREN\n"); currLine += yyleng;}
+"["            {printf("L_SQUARE_BRACKET\n"); currLine += yyleng;}
+"]"            {printf("R_SQUARE_BRACKET\n"); currLine += yyleng;}
+":="           {printf("ASSIGN\n"); currLine += yyleng;}
 
 {COMMENT}+     {currPos++; currLine = 1;}
 
