@@ -9,7 +9,7 @@ LETTER     [a-zA-Z]
 WHITESPACE [\t]
 NEWLINE    [\n]
 UNDERSCORE [_]
-COMMENT    ##.*\n
+COMMENT    ##.*
 
 /* Define Tokens */
 
@@ -58,7 +58,7 @@ COMMENT    ##.*\n
 "<="           printf("LTE\n"); currLine += yyleng;
 ">="           printf("GTE\n"); currLine += yyleng;
 
-{DIGIT}+       printf("NUMBER %s\n", yytext); currLine += yyleng;
+{DIGIT}*"."?{DIGIT}+([eE][+-]?{DIGIT}+)?       printf("NUMBER %s\n", yytext); currLine += yyleng;
 
 ";"            printf("SEMICOLON\n"); currLine += yyleng;
 ":"            printf("COLON\n"); currLine += yyleng;
@@ -80,7 +80,7 @@ COMMENT    ##.*\n
 
 .              {printf("Error at line %d, column %d: unrecognized token %s.\n", currLine, currPos, yytext); exit(1);}
 
-
+[ ]                   {currLine += yyleng;}
 {WHITESPACE}+         {currLine++;}
 {NEWLINE}+            {currPos++; currLine = 1;}
 
