@@ -78,7 +78,7 @@ COMMENT    ##.*\n
 ({LETTER}|{DIGIT}|{UNDERSCORE})*({LETTER}|{DIGIT})*               {printf("IDENT %s\n", yytext); currLine += yyleng;}
 
 
-.              {printf("Error! Unrecognized token %s.\n", yytext); exit(1);}
+.              {printf("Error at line %d, column %d: unrecognized token %s.\n", currline, currPos, yytext); exit(1);}
 
 
 {WHITESPACE}+         {currLine++;}
