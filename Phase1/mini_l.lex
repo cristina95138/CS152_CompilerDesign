@@ -1,6 +1,6 @@
 /* Include Variables */
 %{
-  int currLine = 1, numints = 0, numops = 1, numparens = 0, numequals = 0, currPos = 0;
+  int currLine = 1, currPos = 1;
 %}
 
 /* Define Rules */
@@ -12,7 +12,6 @@ UNDERSCORE [_]
 COMMENT    ##.*
 
 /* Define Tokens */
-
 /* Reserved Words */
 %%
 
@@ -58,7 +57,7 @@ COMMENT    ##.*
 "<="           {printf("LTE\n"); currLine += yyleng;}
 ">="           {printf("GTE\n"); currLine += yyleng;}
 
-{DIGIT}*"."?{DIGIT}+([eE][+-]?{DIGIT}+)?       printf("NUMBER %s\n", yytext); currLine += yyleng;
+{DIGIT}*"."?{DIGIT}+([eE][+-]?{DIGIT}+)?       {printf("NUMBER %s\n", yytext); currLine += yyleng;}
 
 ";"            {printf("SEMICOLON\n"); currLine += yyleng;}
 ":"            {printf("COLON\n"); currLine += yyleng;}
@@ -78,11 +77,11 @@ COMMENT    ##.*
 ({LETTER}|{DIGIT}|{UNDERSCORE})*({LETTER}|{DIGIT})*               {printf("IDENT %s\n", yytext); currLine += yyleng;}
 
 
-.              {printf("Error at line %d, column %d: unrecognized token %s.\n", currLine, currPos, yytext); exit(1);}
-
 [ ]                   {currLine += yyleng;}
-{WHITESPACE}+         {currLine++;}
+{WHITESPACE}+         {currLine += yyleng;}
 {NEWLINE}+            {currPos++; currLine = 1;}
+
+.              {printf("Error at line %d, column %d: unrecognized token %s.\n", currLine, currPos, yytext); exit(0);}
 
 %%
 
