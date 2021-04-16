@@ -72,10 +72,10 @@ COMMENT    ##.*
 {COMMENT}+     {currPos++; currLine = 1;}
 
 
-[0-9_][a-zA-z0-9_]*[a-zA-z0-9_]               {printf("Error at line %d, column %d: identifier \"%s\" must begin with a letter\n", currLine, currPos, yytext); exit(0);}
-[a-zA-z0-9_]*[_]                              {printf("Error at line %d, column %d: identifier \"%s\" cannot end with an underscore\n", currLine, currPos, yytext); exit(0);}
+({DIGIT}|{UNDERSCORE})({LETTER}|{DIGIT}|{UNDERSCORE})*({LETTER}|{DIGIT}|{UNDERSCORE})     {printf("Error at line %d, column %d: identifier \"%s\" must begin with a letter\n", currLine, currPos, yytext); exit(0);}
+({LETTER}|{DIGIT}|{UNDERSCORE})*{UNDERSCORE}                                            {printf("Error at line %d, column %d: identifier \"%s\" cannot end with an underscore\n", currLine, currPos, yytext); exit(0);}
 
-[a-zA-z0-9_]*[a-zA-z0-9]*                     {printf("IDENT %s\n", yytext); currLine += yyleng;}
+({LETTER}|{DIGIT}|{UNDERSCORE})*({LETTER}|{DIGIT})*               {printf("IDENT %s\n", yytext); currLine += yyleng;}
 
 
 .              {printf("Error at line %d, column %d: unrecognized token %s.\n", currLine, currPos, yytext); exit(1);}
