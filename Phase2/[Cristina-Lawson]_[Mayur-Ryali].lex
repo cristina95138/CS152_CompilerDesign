@@ -1,6 +1,7 @@
 /* Include Variables */
 %{
-  int currLine = 1, currPos = 1;
+    #include "y.tab.h"
+    int currLine = 1, currPos = 1;
 %}
 
 /* Define Rules */
@@ -15,58 +16,58 @@ COMMENT    ##.*
 /* Reserved Words */
 %%
 
-"function"     {printf("FUNCTION\n"); currLine += yyleng;}
-"beginparams"  {printf("BEGIN_PARAMS\n"); currLine += yyleng;}
-"endparams"    {printf("END_PARAMS\n"); currLine += yyleng;}
-"beginlocals"  {printf("BEGIN_LOCALS\n"); currLine += yyleng;}
-"endlocals"    {printf("END_LOCALS\n"); currLine += yyleng;}
-"beginbody"    {printf("BEGIN_BODY\n"); currLine += yyleng;}
-"endbody"      {printf("END_BODY\n"); currLine += yyleng;}
-"integer"      {printf("INTEGER\n"); currLine += yyleng;}
-"array"        {printf("ARRAY\n"); currLine += yyleng;}
-"enum"         {printf("ENUM\n"); currLine += yyleng;}
-"of"           {printf("OF\n"); currLine += yyleng;}
-"if"           {printf("IF\n"); currLine += yyleng;}
-"then"         {printf("THEN\n"); currLine += yyleng;}
-"endif"        {printf("ENDIF\n"); currLine += yyleng;}
-"else"         {printf("ELSE\n"); currLine += yyleng;}
-"while"        {printf("WHILE\n"); currLine += yyleng;}
-"do"           {printf("DO\n"); currLine += yyleng;}
-"beginloop"    {printf("BEGINLOOP\n"); currLine += yyleng;}
-"endloop"      {printf("ENDLOOP\n"); currLine += yyleng;}
-"continue"     {printf("CONTINUE\n"); currLine += yyleng;}
-"read"         {printf("READ\n"); currLine += yyleng;}
-"write"        {printf("WRITE\n"); currLine += yyleng;}
-"and"          {printf("AND\n"); currLine += yyleng;}
-"or"           {printf("OR\n"); currLine += yyleng;}
-"not"          {printf("NOT\n"); currLine += yyleng;}
-"true"         {printf("TRUE\n"); currLine += yyleng;}
-"false"        {printf("FALSE\n"); currLine += yyleng;}
-"return"       {printf("RETURN\n"); currLine += yyleng;}
+"function"     {currLine += yyleng; return FUNCTION;}
+"beginparams"  {currLine += yyleng; return BEGIN_PARAMS;}
+"endparams"    {currLine += yyleng; return END_PARAMS;}
+"beginlocals"  {currLine += yyleng; return BEGIN_LOCALS;}
+"endlocals"    {currLine += yyleng; return END_LOCALS;}
+"beginbody"    {currLine += yyleng; return BEGIN_BODY;}
+"endbody"      {currLine += yyleng; return END_BODY;}
+"integer"      {currLine += yyleng; return INTEGER;}
+"array"        {currLine += yyleng; return ARRAY;}
+"enum"         {currLine += yyleng; return ENUM;}
+"of"           {currLine += yyleng; return OF;}
+"if"           {currLine += yyleng; return IF;}
+"then"         {currLine += yyleng; return THEN;}
+"endif"        {currLine += yyleng; return ENDIF;}
+"else"         {currLine += yyleng; return ELSE;}
+"while"        {currLine += yyleng; return WHILE;}
+"do"           {currLine += yyleng; return DO;}
+"beginloop"    {currLine += yyleng; return BEGINLOOP;}
+"endloop"      {currLine += yyleng; return ENDLOOP;}
+"continue"     {currLine += yyleng; return CONTINUE;}
+"read"         {currLine += yyleng; return READ;}
+"write"        {currLine += yyleng; return WRITE;}
+"and"          {currLine += yyleng; return AND;}
+"or"           {currLine += yyleng; return OR;}
+"not"          {currLine += yyleng; return NOT;}
+"true"         {currLine += yyleng; return TRUE;}
+"false"        {currLine += yyleng; return FALSE;}
+"return"       {currLine += yyleng; return RETURN;}
 
-"-"            {printf("SUB\n"); currLine += yyleng;}
-"+"            {printf("ADD\n"); currLine += yyleng;}
-"*"            {printf("MULT\n"); currLine += yyleng;}
-"/"            {printf("DIV\n"); currLine += yyleng;}
-"%"            {printf("MOD\n"); currLine += yyleng;}
+"-"            {currLine += yyleng; return SUB;}
+"+"            {currLine += yyleng; return ADD;}
+"*"            {currLine += yyleng; return MULT;}
+"/"            {currLine += yyleng; return DIV;}
+"%"            {currLine += yyleng; return MOD;}
 
-"=="           {printf("EQ\n"); currLine += yyleng;}
-"<>"           {printf("NEQ\n"); currLine += yyleng;}
-"<"            {printf("LT\n"); currLine += yyleng;}
-">"            {printf("GT\n"); currLine += yyleng;}
-"<="           {printf("LTE\n"); currLine += yyleng;}
-">="           {printf("GTE\n"); currLine += yyleng;}
+"=="           {currLine += yyleng; return EQ;}
+"<>"           {currLine += yyleng; return NEQ;}
+"<"            {currLine += yyleng; return LT;}
+">"            {currLine += yyleng; return GT;}
+"<="           {currLine += yyleng; return LTE;}
+">="           {currLine += yyleng; return GTE;}
 
 {DIGIT}*"."?{DIGIT}+([eE][+-]?{DIGIT}+)?       {printf("NUMBER %s\n", yytext); currLine += yyleng;}
 
-";"            {printf("SEMICOLON\n"); currLine += yyleng;}
-":"            {printf("COLON\n"); currLine += yyleng;}
-","            {printf("COMMA\n"); currLine += yyleng;}
-"("            {printf("L_PAREN\n"); currLine += yyleng;}
-")"            {printf("R_PAREN\n"); currLine += yyleng;}
-"["            {printf("L_SQUARE_BRACKET\n"); currLine += yyleng;}
-"]"            {printf("R_SQUARE_BRACKET\n"); currLine += yyleng;}
-":="           {printf("ASSIGN\n"); currLine += yyleng;}
+";"            {currLine += yyleng; return SEMICOLON;}
+":"            {currLine += yyleng; return COLON;}
+","            {currLine += yyleng; return COMMA;}
+"("            {currLine += yyleng; return L_PAREN;}
+")"            {currLine += yyleng; return R_PAREN;}
+"["            {currLine += yyleng; return L_SQUARE_BRACKET;}
+"]"            {currLine += yyleng; return R_SQUARE_BRACKET;}
+":="           {currLine += yyleng; return ASSIGN;}
 
 {COMMENT}+     {currPos++; currLine = 1;}
 
@@ -85,6 +86,7 @@ COMMENT    ##.*
 
 %%
 
+/*
 int yywrap() {
     return 1;
 }
@@ -105,3 +107,4 @@ int main(int argc, char* argv[]) {
 
   return 0;
 }
+*/
