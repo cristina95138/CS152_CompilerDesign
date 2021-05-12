@@ -84,21 +84,29 @@ vars:                                                   {printf("vars -> epsilon
     ;
 
 var:            IDENTIFIER                              {printf("var -> IDENTIFIER\n");}
-   |            IDENTIFIER L_SQUARE_BRACKET expr
+   |            IDENTIFIER L_SQUARE_BRACKET expression
                 R_SQUARE_BRACKET                        {printf("var -> IDENTIFIER L_SQUARE_BRACKET expr R_SQUARE_BRACKET\n");}
    ;
 
 bool_exp: relation_and_expr {printf("bool_exp -> relation_and_expr\n");}
-        | relation_and_expr OR relation_and_expr {printf("bool_exp -> relation_and_expr OR relation_and_expr\n");}
+        | bool_exp OR relation_and_expr {printf("bool_exp -> bool_exp OR relation_and_expr\n");}
         ;
 
 relation_and_expr: relation_expr {printf("relation_and_expr -> relation_xpr\n");}
-        | relation_expr AND relation_expr {printf("relation_and_expr -> relation_expr AND relation_expr\n");}
+        | relation_and_expr AND relation_expr {printf("relation_and_expr -> relation_and_expr AND relation_expr\n");}
         ;
 
 relation_exprs:
 
-relation_expr:
+relation_expr: expression comp expression {printf(relation_expr -> expression comp expression);}
+        | NOT expression comp expression {printf(relation_expr -> NOT expression comp expression);}
+        | TRUE {printf(relation_expr -> TRUE);}
+        | NOT TRUE {printf(relation_expr -> NOT TRUE);}
+        | FALSE {printf(relation_expr -> FALSE);}
+        | NOT FALSE {printf(relation_expr -> NOT FALSE);}
+        | L_PAREN bool_exp R_PAREN {printf(relation_expr -> L_PAREN bool_exp R_PAREN);}
+        | NOT L_PAREN bool_exp R_PAREN {printf(relation_expr -> NOT L_PAREN bool_exp R_PAREN);}
+        ;
 
 comp:           EQ                                      {printf("comp -> EQ\n");}
     |           NEQ                                     {printf("comp -> NEQ\n");}
@@ -110,16 +118,34 @@ comp:           EQ                                      {printf("comp -> EQ\n");
 
 expressions:
 
-expression:
+expression: multiplicative_expr {printf("expression -> multiplicative_expr\n");}
+        | expression ADD multiplicative_expr {printf("expression -> expression ADD multiplicative_expr\n");}
+        | expression SUB multiplicative_expr {printf("expression -> expression SUB multiplicative_expr\n");}
+        ;
 
 multiplicative_exprs:
 
-multiplicative_expr:
+multiplicative_expr: term {printf("multiplicative_expr -> term\n");}
+        | multiplicative_expr MULT term {printf("multiplicative_expr -> tmultiplicative_expr MULT term\n");}
+        | multiplicative_expr DIV term {printf("multiplicative_expr -> multiplicative_expr DIV term\n");}
+        | multiplicative_expr MOD term {printf("multiplicative_expr -> multiplicative_expr MOD term\n");}
+        ;
 
 terms:
 
-term:
+term:       var {printf("term -> var\n");}
+        |   SUB var {printf("term -> SUB var\n");}
+        |   NUMBER {printf("term -> NUMBER %d\n", $1);}
+        |   SUB NUMBER {printf("term -> SUB NUMBER %d\n", $2);}
+        |   L_PAREN expression R_PAREN {printf("term -> L_PAREN expression R_PAREN\n");}
+        |   SUB L_PAREN expression R_PAREN {printf("term -> SUB L_PAREN expression R_PAREN\n");}
+        |   IDENTIFIER L_PAREN R_PAREN {printf("term -> IDENTIFIER %s L_PAREN R_PAREN\n", $1);}
+        |   IDENTIFIER L_PAREN expr_loop R_PAREN {printf("term -> IDENTIFIER %s L_PAREN expr_loop R_PAREN\n", $1);}
+        ;
 
+expr_loop: expression {printf("expr_loop -> expression\n");}
+        | expr_loop COMMA expression {printf("expr_loop -> expr_loop COMMA expression\n");}
+        ;
 
 int yywrap() {
     return 1;
