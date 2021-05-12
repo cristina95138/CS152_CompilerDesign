@@ -60,7 +60,23 @@ statements:                                             {printf("statements -> e
           |     statement SEMICOLON statements          {printf("statements -> statement SEMICOLON statements\n");}
           ;
 
-statement:
+statement: var ASSIGN expression {printf("statement -> var ASSIGN expression\n");}
+        | IF bool_exp THEN stmt_loop ENDIF {printf("statement -> IF bool_exp THEN stmt_loop ENDIF\n");}
+        | IF bool_exp THEN stmt_loop ELSE stmt_loop ENDIF {printf("statement -> IF bool_exp THEN stmt_loop ELSE stmt_loop ENDIF\n");}
+        | WHILE bool_exp BEGINLOOP stmt_loop ENDLOOP {printf("statement -> WHILE bool_exp BEGINLOOP stmt_loop ENDLOOP\n");}
+        | DO BEGINLOOP stmt_loop ENDLOOP WHILE bool_exp {printf("statement -> DO BEGINLOOP stmt_loop ENDLOOP WHILE bool_exp\n");}
+        | READ var_loop {printf("statement -> READ var_loop\n");}
+        | WRITE var_loop {printf("statement -> WRITE var_loop\n");}
+        | CONTINUE {printf("statement -> CONTINUE\n");}
+        | RETURN expression {printf("statement -> RETURN expression\n");}
+        ;
+
+stmt_loop: statement SEMICOLON {printf("stmt_loop -> statement SEMICOLON\n");}
+        | stmt_loop statement SEMICOLON {printf("stmt_loop -> stmt_loop statement SEMICOLON\n");}
+
+var_loop: var {printf("var_loop -> var\n");}
+        | var_loop COMMA var {printf("var_loop -> var_loop COMMA var\n");}
+
 
 vars:                                                   {printf("vars -> epsilon\n");}
     |           var                                     {printf("vars -> var\n");}
@@ -72,9 +88,13 @@ var:            IDENTIFIER                              {printf("var -> IDENTIFI
                 R_SQUARE_BRACKET                        {printf("var -> IDENTIFIER L_SQUARE_BRACKET expr R_SQUARE_BRACKET\n");}
    ;
 
-bool_expr:
+bool_exp: relation_and_expr {printf("bool_exp -> relation_and_expr\n");}
+        | relation_and_expr OR relation_and_expr {printf("bool_exp -> relation_and_expr OR relation_and_expr\n");}
+        ;
 
-relation_and_expr:
+relation_and_expr: relation_expr {printf("relation_and_expr -> relation_xpr\n");}
+        | relation_expr AND relation_expr {printf("relation_and_expr -> relation_expr AND relation_expr\n");}
+        ;
 
 relation_exprs:
 
@@ -121,4 +141,3 @@ int main(int argc, char* argv[]) {
 
   return 0;
 }
-
