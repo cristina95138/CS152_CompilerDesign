@@ -28,3 +28,31 @@
 %token <ival> NUMBER
 
 %%
+
+program:
+        | program function
+        ;
+
+function:   FUNCTION IDENTIFIER SEMICOLON
+            BEGIN_PARAMS dec_loop END_PARAMS
+            BEGIN_LOCALS dec_loop END_LOCALS
+            BEGIN_BODY stmt_loop END_BODY
+            ;
+
+dec_loop:
+        | dec_loop declaration SEMICOLON
+        ;
+
+stmt_loop:
+        | stmt_loop statement SEMICOLON
+        ;
+
+declaration: iden_loop COLON INTEGER
+        | iden_loop COLON ENUM L_PAREN iden_loop R_PAREN
+        | iden_loop L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER
+        ;
+
+iden_loop: IDENTIFIER
+        | iden_loop COMMA IDENTIFIER
+        ;
+    
