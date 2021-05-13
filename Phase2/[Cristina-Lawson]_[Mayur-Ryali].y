@@ -11,6 +11,8 @@
     FILE* yyin;
 %
 
+%error-verbose
+
 %start PROGRAM
 %token FUNCTION BEGIN_PARAMS END_PARAMS BEGIN_LOCALS END_LOCALS BEGIN_BODY END_BODY
 %token ARRAY ENUM OF IF THEN ENDIF ELSE WHILE DO BEGINLOOP ENDLOOP CONTINUE
@@ -23,7 +25,6 @@
 %left SUB ADD
 %left MULT DIV MOD
 %right EQ NEQ LT GT LTE GTE
-
 
 
 program:        functions                               {printf("program -> functions\n");}
@@ -96,7 +97,9 @@ relation_and_expr: relation_expr {printf("relation_and_expr -> relation_xpr\n");
         | relation_and_expr AND relation_expr {printf("relation_and_expr -> relation_and_expr AND relation_expr\n");}
         ;
 
-relation_exprs:
+relation_exprs: {printf("relation_exprs -> epsilon\n");}
+        | relation_expr SEMICOLON relation_exprs {printf("relation_exprs -> relation_expr SEMICOLON relation_exprs\n");}
+        ;
 
 relation_expr: expression comp expression {printf(relation_expr -> expression comp expression);}
         | NOT expression comp expression {printf(relation_expr -> NOT expression comp expression);}
@@ -116,14 +119,18 @@ comp:           EQ                                      {printf("comp -> EQ\n");
     |           GTE                                     {printf("comp -> GTE\n");}
     ;
 
-expressions:
+expressions: {printf("expressions -> epsilon\n");}
+        | expression COMMA expressions {printf("expressions -> expression COMMA expressions\n");}
+        ;
 
 expression: multiplicative_expr {printf("expression -> multiplicative_expr\n");}
         | expression ADD multiplicative_expr {printf("expression -> expression ADD multiplicative_expr\n");}
         | expression SUB multiplicative_expr {printf("expression -> expression SUB multiplicative_expr\n");}
         ;
 
-multiplicative_exprs:
+multiplicative_exprs: {printf("multiplicative_exprs -> epsilon\n");}
+        | multiplicative_expr COMMA multiplicative_exprs {printf("multiplicative_exprs -> multiplicative_expr COMMA multiplicative_exprs\n");}
+        ;
 
 multiplicative_expr: term {printf("multiplicative_expr -> term\n");}
         | multiplicative_expr MULT term {printf("multiplicative_expr -> tmultiplicative_expr MULT term\n");}
@@ -131,7 +138,9 @@ multiplicative_expr: term {printf("multiplicative_expr -> term\n");}
         | multiplicative_expr MOD term {printf("multiplicative_expr -> multiplicative_expr MOD term\n");}
         ;
 
-terms:
+terms:  {printf("terms -> epsilon\n");}
+        | term COMMA terms {printf("terms -> term COMMA terms\n");}
+        ;
 
 term:       var {printf("term -> var\n");}
         |   SUB var {printf("term -> SUB var\n");}
