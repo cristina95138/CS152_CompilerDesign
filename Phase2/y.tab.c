@@ -176,6 +176,7 @@
 
     #include <stdio.h>
     #include <stdlib.h>
+    int yylex();
     void yyerror(const char *msg);
     int currLine, currPos;
     FILE* yyin;
@@ -201,13 +202,13 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 14 "bis.y"
+#line 15 "bis.y"
 {
     int intVal;
     char* identVal;
 }
 /* Line 193 of yacc.c.  */
-#line 211 "y.tab.c"
+#line 212 "y.tab.c"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -220,7 +221,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 224 "y.tab.c"
+#line 225 "y.tab.c"
 
 #ifdef short
 # undef short
@@ -532,13 +533,13 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    37,    37,    40,    41,    44,    50,    51,    54,    56,
-      59,    62,    63,    64,    67,    68,    71,    72,    73,    74,
-      76,    78,    80,    81,    82,    83,    86,    87,    88,    91,
-      92,    96,    97,   100,   101,   104,   105,   106,   107,   110,
-     111,   114,   115,   116,   117,   118,   119,   122,   123,   124,
-     127,   128,   129,   132,   133,   134,   135,   138,   139,   140,
-     143,   144,   145
+       0,    38,    38,    41,    42,    45,    51,    52,    55,    57,
+      60,    63,    64,    65,    68,    69,    72,    73,    74,    75,
+      77,    79,    81,    82,    83,    84,    87,    88,    89,    92,
+      93,    97,    98,   101,   102,   105,   106,   107,   108,   111,
+     112,   115,   116,   117,   118,   119,   120,   123,   124,   125,
+     128,   129,   130,   133,   134,   135,   136,   139,   140,   141,
+     144,   145,   146
 };
 #endif
 
@@ -1549,313 +1550,313 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 37 "bis.y"
+#line 38 "bis.y"
     {printf("program -> functions\n");;}
     break;
 
   case 3:
-#line 40 "bis.y"
+#line 41 "bis.y"
     {printf("functions -> epsilon\n");;}
     break;
 
   case 4:
-#line 41 "bis.y"
+#line 42 "bis.y"
     {printf("functions -> function functions\n");;}
     break;
 
   case 5:
-#line 47 "bis.y"
+#line 48 "bis.y"
     {printf("function -> FUNCTION IDENTIFIER SEMICOLON BEGIN_PARAMS declarations END_PARAMS BEGIN_LOCALS BEGIN_BODY statements END_BODY\n");;}
     break;
 
   case 6:
-#line 50 "bis.y"
+#line 51 "bis.y"
     {printf("declarations -> epsilon\n");;}
     break;
 
   case 7:
-#line 51 "bis.y"
+#line 52 "bis.y"
     {printf("declarations -> declaration SEMICOLON declarations\n");;}
     break;
 
   case 8:
-#line 55 "bis.y"
+#line 56 "bis.y"
     {printf("declaration -> identifiers COLON ENUM L_PAREN identifiers R_PAREN INTEGER\n");;}
     break;
 
   case 9:
-#line 58 "bis.y"
+#line 59 "bis.y"
     {printf("declaration -> identifiers COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER\n");;}
     break;
 
   case 10:
-#line 59 "bis.y"
+#line 60 "bis.y"
     {printf("declaration -> identifiers COLON INTEGER\n");;}
     break;
 
   case 11:
-#line 62 "bis.y"
+#line 63 "bis.y"
     {printf("identifiers -> epsilon\n");;}
     break;
 
   case 12:
-#line 63 "bis.y"
+#line 64 "bis.y"
     {printf("identifiers -> IDENTIFIER identifiers\n");;}
     break;
 
   case 13:
-#line 64 "bis.y"
+#line 65 "bis.y"
     {printf("identifiers -> COMMA IDENTIFIER identifiers\n");;}
     break;
 
   case 14:
-#line 67 "bis.y"
+#line 68 "bis.y"
     {printf("statements -> epsilon\n");;}
     break;
 
   case 15:
-#line 68 "bis.y"
+#line 69 "bis.y"
     {printf("statements -> statement SEMICOLON statements\n");;}
     break;
 
   case 16:
-#line 71 "bis.y"
+#line 72 "bis.y"
     {printf("statement -> epsilon\n");;}
     break;
 
   case 17:
-#line 72 "bis.y"
+#line 73 "bis.y"
     {printf("statement -> var ASSIGN expression\n");;}
     break;
 
   case 18:
-#line 73 "bis.y"
+#line 74 "bis.y"
     {printf("statement -> IF bool_expr THEN statements ENDIF\n");;}
     break;
 
   case 19:
-#line 75 "bis.y"
+#line 76 "bis.y"
     {printf("statement -> IF bool_expr THEN statements ELSE statements ENDIF\n");;}
     break;
 
   case 20:
-#line 77 "bis.y"
+#line 78 "bis.y"
     {printf("statement -> WHILE bool_expr BEGINLOOP statements ENDLOOP\n");;}
     break;
 
   case 21:
-#line 79 "bis.y"
+#line 80 "bis.y"
     {printf("statement -> DO BEGINLOOP stmt_loop ENDLOOP WHILE bool_expr\n");;}
     break;
 
   case 22:
-#line 80 "bis.y"
+#line 81 "bis.y"
     {printf("statement -> READ vars\n");;}
     break;
 
   case 23:
-#line 81 "bis.y"
+#line 82 "bis.y"
     {printf("statement -> WRITE vars\n");;}
     break;
 
   case 24:
-#line 82 "bis.y"
+#line 83 "bis.y"
     {printf("statement -> CONTINUE\n");;}
     break;
 
   case 25:
-#line 83 "bis.y"
+#line 84 "bis.y"
     {printf("statement -> RETURN expression\n");;}
     break;
 
   case 26:
-#line 86 "bis.y"
+#line 87 "bis.y"
     {printf("vars -> epsilon\n");;}
     break;
 
   case 27:
-#line 87 "bis.y"
+#line 88 "bis.y"
     {printf("vars -> var\n");;}
     break;
 
   case 28:
-#line 88 "bis.y"
+#line 89 "bis.y"
     {printf("vars -> var COMMA vars\n");;}
     break;
 
   case 29:
-#line 91 "bis.y"
+#line 92 "bis.y"
     {printf("var -> IDENTIFIER\n");;}
     break;
 
   case 30:
-#line 93 "bis.y"
+#line 94 "bis.y"
     {printf("var -> IDENTIFIER L_SQUARE_BRACKET expr R_SQUARE_BRACKET\n");;}
     break;
 
   case 31:
-#line 96 "bis.y"
+#line 97 "bis.y"
     {printf("bool_expr -> relation_and_expr\n");;}
     break;
 
   case 32:
-#line 97 "bis.y"
+#line 98 "bis.y"
     {printf("bool_expr -> OR relation_and_expr bool_expr\n");;}
     break;
 
   case 33:
-#line 100 "bis.y"
+#line 101 "bis.y"
     {printf("relation_and_expr -> relation_expr\n");;}
     break;
 
   case 34:
-#line 101 "bis.y"
+#line 102 "bis.y"
     {printf("relation_and_expr -> AND relation_expr relation_and_expr\n");;}
     break;
 
   case 35:
-#line 104 "bis.y"
+#line 105 "bis.y"
     {printf("relation_exprs -> expression comp expression\n");;}
     break;
 
   case 36:
-#line 105 "bis.y"
+#line 106 "bis.y"
     {printf("relation_exprs -> TRUE\n");;}
     break;
 
   case 37:
-#line 106 "bis.y"
+#line 107 "bis.y"
     {printf("relation_exprs -> FALSE\n");;}
     break;
 
   case 38:
-#line 107 "bis.y"
+#line 108 "bis.y"
     {printf("relation_exprs -> L_PAREN bool_expr R_PAREN\n");;}
     break;
 
   case 39:
-#line 110 "bis.y"
+#line 111 "bis.y"
     {printf("relation_exprs -> relation_exprs\n");;}
     break;
 
   case 40:
-#line 111 "bis.y"
+#line 112 "bis.y"
     {printf("relation_exprs -> NOT relation_exprs\n");;}
     break;
 
   case 41:
-#line 114 "bis.y"
+#line 115 "bis.y"
     {printf("comp -> EQ\n");;}
     break;
 
   case 42:
-#line 115 "bis.y"
+#line 116 "bis.y"
     {printf("comp -> NEQ\n");;}
     break;
 
   case 43:
-#line 116 "bis.y"
+#line 117 "bis.y"
     {printf("comp -> LT\n");;}
     break;
 
   case 44:
-#line 117 "bis.y"
+#line 118 "bis.y"
     {printf("comp -> GT\n");;}
     break;
 
   case 45:
-#line 118 "bis.y"
+#line 119 "bis.y"
     {printf("comp -> LTE\n");;}
     break;
 
   case 46:
-#line 119 "bis.y"
+#line 120 "bis.y"
     {printf("comp -> GTE\n");;}
     break;
 
   case 47:
-#line 122 "bis.y"
+#line 123 "bis.y"
     {printf("expressions -> epsilon\n");;}
     break;
 
   case 48:
-#line 123 "bis.y"
+#line 124 "bis.y"
     {printf("expressions -> expression\n");;}
     break;
 
   case 49:
-#line 124 "bis.y"
+#line 125 "bis.y"
     {printf("expressions -> expression COMMA expressions\n");;}
     break;
 
   case 50:
-#line 127 "bis.y"
+#line 128 "bis.y"
     {printf("expression -> multiplicative_expr\n");;}
     break;
 
   case 51:
-#line 128 "bis.y"
+#line 129 "bis.y"
     {printf("expression -> ADD multiplicative_expr expression\n");;}
     break;
 
   case 52:
-#line 129 "bis.y"
+#line 130 "bis.y"
     {printf("expression -> SUB multiplicative_expr expression\n");;}
     break;
 
   case 53:
-#line 132 "bis.y"
+#line 133 "bis.y"
     {printf("multiplicative_expr -> term\n");;}
     break;
 
   case 54:
-#line 133 "bis.y"
+#line 134 "bis.y"
     {printf("multiplicative_expr -> MULT term multiplicative_expr\n");;}
     break;
 
   case 55:
-#line 134 "bis.y"
+#line 135 "bis.y"
     {printf("multiplicative_expr -> DIV term multiplicative_expr\n");;}
     break;
 
   case 56:
-#line 135 "bis.y"
+#line 136 "bis.y"
     {printf("multiplicative_expr -> MOD term multiplicative_expr\n");;}
     break;
 
   case 57:
-#line 138 "bis.y"
+#line 139 "bis.y"
     {printf("terms -> vars\n");;}
     break;
 
   case 58:
-#line 139 "bis.y"
+#line 140 "bis.y"
     {printf("terms -> NUMBER\n");;}
     break;
 
   case 59:
-#line 140 "bis.y"
+#line 141 "bis.y"
     {printf("terms -> L_PAREN expressions R_PAREN\n");;}
     break;
 
   case 60:
-#line 143 "bis.y"
+#line 144 "bis.y"
     {printf("term -> terms\n");;}
     break;
 
   case 61:
-#line 144 "bis.y"
+#line 145 "bis.y"
     {printf("term -> SUB terms\n");;}
     break;
 
   case 62:
-#line 145 "bis.y"
+#line 146 "bis.y"
     {printf("term -> IDENTIFIER L_PAREN expression R_PAREN\n");;}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1859 "y.tab.c"
+#line 1860 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2069,7 +2070,7 @@ yyreturn:
 }
 
 
-#line 148 "bis.y"
+#line 149 "bis.y"
 
 
 int yywrap() {
