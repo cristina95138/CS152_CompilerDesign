@@ -53,7 +53,7 @@ declarations:                                           {printf("declarations ->
             ;
 
 declaration:    identifiers COLON ENUM L_PAREN
-                identifiers R_PAREN INTEGER             {printf("declaration -> identifiers COLON ENUM L_PAREN identifiers R_PAREN INTEGER\n");}
+                identifiers R_PAREN		        {printf("declaration -> identifiers COLON ENUM L_PAREN identifiers R_PAREN\n");}
            |    identifiers COLON ARRAY
                 L_SQUARE_BRACKET NUMBER
                 R_SQUARE_BRACKET OF INTEGER             {printf("declaration -> identifiers COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER\n");}
@@ -102,14 +102,14 @@ relation_and_expr:  relation_expr                       {printf("relation_and_ex
                  |  AND relation_expr relation_and_expr {printf("relation_and_expr -> AND relation_expr relation_and_expr\n");}
                  ;
 
-relation_exprs:     expression comp expression          {printf("relation_exprs -> expression comp expression\n");}
-	      |	    TRUE                                {printf("relation_exprs -> TRUE\n");}
-	      |     FALSE                               {printf("relation_exprs -> FALSE\n");}
-	      |     L_PAREN bool_expr R_PAREN           {printf("relation_exprs -> L_PAREN bool_expr R_PAREN\n");}
+relation_exprs:     relation_expr			{printf("relation_exprs -> relation_expr\n");}
+              |     NOT relation_expr             	{printf("relation_exprs -> NOT relation_expr\n");}
               ;
 
-relation_expr: 	    relation_exprs			{printf("relation_exprs -> relation_exprs\n");}
-             |      NOT relation_exprs             	{printf("relation_exprs -> NOT relation_exprs\n");}
+relation_expr: 	    expressions comp expressions          {printf("relation_expr -> expressions comp expressions\n");}
+             |	    TRUE                                {printf("relation_expr -> TRUE\n");}
+             |      FALSE                               {printf("relation_expr -> FALSE\n");}
+             |      L_PAREN bool_expr R_PAREN           {printf("relation_expr -> L_PAREN bool_expr R_PAREN\n");}
              ;
 
 comp:           EQ                                      {printf("comp -> EQ\n");}
@@ -170,5 +170,5 @@ int main(int argc, char* argv[]) {
 }
 
 void yyerror (const char* msg) {
-    printf("Line %d, position %d: %s\n", currLine, currPos, msg);
+    printf("Line %d, position %d: %s\n", currPos, currLine, msg);
 }

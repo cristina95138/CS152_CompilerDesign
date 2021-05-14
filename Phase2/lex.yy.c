@@ -1116,7 +1116,7 @@ YY_RULE_SETUP
 case 52:
 YY_RULE_SETUP
 #line 78 "fle.lex"
-{printf("IDENTIFIER %s\n", yytext); currLine += yyleng; return IDENTIFIER;}
+{printf("identifier -> IDENTIFIER %s\n", yytext); currLine += yyleng; return IDENTIFIER;}
 	YY_BREAK
 case 53:
 YY_RULE_SETUP

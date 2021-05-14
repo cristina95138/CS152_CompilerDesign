@@ -53,7 +53,7 @@ declarations:                                           {printf("declarations ->
             ;
 
 declaration:    identifiers COLON ENUM L_PAREN
-                identifiers R_PAREN INTEGER             {printf("declaration -> identifiers COLON ENUM L_PAREN identifiers R_PAREN INTEGER\n");}
+                identifiers R_PAREN		        {printf("declaration -> identifiers COLON ENUM L_PAREN identifiers R_PAREN\n");}
            |    identifiers COLON ARRAY
                 L_SQUARE_BRACKET NUMBER
                 R_SQUARE_BRACKET OF INTEGER             {printf("declaration -> identifiers COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER\n");}
@@ -94,12 +94,16 @@ var:            IDENTIFIER                              {printf("var -> IDENTIFI
                 R_SQUARE_BRACKET                        {printf("var -> IDENTIFIER L_SQUARE_BRACKET expr R_SQUARE_BRACKET\n");}
    ;
 
-bool_expr:      relation_and_expr                       {printf("bool_expr -> relation_and_expr\n");}
-        |       OR relation_and_expr bool_expr          {printf("bool_expr -> OR relation_and_expr bool_expr\n");}
-        ;
+bool_exprs: 	OR relation_and_expr bool_exprs          {printf("bool_expr -> OR relation_and_expr bool_exprs\n");}
+          ;
 
-relation_and_expr:  relation_expr                       {printf("relation_and_expr -> relation_expr\n");}
-                 |  AND relation_expr relation_and_expr {printf("relation_and_expr -> AND relation_expr relation_and_expr\n");}
+bool_expr:      relation_and_expr bool_exprs             {printf("bool_expr -> relation_and_expr bool_exprs\n");}
+         ;
+
+relation_and_exprs: AND relation_expr relation_and_exprs {printf("relation_and_expr -> AND relation_expr relation_and_expr\n");}
+		  ;
+
+relation_and_expr:  relation_expr relation_and_exprs     {printf("relation_and_expr -> relation_expr relation_and_exprs\n");}
                  ;
 
 relation_exprs:     expression comp expression          {printf("relation_exprs -> expression comp expression\n");}
@@ -108,8 +112,8 @@ relation_exprs:     expression comp expression          {printf("relation_exprs 
 	      |     L_PAREN bool_expr R_PAREN           {printf("relation_exprs -> L_PAREN bool_expr R_PAREN\n");}
               ;
 
-relation_expr: 	    relation_exprs			{printf("relation_exprs -> relation_exprs\n");}
-             |      NOT relation_exprs             	{printf("relation_exprs -> NOT relation_exprs\n");}
+relation_expr: 	    relation_exprs			{printf("relation_expr -> relation_exprs\n");}
+             |      NOT relation_exprs             	{printf("relation_expr -> NOT relation_exprs\n");}
              ;
 
 comp:           EQ                                      {printf("comp -> EQ\n");}
@@ -136,7 +140,7 @@ multiplicative_expr:    term                            {printf("multiplicative_
                    | 	MOD term multiplicative_expr    {printf("multiplicative_expr -> MOD term multiplicative_expr\n");}
                    ;
 
-terms:          var					{printf("terms -> vars\n");}
+terms:          var					{printf("terms -> var\n");}
      |		NUMBER					{printf("terms -> NUMBER\n");}
      |          L_PAREN expressions R_PAREN             {printf("terms -> L_PAREN expressions R_PAREN\n");}
      ;
