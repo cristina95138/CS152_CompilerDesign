@@ -13,7 +13,7 @@
 
 %error-verbose
 
-%start PROGRAM
+%start program
 %token FUNCTION BEGIN_PARAMS END_PARAMS BEGIN_LOCALS END_LOCALS BEGIN_BODY END_BODY
 %token ARRAY ENUM OF IF THEN ENDIF ELSE WHILE DO BEGINLOOP ENDLOOP CONTINUE
 %token READ WRITE AND OR NOT TRUE FALSE RETURN
@@ -26,6 +26,7 @@
 %left MULT DIV MOD
 %right EQ NEQ LT GT LTE GTE
 
+%%
 
 program:        functions                               {printf("program -> functions\n");}
        ;
@@ -160,6 +161,8 @@ term:           var                                     {printf("term -> var\n")
 expr_loop:      expression                              {printf("expr_loop -> expression\n");}
          |      expr_loop COMMA expression              {printf("expr_loop -> expr_loop COMMA expression\n");}
          ;
+
+%%
 
 int yywrap() {
     return 1;
