@@ -141,7 +141,7 @@ terms:          var					{printf("terms -> vars\n");}
      |          L_PAREN expressions R_PAREN             {printf("terms -> L_PAREN expressions R_PAREN\n");}
      ;
 
-term:           terms                                     {printf("term -> terms\n");}
+term:           terms                                   {printf("term -> terms\n");}
     |           SUB terms                               {printf("term -> SUB terms\n");}
     |           IDENTIFIER L_PAREN expressions R_PAREN  {printf("term -> IDENTIFIER L_PAREN expression R_PAREN\n");}
     ;
