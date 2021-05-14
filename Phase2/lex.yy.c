@@ -582,14 +582,15 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "exl.lex"
+#line 1 "fle.lex"
 /* Include Variables */
-#line 3 "exl.lex"
-  int currLine = 1, currPos = 1;
+#line 3 "fle.lex"
+    #include "y.tab.h"
+    int currLine = 1, currPos = 1;
 /* Define Rules */
 /* Define Tokens */
 /* Reserved Words */
-#line 593 "lex.yy.c"
+#line 594 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -771,10 +772,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 16 "exl.lex"
+#line 17 "fle.lex"
 
 
-#line 778 "lex.yy.c"
+#line 779 "lex.yy.c"
 
 	if ( !(yy_init) )
 		{
@@ -859,291 +860,291 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 18 "exl.lex"
-{printf("FUNCTION\n"); currLine += yyleng;}
+#line 19 "fle.lex"
+{currLine += yyleng; return FUNCTION;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 19 "exl.lex"
-{printf("BEGIN_PARAMS\n"); currLine += yyleng;}
+#line 20 "fle.lex"
+{currLine += yyleng; return BEGIN_PARAMS;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 20 "exl.lex"
-{printf("END_PARAMS\n"); currLine += yyleng;}
+#line 21 "fle.lex"
+{currLine += yyleng; return END_PARAMS;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 21 "exl.lex"
-{printf("BEGIN_LOCALS\n"); currLine += yyleng;}
+#line 22 "fle.lex"
+{currLine += yyleng; return BEGIN_LOCALS;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 22 "exl.lex"
-{printf("END_LOCALS\n"); currLine += yyleng;}
+#line 23 "fle.lex"
+{currLine += yyleng; return END_LOCALS;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 23 "exl.lex"
-{printf("BEGIN_BODY\n"); currLine += yyleng;}
+#line 24 "fle.lex"
+{currLine += yyleng; return BEGIN_BODY;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 24 "exl.lex"
-{printf("END_BODY\n"); currLine += yyleng;}
+#line 25 "fle.lex"
+{currLine += yyleng; return END_BODY;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 25 "exl.lex"
-{printf("INTEGER\n"); currLine += yyleng;}
+#line 26 "fle.lex"
+{currLine += yyleng; return INTEGER;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 26 "exl.lex"
-{printf("ARRAY\n"); currLine += yyleng;}
+#line 27 "fle.lex"
+{currLine += yyleng; return ARRAY;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 27 "exl.lex"
-{printf("ENUM\n"); currLine += yyleng;}
+#line 28 "fle.lex"
+{currLine += yyleng; return ENUM;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 28 "exl.lex"
-{printf("OF\n"); currLine += yyleng;}
+#line 29 "fle.lex"
+{currLine += yyleng; return OF;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 29 "exl.lex"
-{printf("IF\n"); currLine += yyleng;}
+#line 30 "fle.lex"
+{currLine += yyleng; return IF;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 30 "exl.lex"
-{printf("THEN\n"); currLine += yyleng;}
+#line 31 "fle.lex"
+{currLine += yyleng; return THEN;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 31 "exl.lex"
-{printf("ENDIF\n"); currLine += yyleng;}
+#line 32 "fle.lex"
+{currLine += yyleng; return ENDIF;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 32 "exl.lex"
-{printf("ELSE\n"); currLine += yyleng;}
+#line 33 "fle.lex"
+{currLine += yyleng; return ELSE;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 33 "exl.lex"
-{printf("WHILE\n"); currLine += yyleng;}
+#line 34 "fle.lex"
+{currLine += yyleng; return WHILE;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 34 "exl.lex"
-{printf("DO\n"); currLine += yyleng;}
+#line 35 "fle.lex"
+{currLine += yyleng; return DO;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 35 "exl.lex"
-{printf("BEGINLOOP\n"); currLine += yyleng;}
+#line 36 "fle.lex"
+{currLine += yyleng; return BEGINLOOP;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 36 "exl.lex"
-{printf("ENDLOOP\n"); currLine += yyleng;}
+#line 37 "fle.lex"
+{currLine += yyleng; return ENDLOOP;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 37 "exl.lex"
-{printf("CONTINUE\n"); currLine += yyleng;}
+#line 38 "fle.lex"
+{currLine += yyleng; return CONTINUE;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 38 "exl.lex"
-{printf("READ\n"); currLine += yyleng;}
+#line 39 "fle.lex"
+{currLine += yyleng; return READ;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 39 "exl.lex"
-{printf("WRITE\n"); currLine += yyleng;}
+#line 40 "fle.lex"
+{currLine += yyleng; return WRITE;}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 40 "exl.lex"
-{printf("AND\n"); currLine += yyleng;}
+#line 41 "fle.lex"
+{currLine += yyleng; return AND;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 41 "exl.lex"
-{printf("OR\n"); currLine += yyleng;}
+#line 42 "fle.lex"
+{currLine += yyleng; return OR;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 42 "exl.lex"
-{printf("NOT\n"); currLine += yyleng;}
+#line 43 "fle.lex"
+{currLine += yyleng; return NOT;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 43 "exl.lex"
-{printf("TRUE\n"); currLine += yyleng;}
+#line 44 "fle.lex"
+{currLine += yyleng; return TRUE;}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 44 "exl.lex"
-{printf("FALSE\n"); currLine += yyleng;}
+#line 45 "fle.lex"
+{currLine += yyleng; return FALSE;}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 45 "exl.lex"
-{printf("RETURN\n"); currLine += yyleng;}
+#line 46 "fle.lex"
+{currLine += yyleng; return RETURN;}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 47 "exl.lex"
-{printf("SUB\n"); currLine += yyleng;}
+#line 48 "fle.lex"
+{currLine += yyleng; return SUB;}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 48 "exl.lex"
-{printf("ADD\n"); currLine += yyleng;}
+#line 49 "fle.lex"
+{currLine += yyleng; return ADD;}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 49 "exl.lex"
-{printf("MULT\n"); currLine += yyleng;}
+#line 50 "fle.lex"
+{currLine += yyleng; return MULT;}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 50 "exl.lex"
-{printf("DIV\n"); currLine += yyleng;}
+#line 51 "fle.lex"
+{currLine += yyleng; return DIV;}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 51 "exl.lex"
-{printf("MOD\n"); currLine += yyleng;}
+#line 52 "fle.lex"
+{currLine += yyleng; return MOD;}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 53 "exl.lex"
-{printf("EQ\n"); currLine += yyleng;}
+#line 54 "fle.lex"
+{currLine += yyleng; return EQ;}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 54 "exl.lex"
-{printf("NEQ\n"); currLine += yyleng;}
+#line 55 "fle.lex"
+{currLine += yyleng; return NEQ;}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 55 "exl.lex"
-{printf("LT\n"); currLine += yyleng;}
+#line 56 "fle.lex"
+{currLine += yyleng; return LT;}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 56 "exl.lex"
-{printf("GT\n"); currLine += yyleng;}
+#line 57 "fle.lex"
+{currLine += yyleng; return GT;}
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 57 "exl.lex"
-{printf("LTE\n"); currLine += yyleng;}
+#line 58 "fle.lex"
+{currLine += yyleng; return LTE;}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 58 "exl.lex"
-{printf("GTE\n"); currLine += yyleng;}
+#line 59 "fle.lex"
+{currLine += yyleng; return GTE;}
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 60 "exl.lex"
+#line 61 "fle.lex"
 {printf("NUMBER %s\n", yytext); currLine += yyleng;}
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 62 "exl.lex"
-{printf("SEMICOLON\n"); currLine += yyleng;}
+#line 63 "fle.lex"
+{currLine += yyleng; return SEMICOLON;}
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 63 "exl.lex"
-{printf("COLON\n"); currLine += yyleng;}
+#line 64 "fle.lex"
+{currLine += yyleng; return COLON;}
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 64 "exl.lex"
-{printf("COMMA\n"); currLine += yyleng;}
+#line 65 "fle.lex"
+{currLine += yyleng; return COMMA;}
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 65 "exl.lex"
-{printf("L_PAREN\n"); currLine += yyleng;}
+#line 66 "fle.lex"
+{currLine += yyleng; return L_PAREN;}
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 66 "exl.lex"
-{printf("R_PAREN\n"); currLine += yyleng;}
+#line 67 "fle.lex"
+{currLine += yyleng; return R_PAREN;}
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 67 "exl.lex"
-{printf("L_SQUARE_BRACKET\n"); currLine += yyleng;}
+#line 68 "fle.lex"
+{currLine += yyleng; return L_SQUARE_BRACKET;}
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 68 "exl.lex"
-{printf("R_SQUARE_BRACKET\n"); currLine += yyleng;}
+#line 69 "fle.lex"
+{currLine += yyleng; return R_SQUARE_BRACKET;}
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 69 "exl.lex"
-{printf("ASSIGN\n"); currLine += yyleng;}
+#line 70 "fle.lex"
+{currLine += yyleng; return ASSIGN;}
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 71 "exl.lex"
+#line 72 "fle.lex"
 {currPos++; currLine = 1;}
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 74 "exl.lex"
+#line 75 "fle.lex"
 {printf("Error at line %d, column %d: identifier \"%s\" must begin with a letter\n", currLine, currPos, yytext); exit(0);}
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 75 "exl.lex"
+#line 76 "fle.lex"
 {printf("Error at line %d, column %d: identifier \"%s\" cannot end with an underscore\n", currLine, currPos, yytext); exit(0);}
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 77 "exl.lex"
+#line 78 "fle.lex"
 {printf("IDENT %s\n", yytext); currLine += yyleng;}
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 80 "exl.lex"
+#line 81 "fle.lex"
 {currLine += yyleng;}
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 81 "exl.lex"
+#line 82 "fle.lex"
 {currLine += yyleng;}
 	YY_BREAK
 case 55:
 /* rule 55 can match eol */
 YY_RULE_SETUP
-#line 82 "exl.lex"
+#line 83 "fle.lex"
 {currPos++; currLine = 1;}
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 84 "exl.lex"
+#line 85 "fle.lex"
 {printf("Error at line %d, column %d: unrecognized token %s.\n", currLine, currPos, yytext); exit(0);}
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 86 "exl.lex"
+#line 87 "fle.lex"
 ECHO;
 	YY_BREAK
-#line 1147 "lex.yy.c"
+#line 1148 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2140,10 +2141,11 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 86 "exl.lex"
+#line 87 "fle.lex"
 
 
 
+/*
 int yywrap() {
     return 1;
 }
@@ -2164,4 +2166,5 @@ int main(int argc, char* argv[]) {
 
   return 0;
 }
+*/
 
