@@ -69,13 +69,13 @@ statements:                                             {printf("statements -> e
           ;
 
 statement:      var ASSIGN expression                   {printf("statement -> var ASSIGN expression\n");}
-        |       IF bool_exp THEN stmt_loop ENDIF        {printf("statement -> IF bool_exp THEN stmt_loop ENDIF\n");}
-        |       IF bool_exp THEN stmt_loop ELSE
-                stmt_loop ENDIF                         {printf("statement -> IF bool_exp THEN stmt_loop ELSE stmt_loop ENDIF\n");}
-        |       WHILE bool_exp BEGINLOOP stmt_loop
-                ENDLOOP                                 {printf("statement -> WHILE bool_exp BEGINLOOP stmt_loop ENDLOOP\n");}
+        |       IF bool_expr THEN stmt_loop ENDIF       {printf("statement -> IF bool_expr THEN stmt_loop ENDIF\n");}
+        |       IF bool_expr THEN stmt_loop ELSE
+                stmt_loop ENDIF                         {printf("statement -> IF bool_expr THEN stmt_loop ELSE stmt_loop ENDIF\n");}
+        |       WHILE bool_expr BEGINLOOP stmt_loop
+                ENDLOOP                                 {printf("statement -> WHILE bool_expr BEGINLOOP stmt_loop ENDLOOP\n");}
         |       DO BEGINLOOP stmt_loop ENDLOOP
-                WHILE bool_exp                          {printf("statement -> DO BEGINLOOP stmt_loop ENDLOOP WHILE bool_exp\n");}
+                WHILE bool_expr                         {printf("statement -> DO BEGINLOOP stmt_loop ENDLOOP WHILE bool_expr\n");}
         |       READ var_loop                           {printf("statement -> READ var_loop\n");}
         |       WRITE var_loop                          {printf("statement -> WRITE var_loop\n");}
         |       CONTINUE                                {printf("statement -> CONTINUE\n");}
@@ -100,8 +100,8 @@ var:            IDENTIFIER                              {printf("var -> IDENTIFI
                 R_SQUARE_BRACKET                        {printf("var -> IDENTIFIER L_SQUARE_BRACKET expr R_SQUARE_BRACKET\n");}
    ;
 
-bool_exp:       relation_and_expr                       {printf("bool_exp -> relation_and_expr\n");}
-        |       bool_exp OR relation_and_expr           {printf("bool_exp -> bool_exp OR relation_and_expr\n");}
+bool_expr:      relation_and_expr                       {printf("bool_expr -> relation_and_expr\n");}
+        |       bool_expr OR relation_and_expr          {printf("bool_expr -> bool_expr OR relation_and_expr\n");}
         ;
 
 relation_and_expr:  relation_expr                       {printf("relation_and_expr -> relation_xpr\n");}
@@ -119,8 +119,8 @@ relation_expr:      expression comp expression          {printf(relation_expr ->
              |      NOT TRUE                            {printf(relation_expr -> NOT TRUE);}
              |      FALSE                               {printf(relation_expr -> FALSE);}
              |      NOT FALSE                           {printf(relation_expr -> NOT FALSE);}
-             |      L_PAREN bool_exp R_PAREN            {printf(relation_expr -> L_PAREN bool_exp R_PAREN);}
-             |      NOT L_PAREN bool_exp R_PAREN        {printf(relation_expr -> NOT L_PAREN bool_exp R_PAREN);}
+             |      L_PAREN bool_expr R_PAREN           {printf(relation_expr -> L_PAREN bool_expr R_PAREN);}
+             |      NOT L_PAREN bool_expr R_PAREN       {printf(relation_expr -> NOT L_PAREN bool_expr R_PAREN);}
              ;
 
 comp:           EQ                                      {printf("comp -> EQ\n");}
