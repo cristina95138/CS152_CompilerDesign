@@ -11,6 +11,11 @@
     FILE* yyin;
 %}
 
+%union {
+    int intVal;
+    char* identVal
+}
+
 %error-verbose
 
 %start program
@@ -20,6 +25,7 @@
 %token SUB ADD MULT DIV MOD
 %token EQ NEQ LT GT LTE GTE
 %token SEMICOLON COLON COMMA L_PAREN R_PAREN L_SQUARE_BRACKET R_SQUARE_BRACKET ASSIGN
+%token <intVal> NUMBER
 %token <identVal> IDENTIFIER
 %token <intVal> INTEGER
 %left SUB ADD
@@ -78,10 +84,11 @@ statement:      var ASSIGN expression                   {printf("statement -> va
 
 stmt_loop:      statement SEMICOLON                     {printf("stmt_loop -> statement SEMICOLON\n");}
         |       stmt_loop statement SEMICOLON           {printf("stmt_loop -> stmt_loop statement SEMICOLON\n");}
+        ;
 
 var_loop:       var                                     {printf("var_loop -> var\n");}
         |       var_loop COMMA var                      {printf("var_loop -> var_loop COMMA var\n");}
-
+        ;
 
 vars:                                                   {printf("vars -> epsilon\n");}
     |           var                                     {printf("vars -> var\n");}
