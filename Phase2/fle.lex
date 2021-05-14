@@ -75,7 +75,7 @@ COMMENT    ##.*
 ({DIGIT}|{UNDERSCORE})({LETTER}|{DIGIT}|{UNDERSCORE})*({LETTER}|{DIGIT}|{UNDERSCORE})     {printf("Error at line %d, column %d: identifier \"%s\" must begin with a letter\n", currLine, currPos, yytext); exit(0);}
 ({LETTER}|{DIGIT}|{UNDERSCORE})*{UNDERSCORE}                                            {printf("Error at line %d, column %d: identifier \"%s\" cannot end with an underscore\n", currLine, currPos, yytext); exit(0);}
 
-({LETTER}|{DIGIT}|{UNDERSCORE})*({LETTER}|{DIGIT})*               {printf("IDENT %s\n", yytext); currLine += yyleng;}
+({LETTER}|{DIGIT}|{UNDERSCORE})*({LETTER}|{DIGIT})*               {printf("IDENTIFIER %s\n", yytext); currLine += yyleng; return IDENTIFIER:}
 
 
 [ ]                   {currLine += yyleng;}
