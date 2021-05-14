@@ -9,7 +9,7 @@
     void yyerror(const char *msg);
     int currLine = 1, currPos = 1;
     FILE* yyin;
-%
+%}
 
 %error-verbose
 
