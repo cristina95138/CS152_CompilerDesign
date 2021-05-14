@@ -2144,27 +2144,3 @@ void yyfree (void * ptr )
 #line 87 "fle.lex"
 
 
-
-/*
-int yywrap() {
-    return 1;
-}
-
-int main(int argc, char* argv[]) {
-  if (argc == 2) {
-    yyin = fopen(argv[1], "r");
-    if (yyin == 0) {
-      printf("Error opening file: %s\n", argv[1]);
-      exit(1);
-    }
-  }
-  else {
-    yyin = stdin;
-  }
-
-  yylex();
-
-  return 0;
-}
-*/
-

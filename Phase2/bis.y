@@ -7,7 +7,7 @@
     #include <stdio.h>
     #include <stdlib.h>
     void yyerror(const char *msg);
-    int currLine = 1, currPos = 1;
+    int currLine, currPos;
     FILE* yyin;
 %}
 
@@ -155,9 +155,9 @@ int yywrap() {
 }
 
 int main(int argc, char* argv[]) {
-  if (argc == 2) {
+  if (argc >= 2) {
     yyin = fopen(argv[1], "r");
-    if (yyin == 0) {
+    if (yyin == NULL) {
       printf("Error opening file: %s\n", argv[1]);
       exit(1);
     }
@@ -166,7 +166,11 @@ int main(int argc, char* argv[]) {
     yyin = stdin;
   }
 
-  yylex();
+  yyparse();
 
   return 0;
+}
+
+void yyerror (const char* msg) {
+    printf("Line %d, position %d: %s\n", currLine, currPos, msg);
 }
