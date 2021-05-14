@@ -7,7 +7,7 @@
     #include <stdio.h>
     #include <stdlib.h>
     void yyerror(const char *msg);
-    int currLine = 1, currPos = 1;
+    extern int currLine = 1, currPos = 1;
     FILE* yyin;
 %}
 
@@ -104,7 +104,7 @@ bool_expr:      relation_and_expr                       {printf("bool_expr -> re
         |       bool_expr OR relation_and_expr          {printf("bool_expr -> bool_expr OR relation_and_expr\n");}
         ;
 
-relation_and_expr:  relation_expr                       {printf("relation_and_expr -> relation_xpr\n");}
+relation_and_expr:  relation_expr                       {printf("relation_and_expr -> relation_expr\n");}
                  |  relation_and_expr AND relation_expr {printf("relation_and_expr -> relation_and_expr AND relation_expr\n");}
                  ;
 
@@ -113,14 +113,14 @@ relation_exprs:                                         {printf("relation_exprs 
                     relation_exprs                      {printf("relation_exprs -> relation_expr SEMICOLON relation_exprs\n");}
               ;
 
-relation_expr:      expression comp expression          {printf(relation_expr -> expression comp expression);}
-             |      NOT expression comp expression      {printf(relation_expr -> NOT expression comp expression);}
-             |      TRUE                                {printf(relation_expr -> TRUE);}
-             |      NOT TRUE                            {printf(relation_expr -> NOT TRUE);}
-             |      FALSE                               {printf(relation_expr -> FALSE);}
-             |      NOT FALSE                           {printf(relation_expr -> NOT FALSE);}
-             |      L_PAREN bool_expr R_PAREN           {printf(relation_expr -> L_PAREN bool_expr R_PAREN);}
-             |      NOT L_PAREN bool_expr R_PAREN       {printf(relation_expr -> NOT L_PAREN bool_expr R_PAREN);}
+relation_expr:      expression comp expression          {printf("relation_expr -> expression comp expression\n");}
+             |      NOT expression comp expression      {printf("relation_expr -> NOT expression comp expression\n");}
+             |      TRUE                                {printf("relation_expr -> TRUE\n");}
+             |      NOT TRUE                            {printf("relation_expr -> NOT TRUE\n");}
+             |      FALSE                               {printf("relation_expr -> FALSE\n");}
+             |      NOT FALSE                           {printf("relation_expr -> NOT FALSE\n");}
+             |      L_PAREN bool_expr R_PAREN           {printf("relation_expr -> L_PAREN bool_expr R_PAREN\n");}
+             |      NOT L_PAREN bool_expr R_PAREN       {printf("relation_expr -> NOT L_PAREN bool_expr R_PAREN\n");}
              ;
 
 comp:           EQ                                      {printf("comp -> EQ\n");}
