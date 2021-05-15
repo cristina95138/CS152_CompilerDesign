@@ -29,9 +29,12 @@
 %token <intVal> NUMBER
 %token <identVal> IDENTIFIER
 %token <intVal> INTEGER
+%left ASSIGN
 %left SUB ADD
+%left AND OR
 %left MULT DIV MOD
-%right EQ NEQ LT GT LTE GTE
+%left EQ NEQ LT GT LTE GTE
+%right NOT
 
 %%
 
@@ -60,17 +63,16 @@ declaration:    identifiers COLON ENUM L_PAREN
            |    identifiers COLON INTEGER               {printf("declaration -> identifiers COLON INTEGER\n");}
            ;
 
-identifiers:                                            {printf("identifiers -> epsilon\n");}
-           |    IDENTIFIER identifiers                  {printf("identifiers -> IDENTIFIER identifiers\n");}
-           |    COMMA IDENTIFIER identifiers            {printf("identifiers -> COMMA IDENTIFIER identifiers\n");}
+identifiers:    IDENTIFIER		                {printf("identifiers -> IDENTIFIER\n");}
+           |    IDENTIFIER COMMA identifiers            {printf("identifiers -> IDENTIFIER COMMA identifiers\n");}
            ;
 
-statements:                                             {printf("statements -> epsilon\n");}
+statements:     statement SEMICOLON                     {printf("statements -> statement SEMICOLON\n");}
           |     statement SEMICOLON statements          {printf("statements -> statement SEMICOLON statements\n");}
           ;
 
 statement:      					{printf("statement -> epsilon\n");}
-	|	var ASSIGN expression                   {printf("statement -> var ASSIGN expression\n");}
+	|	var ASSIGN expressions                   {printf("statement -> var ASSIGN expressions\n");}
         |       IF bool_expr THEN statements ENDIF      {printf("statement -> IF bool_expr THEN statements ENDIF\n");}
         |       IF bool_expr THEN statements ELSE
                 statements ENDIF                         {printf("statement -> IF bool_expr THEN statements ELSE statements ENDIF\n");}
@@ -81,7 +83,7 @@ statement:      					{printf("statement -> epsilon\n");}
         |       READ vars                           	{printf("statement -> READ vars\n");}
         |       WRITE vars                          	{printf("statement -> WRITE vars\n");}
         |       CONTINUE                                {printf("statement -> CONTINUE\n");}
-        |       RETURN expression                       {printf("statement -> RETURN expression\n");}
+        |       RETURN expressions                       {printf("statement -> RETURN expressions\n");}
         ;
 
 vars:                                                   {printf("vars -> epsilon\n");}
@@ -95,18 +97,18 @@ var:            IDENTIFIER                              {printf("var -> IDENTIFI
    ;
 
 bool_expr:      relation_and_expr                       {printf("bool_expr -> relation_and_expr\n");}
-        |       OR relation_and_expr bool_expr          {printf("bool_expr -> OR relation_and_expr bool_expr\n");}
+        |       relation_and_expr OR relation_and_expr  {printf("bool_expr -> relation_and_expr OR bool_expr\n");}
         ;
 
-relation_and_expr:  relation_expr                       {printf("relation_and_expr -> relation_expr\n");}
-                 |  AND relation_expr relation_and_expr {printf("relation_and_expr -> AND relation_expr relation_and_expr\n");}
+relation_and_expr:  relation_exprs                       {printf("relation_and_expr -> relation_exprs\n");}
+                 |  relation_exprs AND relation_and_expr {printf("relation_and_expr -> relation_exprs AND relation_and_expr\n");}
                  ;
 
 relation_exprs:     relation_expr			{printf("relation_exprs -> relation_expr\n");}
               |     NOT relation_expr             	{printf("relation_exprs -> NOT relation_expr\n");}
               ;
 
-relation_expr: 	    expressions comp expressions          {printf("relation_expr -> expressions comp expressions\n");}
+relation_expr:      expressions comp expressions        {printf("relation_expr -> expressions comp expressions\n");}
              |	    TRUE                                {printf("relation_expr -> TRUE\n");}
              |      FALSE                               {printf("relation_expr -> FALSE\n");}
              |      L_PAREN bool_expr R_PAREN           {printf("relation_expr -> L_PAREN bool_expr R_PAREN\n");}
@@ -126,24 +128,24 @@ expressions:                                            {printf("expressions -> 
            ;
 
 expression:     multiplicative_expr                     {printf("expression -> multiplicative_expr\n");}
-          |     ADD multiplicative_expr expression      {printf("expression -> ADD multiplicative_expr expression\n");}
-          |     SUB multiplicative_expr expression      {printf("expression -> SUB multiplicative_expr expression\n");}
+          |     multiplicative_expr ADD expressions     {printf("expression -> multiplicative_expr ADD expressions\n");}
+          |     multiplicative_expr SUB expressions     {printf("expression -> multiplicative_expr SUB expressions\n");}
           ;
 
 multiplicative_expr:    term                            {printf("multiplicative_expr -> term\n");}
-                   | 	MULT term multiplicative_expr   {printf("multiplicative_expr -> MULT term multiplicative_expr\n");}
-                   | 	DIV term multiplicative_expr    {printf("multiplicative_expr -> DIV term multiplicative_expr\n");}
-                   | 	MOD term multiplicative_expr    {printf("multiplicative_expr -> MOD term multiplicative_expr\n");}
+                   | 	term MULT multiplicative_expr   {printf("multiplicative_expr -> term MULT multiplicative_expr\n");}
+                   | 	term DIV multiplicative_expr    {printf("multiplicative_expr -> term DIV multiplicative_expr\n");}
+                   | 	term MOD multiplicative_expr    {printf("multiplicative_expr -> term MOD multiplicative_expr\n");}
                    ;
 
 terms:          var					{printf("terms -> vars\n");}
      |		NUMBER					{printf("terms -> NUMBER\n");}
-     |          L_PAREN expressions R_PAREN             {printf("terms -> L_PAREN expressions R_PAREN\n");}
+     |          L_PAREN expression R_PAREN              {printf("terms -> L_PAREN expression R_PAREN\n");}
      ;
 
 term:           terms                                   {printf("term -> terms\n");}
     |           SUB terms                               {printf("term -> SUB terms\n");}
-    |           IDENTIFIER L_PAREN expressions R_PAREN  {printf("term -> IDENTIFIER L_PAREN expression R_PAREN\n");}
+    |           IDENTIFIER L_PAREN expressions R_PAREN  {printf("term -> IDENTIFIER L_PAREN expressions R_PAREN\n");}
     ;
 
 %%
