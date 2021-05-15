@@ -72,10 +72,10 @@ statements:     statement SEMICOLON                     {printf("statements -> s
           ;
 
 statement:      					{printf("statement -> epsilon\n");}
-	|	var ASSIGN expressions                  {printf("statement -> var ASSIGN expressions\n");}
+	|	var ASSIGN expressions                   {printf("statement -> var ASSIGN expressions\n");}
         |       IF bool_expr THEN statements ENDIF      {printf("statement -> IF bool_expr THEN statements ENDIF\n");}
         |       IF bool_expr THEN statements ELSE
-                statements ENDIF                        {printf("statement -> IF bool_expr THEN statements ELSE statements ENDIF\n");}
+                statements ENDIF                         {printf("statement -> IF bool_expr THEN statements ELSE statements ENDIF\n");}
         |       WHILE bool_expr BEGINLOOP statements
                 ENDLOOP                                 {printf("statement -> WHILE bool_expr BEGINLOOP statements ENDLOOP\n");}
         |       DO BEGINLOOP statements ENDLOOP
@@ -83,7 +83,7 @@ statement:      					{printf("statement -> epsilon\n");}
         |       READ vars                           	{printf("statement -> READ vars\n");}
         |       WRITE vars                          	{printf("statement -> WRITE vars\n");}
         |       CONTINUE                                {printf("statement -> CONTINUE\n");}
-        |       RETURN expressions                      {printf("statement -> RETURN expressions\n");}
+        |       RETURN expressions                       {printf("statement -> RETURN expressions\n");}
         ;
 
 vars:                                                   {printf("vars -> epsilon\n");}
@@ -93,7 +93,7 @@ vars:                                                   {printf("vars -> epsilon
 
 var:            IDENTIFIER                              {printf("var -> IDENTIFIER\n");}
    |            IDENTIFIER L_SQUARE_BRACKET expression
-                R_SQUARE_BRACKET                        {printf("var -> IDENTIFIER L_SQUARE_BRACKET expr R_SQUARE_BRACKET\n");}
+                R_SQUARE_BRACKET                        {printf("var -> IDENTIFIER L_SQUARE_BRACKET expressions R_SQUARE_BRACKET\n");}
    ;
 
 bool_expr:      relation_and_expr                       {printf("bool_expr -> relation_and_expr\n");}
