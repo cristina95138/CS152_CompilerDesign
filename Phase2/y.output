@@ -1,6 +1,3 @@
-State 58 conflicts: 1 shift/reduce
-
-
 Grammar
 
     0 $accept: program $end
@@ -34,7 +31,7 @@ Grammar
    20          | READ vars
    21          | WRITE vars
    22          | CONTINUE
-   23          | RETURN expression
+   23          | RETURN expressions
 
    24 vars: /* empty */
    25     | var
@@ -69,8 +66,8 @@ Grammar
    47            | expression COMMA expressions
 
    48 expression: multiplicative_expr
-   49           | multiplicative_expr ADD expressions
-   50           | multiplicative_expr SUB expressions
+   49           | multiplicative_expr ADD expression
+   50           | multiplicative_expr SUB expression
 
    51 multiplicative_expr: term
    52                    | term MULT multiplicative_expr
@@ -176,9 +173,9 @@ relation_expr (66)
 comp (67)
     on left: 39 40 41 42 43 44, on right: 35
 expressions (68)
-    on left: 45 46 47, on right: 15 35 47 49 50 60
+    on left: 45 46 47, on right: 15 23 35 47 60
 expression (69)
-    on left: 48 49 50, on right: 23 28 46 47 57
+    on left: 48 49 50, on right: 28 46 47 49 50 57
 multiplicative_expr (70)
     on left: 51 52 53 54, on right: 48 49 50 52 53 54
 terms (71)
@@ -566,15 +563,18 @@ state 38
 
 state 39
 
-   23 statement: RETURN . expression
+   23 statement: RETURN . expressions
 
     SUB         shift, and go to state 48
     L_PAREN     shift, and go to state 67
     NUMBER      shift, and go to state 50
     IDENTIFIER  shift, and go to state 51
 
+    $default  reduce using rule 45 (expressions)
+
     var                  go to state 52
-    expression           go to state 68
+    expressions          go to state 68
+    expression           go to state 58
     multiplicative_expr  go to state 59
     terms                go to state 60
     term                 go to state 61
@@ -776,15 +776,14 @@ state 58
 
     COMMA  shift, and go to state 89
 
-    COMMA     [reduce using rule 46 (expressions)]
     $default  reduce using rule 46 (expressions)
 
 
 state 59
 
    48 expression: multiplicative_expr .
-   49           | multiplicative_expr . ADD expressions
-   50           | multiplicative_expr . SUB expressions
+   49           | multiplicative_expr . ADD expression
+   50           | multiplicative_expr . SUB expression
 
     SUB  shift, and go to state 90
     ADD  shift, and go to state 91
@@ -882,7 +881,7 @@ state 67
 
 state 68
 
-   23 statement: RETURN expression .
+   23 statement: RETURN expressions .
 
     $default  reduce using rule 23 (statement)
 
@@ -1163,18 +1162,15 @@ state 89
 
 state 90
 
-   50 expression: multiplicative_expr SUB . expressions
+   50 expression: multiplicative_expr SUB . expression
 
     SUB         shift, and go to state 48
     L_PAREN     shift, and go to state 67
     NUMBER      shift, and go to state 50
     IDENTIFIER  shift, and go to state 51
 
-    $default  reduce using rule 45 (expressions)
-
     var                  go to state 52
-    expressions          go to state 110
-    expression           go to state 58
+    expression           go to state 110
     multiplicative_expr  go to state 59
     terms                go to state 60
     term                 go to state 61
@@ -1182,18 +1178,15 @@ state 90
 
 state 91
 
-   49 expression: multiplicative_expr ADD . expressions
+   49 expression: multiplicative_expr ADD . expression
 
     SUB         shift, and go to state 48
     L_PAREN     shift, and go to state 67
     NUMBER      shift, and go to state 50
     IDENTIFIER  shift, and go to state 51
 
-    $default  reduce using rule 45 (expressions)
-
     var                  go to state 52
-    expressions          go to state 111
-    expression           go to state 58
+    expression           go to state 111
     multiplicative_expr  go to state 59
     terms                go to state 60
     term                 go to state 61
@@ -1371,14 +1364,14 @@ state 109
 
 state 110
 
-   50 expression: multiplicative_expr SUB expressions .
+   50 expression: multiplicative_expr SUB expression .
 
     $default  reduce using rule 50 (expression)
 
 
 state 111
 
-   49 expression: multiplicative_expr ADD expressions .
+   49 expression: multiplicative_expr ADD expression .
 
     $default  reduce using rule 49 (expression)
 

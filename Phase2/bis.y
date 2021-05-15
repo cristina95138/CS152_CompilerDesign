@@ -29,7 +29,7 @@
 %token <intVal> NUMBER
 %token <identVal> IDENTIFIER
 %token <intVal> INTEGER
-%left ASSIGN
+%right ASSIGN
 %left SUB ADD
 %left AND OR
 %left MULT DIV MOD
@@ -93,11 +93,11 @@ vars:                                                   {printf("vars -> epsilon
 
 var:            IDENTIFIER                              {printf("var -> IDENTIFIER\n");}
    |            IDENTIFIER L_SQUARE_BRACKET expression
-                R_SQUARE_BRACKET                        {printf("var -> IDENTIFIER L_SQUARE_BRACKET expressions R_SQUARE_BRACKET\n");}
+                R_SQUARE_BRACKET                        {printf("var -> IDENTIFIER L_SQUARE_BRACKET expression R_SQUARE_BRACKET\n");}
    ;
 
 bool_expr:      relation_and_expr                       {printf("bool_expr -> relation_and_expr\n");}
-        |       relation_and_expr OR relation_and_expr  {printf("bool_expr -> relation_and_expr OR bool_expr\n");}
+        |       relation_and_expr OR relation_and_expr  {printf("bool_expr -> relation_and_expr OR relation_and_expr\n");}
         ;
 
 relation_and_expr:  relation_exprs                       {printf("relation_and_expr -> relation_exprs\n");}
@@ -128,8 +128,8 @@ expressions:                                            {printf("expressions -> 
            ;
 
 expression:     multiplicative_expr                     {printf("expression -> multiplicative_expr\n");}
-          |     multiplicative_expr ADD expressions     {printf("expression -> multiplicative_expr ADD expressions\n");}
-          |     multiplicative_expr SUB expressions     {printf("expression -> multiplicative_expr SUB expressions\n");}
+          |     multiplicative_expr ADD expression      {printf("expression -> multiplicative_expr ADD expression\n");}
+          |     multiplicative_expr SUB expression      {printf("expression -> multiplicative_expr SUB expression\n");}
           ;
 
 multiplicative_expr:    term                            {printf("multiplicative_expr -> term\n");}
