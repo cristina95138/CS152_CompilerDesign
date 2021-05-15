@@ -1770,12 +1770,12 @@ yyreduce:
 
   case 50:
 #line 131 "bis.y"
-    {printf("expression -> multiplicative_expr ADD expressions\n");;}
+    {printf("expression -> multiplicative_expr ADD expression\n");;}
     break;
 
   case 51:
 #line 132 "bis.y"
-    {printf("expression -> multiplicative_expr SUB expressions\n");;}
+    {printf("expression -> multiplicative_expr SUB expression\n");;}
     break;
 
   case 52:
