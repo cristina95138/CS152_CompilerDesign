@@ -72,10 +72,10 @@ statements:     statement SEMICOLON                     {printf("statements -> s
           ;
 
 statement:      					{printf("statement -> epsilon\n");}
-	|	var ASSIGN expressions                   {printf("statement -> var ASSIGN expressions\n");}
+	|	var ASSIGN expressions                  {printf("statement -> var ASSIGN expressions\n");}
         |       IF bool_expr THEN statements ENDIF      {printf("statement -> IF bool_expr THEN statements ENDIF\n");}
         |       IF bool_expr THEN statements ELSE
-                statements ENDIF                         {printf("statement -> IF bool_expr THEN statements ELSE statements ENDIF\n");}
+                statements ENDIF                        {printf("statement -> IF bool_expr THEN statements ELSE statements ENDIF\n");}
         |       WHILE bool_expr BEGINLOOP statements
                 ENDLOOP                                 {printf("statement -> WHILE bool_expr BEGINLOOP statements ENDLOOP\n");}
         |       DO BEGINLOOP statements ENDLOOP
@@ -83,7 +83,7 @@ statement:      					{printf("statement -> epsilon\n");}
         |       READ vars                           	{printf("statement -> READ vars\n");}
         |       WRITE vars                          	{printf("statement -> WRITE vars\n");}
         |       CONTINUE                                {printf("statement -> CONTINUE\n");}
-        |       RETURN expressions                       {printf("statement -> RETURN expressions\n");}
+        |       RETURN expressions                      {printf("statement -> RETURN expressions\n");}
         ;
 
 vars:                                                   {printf("vars -> epsilon\n");}

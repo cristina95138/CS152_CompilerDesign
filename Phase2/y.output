@@ -34,7 +34,7 @@ Grammar
    20          | READ vars
    21          | WRITE vars
    22          | CONTINUE
-   23          | RETURN expressions
+   23          | RETURN expression
 
    24 vars: /* empty */
    25     | var
@@ -176,9 +176,9 @@ relation_expr (66)
 comp (67)
     on left: 39 40 41 42 43 44, on right: 35
 expressions (68)
-    on left: 45 46 47, on right: 15 23 35 47 49 50 60
+    on left: 45 46 47, on right: 15 35 47 49 50 60
 expression (69)
-    on left: 48 49 50, on right: 28 46 47 57
+    on left: 48 49 50, on right: 23 28 46 47 57
 multiplicative_expr (70)
     on left: 51 52 53 54, on right: 48 49 50 52 53 54
 terms (71)
@@ -566,18 +566,15 @@ state 38
 
 state 39
 
-   23 statement: RETURN . expressions
+   23 statement: RETURN . expression
 
     SUB         shift, and go to state 48
     L_PAREN     shift, and go to state 67
     NUMBER      shift, and go to state 50
     IDENTIFIER  shift, and go to state 51
 
-    $default  reduce using rule 45 (expressions)
-
     var                  go to state 52
-    expressions          go to state 68
-    expression           go to state 58
+    expression           go to state 68
     multiplicative_expr  go to state 59
     terms                go to state 60
     term                 go to state 61
@@ -885,7 +882,7 @@ state 67
 
 state 68
 
-   23 statement: RETURN expressions .
+   23 statement: RETURN expression .
 
     $default  reduce using rule 23 (statement)
 
