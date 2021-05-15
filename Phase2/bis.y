@@ -93,7 +93,7 @@ vars:                                                   {printf("vars -> epsilon
 
 var:            IDENTIFIER                              {printf("var -> IDENTIFIER\n");}
    |            IDENTIFIER L_SQUARE_BRACKET expression
-                R_SQUARE_BRACKET                        {printf("var -> IDENTIFIER L_SQUARE_BRACKET expr R_SQUARE_BRACKET\n");}
+                R_SQUARE_BRACKET                        {printf("var -> IDENTIFIER L_SQUARE_BRACKET expressions R_SQUARE_BRACKET\n");}
    ;
 
 bool_expr:      relation_and_expr                       {printf("bool_expr -> relation_and_expr\n");}

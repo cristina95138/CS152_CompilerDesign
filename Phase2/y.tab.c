@@ -1665,7 +1665,7 @@ yyreduce:
 
   case 29:
 #line 96 "bis.y"
-    {printf("var -> IDENTIFIER L_SQUARE_BRACKET expr R_SQUARE_BRACKET\n");;}
+    {printf("var -> IDENTIFIER L_SQUARE_BRACKET expressions R_SQUARE_BRACKET\n");;}
     break;
 
   case 30:
@@ -1770,12 +1770,12 @@ yyreduce:
 
   case 50:
 #line 131 "bis.y"
-    {printf("expression -> multiplicative_expr ADD expression\n");;}
+    {printf("expression -> multiplicative_expr ADD expressions\n");;}
     break;
 
   case 51:
 #line 132 "bis.y"
-    {printf("expression -> multiplicative_expr SUB expression\n");;}
+    {printf("expression -> multiplicative_expr SUB expressions\n");;}
     break;
 
   case 52:

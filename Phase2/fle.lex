@@ -58,7 +58,7 @@ COMMENT    ##.*
 "<="           {currLine += yyleng; return LTE;}
 ">="           {currLine += yyleng; return GTE;}
 
-{DIGIT}*"."?{DIGIT}+([eE][+-]?{DIGIT}+)?       {printf("NUMBER %s\n", yytext); currLine += yyleng;}
+{DIGIT}*"."?{DIGIT}+([eE][+-]?{DIGIT}+)?       {printf("NUMBER %s\n", yytext); currLine += yyleng; return NUMBER;}
 
 ";"            {currLine += yyleng; return SEMICOLON;}
 ":"            {currLine += yyleng; return COLON;}

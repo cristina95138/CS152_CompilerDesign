@@ -1056,7 +1056,7 @@ YY_RULE_SETUP
 case 40:
 YY_RULE_SETUP
 #line 61 "fle.lex"
-{printf("NUMBER %s\n", yytext); currLine += yyleng;}
+{printf("NUMBER %s\n", yytext); currLine += yyleng; return NUMBER;}
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
