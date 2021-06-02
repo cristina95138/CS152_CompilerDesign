@@ -172,7 +172,7 @@
 
 
 /* Copy the first part of user declarations.  */
-#line 6 "bis.y"
+#line 6 "mini_l.y"
 
     #include <stdio.h>
     #include <stdlib.h>
@@ -202,7 +202,7 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 15 "bis.y"
+#line 15 "mini_l.y"
 {
     int intVal;
     char* identVal;
@@ -1529,302 +1529,302 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 41 "bis.y"
+#line 41 "mini_l.y"
     {printf("program -> functions\n");;}
     break;
 
   case 3:
-#line 44 "bis.y"
+#line 44 "mini_l.y"
     {printf("functions -> epsilon\n");;}
     break;
 
   case 4:
-#line 45 "bis.y"
+#line 45 "mini_l.y"
     {printf("functions -> function functions\n");;}
     break;
 
   case 5:
-#line 51 "bis.y"
+#line 51 "mini_l.y"
     {printf("function -> FUNCTION IDENTIFIER SEMICOLON BEGIN_PARAMS declarations END_PARAMS BEGIN_LOCALS BEGIN_BODY statements END_BODY\n");;}
     break;
 
   case 6:
-#line 54 "bis.y"
+#line 54 "mini_l.y"
     {printf("declarations -> epsilon\n");;}
     break;
 
   case 7:
-#line 55 "bis.y"
+#line 55 "mini_l.y"
     {printf("declarations -> declaration SEMICOLON declarations\n");;}
     break;
 
   case 8:
-#line 59 "bis.y"
+#line 59 "mini_l.y"
     {printf("declaration -> identifiers COLON ENUM L_PAREN identifiers R_PAREN\n");;}
     break;
 
   case 9:
-#line 62 "bis.y"
+#line 62 "mini_l.y"
     {printf("declaration -> identifiers COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER\n");;}
     break;
 
   case 10:
-#line 63 "bis.y"
+#line 63 "mini_l.y"
     {printf("declaration -> identifiers COLON INTEGER\n");;}
     break;
 
   case 11:
-#line 66 "bis.y"
+#line 66 "mini_l.y"
     {printf("identifiers -> IDENTIFIER\n");;}
     break;
 
   case 12:
-#line 67 "bis.y"
+#line 67 "mini_l.y"
     {printf("identifiers -> IDENTIFIER COMMA identifiers\n");;}
     break;
 
   case 13:
-#line 70 "bis.y"
+#line 70 "mini_l.y"
     {printf("statements -> statement SEMICOLON\n");;}
     break;
 
   case 14:
-#line 71 "bis.y"
+#line 71 "mini_l.y"
     {printf("statements -> statement SEMICOLON statements\n");;}
     break;
 
   case 15:
-#line 74 "bis.y"
+#line 74 "mini_l.y"
     {printf("statement -> epsilon\n");;}
     break;
 
   case 16:
-#line 75 "bis.y"
+#line 75 "mini_l.y"
     {printf("statement -> var ASSIGN expressions\n");;}
     break;
 
   case 17:
-#line 76 "bis.y"
+#line 76 "mini_l.y"
     {printf("statement -> IF bool_expr THEN statements ENDIF\n");;}
     break;
 
   case 18:
-#line 78 "bis.y"
+#line 78 "mini_l.y"
     {printf("statement -> IF bool_expr THEN statements ELSE statements ENDIF\n");;}
     break;
 
   case 19:
-#line 80 "bis.y"
+#line 80 "mini_l.y"
     {printf("statement -> WHILE bool_expr BEGINLOOP statements ENDLOOP\n");;}
     break;
 
   case 20:
-#line 82 "bis.y"
+#line 82 "mini_l.y"
     {printf("statement -> DO BEGINLOOP stmt_loop ENDLOOP WHILE bool_expr\n");;}
     break;
 
   case 21:
-#line 83 "bis.y"
+#line 83 "mini_l.y"
     {printf("statement -> READ vars\n");;}
     break;
 
   case 22:
-#line 84 "bis.y"
+#line 84 "mini_l.y"
     {printf("statement -> WRITE vars\n");;}
     break;
 
   case 23:
-#line 85 "bis.y"
+#line 85 "mini_l.y"
     {printf("statement -> CONTINUE\n");;}
     break;
 
   case 24:
-#line 86 "bis.y"
+#line 86 "mini_l.y"
     {printf("statement -> RETURN expressions\n");;}
     break;
 
   case 25:
-#line 89 "bis.y"
+#line 89 "mini_l.y"
     {printf("vars -> epsilon\n");;}
     break;
 
   case 26:
-#line 90 "bis.y"
+#line 90 "mini_l.y"
     {printf("vars -> var\n");;}
     break;
 
   case 27:
-#line 91 "bis.y"
+#line 91 "mini_l.y"
     {printf("vars -> var COMMA vars\n");;}
     break;
 
   case 28:
-#line 94 "bis.y"
+#line 94 "mini_l.y"
     {printf("var -> IDENTIFIER\n");;}
     break;
 
   case 29:
-#line 96 "bis.y"
+#line 96 "mini_l.y"
     {printf("var -> IDENTIFIER L_SQUARE_BRACKET expression R_SQUARE_BRACKET\n");;}
     break;
 
   case 30:
-#line 99 "bis.y"
+#line 99 "mini_l.y"
     {printf("bool_expr -> relation_and_expr\n");;}
     break;
 
   case 31:
-#line 100 "bis.y"
+#line 100 "mini_l.y"
     {printf("bool_expr -> relation_and_expr OR relation_and_expr\n");;}
     break;
 
   case 32:
-#line 103 "bis.y"
+#line 103 "mini_l.y"
     {printf("relation_and_expr -> relation_exprs\n");;}
     break;
 
   case 33:
-#line 104 "bis.y"
+#line 104 "mini_l.y"
     {printf("relation_and_expr -> relation_exprs AND relation_and_expr\n");;}
     break;
 
   case 34:
-#line 107 "bis.y"
+#line 107 "mini_l.y"
     {printf("relation_exprs -> relation_expr\n");;}
     break;
 
   case 35:
-#line 108 "bis.y"
+#line 108 "mini_l.y"
     {printf("relation_exprs -> NOT relation_expr\n");;}
     break;
 
   case 36:
-#line 111 "bis.y"
+#line 111 "mini_l.y"
     {printf("relation_expr -> expressions comp expressions\n");;}
     break;
 
   case 37:
-#line 112 "bis.y"
+#line 112 "mini_l.y"
     {printf("relation_expr -> TRUE\n");;}
     break;
 
   case 38:
-#line 113 "bis.y"
+#line 113 "mini_l.y"
     {printf("relation_expr -> FALSE\n");;}
     break;
 
   case 39:
-#line 114 "bis.y"
+#line 114 "mini_l.y"
     {printf("relation_expr -> L_PAREN bool_expr R_PAREN\n");;}
     break;
 
   case 40:
-#line 117 "bis.y"
+#line 117 "mini_l.y"
     {printf("comp -> EQ\n");;}
     break;
 
   case 41:
-#line 118 "bis.y"
+#line 118 "mini_l.y"
     {printf("comp -> NEQ\n");;}
     break;
 
   case 42:
-#line 119 "bis.y"
+#line 119 "mini_l.y"
     {printf("comp -> LT\n");;}
     break;
 
   case 43:
-#line 120 "bis.y"
+#line 120 "mini_l.y"
     {printf("comp -> GT\n");;}
     break;
 
   case 44:
-#line 121 "bis.y"
+#line 121 "mini_l.y"
     {printf("comp -> LTE\n");;}
     break;
 
   case 45:
-#line 122 "bis.y"
+#line 122 "mini_l.y"
     {printf("comp -> GTE\n");;}
     break;
 
   case 46:
-#line 125 "bis.y"
+#line 125 "mini_l.y"
     {printf("expressions -> epsilon\n");;}
     break;
 
   case 47:
-#line 126 "bis.y"
+#line 126 "mini_l.y"
     {printf("expressions -> expression\n");;}
     break;
 
   case 48:
-#line 127 "bis.y"
+#line 127 "mini_l.y"
     {printf("expressions -> expression COMMA expressions\n");;}
     break;
 
   case 49:
-#line 130 "bis.y"
+#line 130 "mini_l.y"
     {printf("expression -> multiplicative_expr\n");;}
     break;
 
   case 50:
-#line 131 "bis.y"
+#line 131 "mini_l.y"
     {printf("expression -> multiplicative_expr ADD expression\n");;}
     break;
 
   case 51:
-#line 132 "bis.y"
+#line 132 "mini_l.y"
     {printf("expression -> multiplicative_expr SUB expression\n");;}
     break;
 
   case 52:
-#line 135 "bis.y"
+#line 135 "mini_l.y"
     {printf("multiplicative_expr -> term\n");;}
     break;
 
   case 53:
-#line 136 "bis.y"
+#line 136 "mini_l.y"
     {printf("multiplicative_expr -> term MULT multiplicative_expr\n");;}
     break;
 
   case 54:
-#line 137 "bis.y"
+#line 137 "mini_l.y"
     {printf("multiplicative_expr -> term DIV multiplicative_expr\n");;}
     break;
 
   case 55:
-#line 138 "bis.y"
+#line 138 "mini_l.y"
     {printf("multiplicative_expr -> term MOD multiplicative_expr\n");;}
     break;
 
   case 56:
-#line 141 "bis.y"
+#line 141 "mini_l.y"
     {printf("terms -> vars\n");;}
     break;
 
   case 57:
-#line 142 "bis.y"
+#line 142 "mini_l.y"
     {printf("terms -> NUMBER\n");;}
     break;
 
   case 58:
-#line 143 "bis.y"
+#line 143 "mini_l.y"
     {printf("terms -> L_PAREN expression R_PAREN\n");;}
     break;
 
   case 59:
-#line 146 "bis.y"
+#line 146 "mini_l.y"
     {printf("term -> terms\n");;}
     break;
 
   case 60:
-#line 147 "bis.y"
+#line 147 "mini_l.y"
     {printf("term -> SUB terms\n");;}
     break;
 
   case 61:
-#line 148 "bis.y"
+#line 148 "mini_l.y"
     {printf("term -> IDENTIFIER L_PAREN expressions R_PAREN\n");;}
     break;
 
@@ -2044,7 +2044,7 @@ yyreturn:
 }
 
 
-#line 151 "bis.y"
+#line 151 "mini_l.y"
 
 
 int yywrap() {
