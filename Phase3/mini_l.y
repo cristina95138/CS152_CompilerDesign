@@ -62,6 +62,8 @@
     bool subFlag = false;
     bool root = true;
     bool assignFlag = false;
+    bool readTag = false;
+    bool writeTag = false;
     int regNum = 0;
     int idNum = 0;
     string code; // string for code in program
@@ -218,46 +220,77 @@ statements:     statement SEMICOLON                     //{printf("statements ->
           ;
 
 statement:      					//{printf("statement -> epsilon\n");}
-
+                {}
         |	    var ASSIGN expressions                  //{printf("statement -> var ASSIGN expressions\n");}
-
+                {
+                    assignFlag = true;
+                    code += "= " + string(idTable.at(idNum-2)) + ", temp" + to_string(numTemp-1);
+                }
         |       IF bool_expr THEN statements ENDIF      //{printf("statement -> IF bool_expr THEN statements ENDIF\n");}
-
+                {
+                    code += ": label"+ to_string(numLabel-1) + "\n";
+                }
         |       IF bool_expr THEN statements ELSE
                 statements ENDIF                        //{printf("statement -> IF bool_expr THEN statements ELSE statements ENDIF\n");}
-
+                {}
         |       WHILE bool_expr BEGINLOOP statements
                 ENDLOOP                                 //{printf("statement -> WHILE bool_expr BEGINLOOP statements ENDLOOP\n");}
-
+                {}
         |       DO BEGINLOOP statements ENDLOOP
                 WHILE bool_expr                         //{printf("statement -> DO BEGINLOOP stmt_loop ENDLOOP WHILE bool_expr\n");}
-
+                {}
         |       READ vars                           	//{printf("statement -> READ vars\n");}
-
+                {
+                    readTag = true;
+                    if (readTag) {
+                        readTag = false;
+                        code += ".< " + string(idTable.at(idNum-1)) + "\n";
+                    }
+                }
         |       WRITE vars                          	//{printf("statement -> WRITE vars\n");}
-
+                {
+                    writeTag = true;
+                    if (writeTag) {
+                        writeTag = false;
+                        code += ".> " + string(idTable.at(idNum-2)) + "\n";
+                    }
+                }
         |       CONTINUE                                //{printf("statement -> CONTINUE\n");}
-
+                {
+                    code += "CONTINUE\n";
+                }
         |       RETURN expressions                      //{printf("statement -> RETURN expressions\n");}
-
+                {
+                    code += "RETURN ";
+                    code += "temp" + to_string(numTemp-1) + "\n";
+                }
         ;
 
 vars:                                                   //{printf("vars -> epsilon\n");}
+                {}
     |           var                                     //{printf("vars -> var\n");}
+                {}
     |           var COMMA vars                          //{printf("vars -> var COMMA vars\n");}
+                {}
     ;
 
 var:            IDENTIFIER                              //{printf("var -> IDENTIFIER\n");}
+                {}
    |            IDENTIFIER L_SQUARE_BRACKET expression
                 R_SQUARE_BRACKET                        //{printf("var -> IDENTIFIER L_SQUARE_BRACKET expression R_SQUARE_BRACKET\n");}
+                {}
    ;
 
 bool_expr:      relation_and_expr                       //{printf("bool_expr -> relation_and_expr\n");}
+                {}
         |       relation_and_expr OR relation_and_expr  //{printf("bool_expr -> relation_and_expr OR relation_and_expr\n");}
+                {}
         ;
 
 relation_and_expr:  relation_exprs                       //{printf("relation_and_expr -> relation_exprs\n");}
+                    {}
                  |  relation_exprs AND relation_and_expr //{printf("relation_and_expr -> relation_exprs AND relation_and_expr\n");}
+                    {}
                  ;
 
 relation_exprs:     relation_expr			//{printf("relation_exprs -> relation_expr\n");}
