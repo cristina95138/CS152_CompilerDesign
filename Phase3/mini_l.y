@@ -11,8 +11,6 @@
     #include <sstream>
     #include <fstream>
     #include <iostream>
-    #include <queue>
-    #include <stack>
     #include <vector>
     #include <cstdlib>
     using namespace std;
@@ -24,7 +22,7 @@
 
     bool isError = true;
 
-    // adding to table
+    // adding to symbol table
     vector<string> functionTable;
     void addFunction(string s) {
         functionTable.push_back(s);
@@ -48,6 +46,7 @@
         return lbl;
     }
 
+    // tags to see what actions need to be performed
     bool isFunc = true;
     bool eqFlag = false;
     bool neqFlag = false;
@@ -96,7 +95,17 @@
 
 %%
 
-/* using stack-based algorithm from class*/
+/* using stack-based algorithm from class
+ * Code Representation: https://www.cs.ucr.edu/~mafar001/compiler/webpages3/mil.html
+ */
+
+ /* Still need to do:
+  * var
+  * term
+  * expression
+  * check to make sure proper code representation is achieved i.e "ret" vs "RETURN"
+  * testing
+  */
 
 program:        functions                               //{printf("program -> functions\n");}
        ;
@@ -275,10 +284,10 @@ vars:                                                   //{printf("vars -> epsil
     ;
 
 var:            IDENTIFIER                              //{printf("var -> IDENTIFIER\n");}
-                {}
+
    |            IDENTIFIER L_SQUARE_BRACKET expression
                 R_SQUARE_BRACKET                        //{printf("var -> IDENTIFIER L_SQUARE_BRACKET expression R_SQUARE_BRACKET\n");}
-                {}
+
    ;
 
 bool_expr:      relation_and_expr                       //{printf("bool_expr -> relation_and_expr\n");}
