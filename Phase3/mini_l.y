@@ -15,11 +15,38 @@
     #include <stack>
     #include <vector>
     #include <cstdlib>
+    using namespace std;
 
     int yylex();
     void yyerror(const char *msg);
     int currLine, currPos;
     FILE* yyin;
+
+    bool isError = true;
+
+    // adding to table
+    vector<string> functionTable;
+    void addFunction(string str) {
+        functionTable.push_back(str);
+    }
+
+    int numTemp = 0;
+    int numLabel = 0;
+    vector<string> tempTable; // holder table for temp string
+    vector<string> labelTable; // holder table for labels
+    string new_temp() {
+        string tmp = "temp" + to_string(numTemp);
+        tempTable.push_back(tmp);
+        numTemp++;
+        return tmp;
+    }
+    string new_label() {
+        string lbl = "label" + to_string(numLabel);
+        labelTable.push_back(lbl);
+        numLabel++;
+        return lbl;
+    }
+
 %}
 
 %union {
@@ -59,6 +86,7 @@ function:       FUNCTION IDENTIFIER SEMICOLON
                 BEGIN_PARAMS declarations END_PARAMS
                 BEGIN_LOCALS declarations END_LOCALS
                 BEGIN_BODY statements END_BODY          //{printf("function -> FUNCTION IDENTIFIER SEMICOLON BEGIN_PARAMS declarations END_PARAMS BEGIN_LOCALS BEGIN_BODY statements END_BODY\n");}
+
         ;
 
 declarations:                                           //{printf("declarations -> epsilon\n");}
