@@ -6,6 +6,16 @@
 %{
     #include <stdio.h>
     #include <stdlib.h>
+    #include <string.h>
+    #include <string>
+    #include <sstream>
+    #include <fstream>
+    #include <iostream>
+    #include <queue>
+    #include <stack>
+    #include <vector>
+    #include <cstdlib>
+
     int yylex();
     void yyerror(const char *msg);
     int currLine, currPos;
