@@ -66,6 +66,7 @@
     bool assignTag = false;
     bool readTag = false;
     bool writeTag = false;
+    bool isSub = false; // check if doing sub in terms
     int regNum = 0;
     int idNum = 0;
     string code; // string for code representation in program
@@ -111,6 +112,7 @@
   */
 
 program:        functions                               //{printf("program -> functions\n");}
+                {}
        ;
 
 functions:      /* epsilon*/
@@ -125,7 +127,7 @@ function:       FUNCTION IDENTIFIER SEMICOLON
                 BEGIN_BODY statements END_BODY
                 {
                     if(!isFunc) {
-                        code += "ENDFUNC\n\n";
+                        code += "endfunc\n\n";
                     }
                     isFunc = true;
                 }
@@ -287,9 +289,7 @@ vars:
     ;
 
 var:            IDENTIFIER
-                {
-
-                }
+                {}
    |            IDENTIFIER L_SQUARE_BRACKET expression
                 R_SQUARE_BRACKET
                 {
@@ -353,9 +353,7 @@ relation_expr:      expressions comp expressions
              |      FALSE
                     {falseTag = false;}
              |      L_PAREN bool_expr R_PAREN
-                    {
-
-                    }
+                    {}
              ;
 
 comp:           EQ
@@ -383,9 +381,9 @@ expressions:
 expression:     multiplicative_expr
                 {}
           |     multiplicative_expr ADD expression
-                {addTag = true;}
+                {}
           |     multiplicative_expr SUB expression
-                {subTag = true;}
+                {}
           ;
 
 multiplicative_expr:    term
@@ -399,25 +397,38 @@ multiplicative_expr:    term
                    ;
 
 terms:          var
-
+                {}
      |		    NUMBER
-
+                {
+                    if (!isSub) {
+                        string t = make_temp();
+                        code += ". " + t + "\n= " + t + ", ";
+                        code += to_string($1) + "\n";
+                    }
+                }
      |          L_PAREN expression R_PAREN
-
+                {
+                    code += "param temp " + to_string(numTemp - 1) + "\n";
+                    code += "call ";
+                    string str($1);
+                    for (int i = 0; i< str.size(); i++) {
+                        if (str.at(i) == '(' || str.at(i) == ' ') {
+                            i = 100; // breaks for loop
+                        }
+                        else {
+                            code += str.at(i);
+                        }
+                    }
+                    code += ", temp " + to_string(numTemp-1) + "\n";
+                }
      ;
 
 term:           terms
-                {
-
-                }
+                {isSub = false;}
     |           SUB terms
-                {
-
-                }
+                {isSub = true;}
     |           IDENTIFIER L_PAREN expressions R_PAREN
-                {
-
-                }
+                {}
     ;
 
 %%
@@ -439,6 +450,25 @@ int main(int argc, char* argv[]) {
   }
 
   yyparse();
+
+  // Error-handling in progress
+  for (int i = 0; i < functionTable.size() - 1; ++i) {
+		for (int j = i+1; j < funcTable.size(); ++j) {
+			if (functionTable.at(i) == funcTable.at(j)) {
+				isError = false;
+				cerr << "Multiple functions with same name detected. \n";
+			}
+		}
+	}
+	if (isError) {
+                ofstream file;
+                file.open("CODE.mil");
+                file << code;
+                file.close();
+        }
+	else {
+		cout << "Error encountered while generating code." << endl;
+	}
 
   return 0;
 }
