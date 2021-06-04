@@ -34,6 +34,7 @@
     vector<string> labelTable; // holder table for labels
     vector<string> idTable; // holder table for identifiers
     vector<string> exprTable; // holder table for expressions
+    vector<string> varTable; // holder table for variables
     string new_temp() {
         string tmp = "temp" + to_string(numTemp);
         tempTable.push_back(tmp);
@@ -298,7 +299,10 @@ vars:
     ;
 
 var:            IDENTIFIER
-                {}
+                {
+                    varTable.push_back(idTable.back());
+                    idTable.pop_back();
+                }
    |            IDENTIFIER L_SQUARE_BRACKET expression
                 R_SQUARE_BRACKET
                 {
