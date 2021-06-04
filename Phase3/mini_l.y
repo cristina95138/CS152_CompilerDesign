@@ -111,8 +111,17 @@
   * testing
   */
 
-program:        functions                               //{printf("program -> functions\n");}
-                {}
+program:        functions
+                {
+                    if (find(functionTable.begin(), functionTable.end(), "main") == functionTable.end()) {
+                        cout << "Error line " << currLine << " : no main function declared." << endl;
+                        isError = true;
+                    }
+
+                    if (isError) {
+                        return -1;
+                    }
+                }
        ;
 
 functions:      /* epsilon*/
