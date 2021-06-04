@@ -60,6 +60,8 @@
     bool modFlag = false;
     bool addFlag = false;
     bool subFlag = false;
+    bool trueFlag = false;
+    bool falseFlag = false;
     bool root = true;
     bool assignFlag = false;
     bool readTag = false;
@@ -347,13 +349,9 @@ relation_expr:      expressions comp expressions
                         code += "\n";
                     }
              |	    TRUE
-                    {
-
-                    }
+                    {trueFlag = true;}
              |      FALSE
-                    {
-
-                    }
+                    {falseFlag = false;}
              |      L_PAREN bool_expr R_PAREN
                     {
 
