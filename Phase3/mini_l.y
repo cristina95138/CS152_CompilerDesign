@@ -33,6 +33,7 @@
     vector<string> tempTable; // holder table for temp string
     vector<string> labelTable; // holder table for labels
     vector<string> idTable; // holder table for identifiers
+    vector<string> exprTable; // holder table for expressions
     string new_temp() {
         string tmp = "temp" + to_string(numTemp);
         tempTable.push_back(tmp);
@@ -128,14 +129,14 @@ function:       FUNCTION IDENTIFIER SEMICOLON
                 }
         ;
 
-declarations:                                           //{printf("declarations -> epsilon\n");}
+declarations:
                 {}
-            |   declaration SEMICOLON declarations      //{printf("declarations -> declaration SEMICOLON declarations\n");}
+            |   declaration SEMICOLON declarations
                 {}
             ;
 
 declaration:    identifiers COLON ENUM L_PAREN
-                identifiers R_PAREN		        //{printf("declaration -> identifiers COLON ENUM L_PAREN identifiers R_PAREN\n");}
+                identifiers R_PAREN
                 {
                     code += $1; //id
                     code += ", ";
@@ -144,7 +145,7 @@ declaration:    identifiers COLON ENUM L_PAREN
                 }
            |    identifiers COLON ARRAY
                 L_SQUARE_BRACKET NUMBER
-                R_SQUARE_BRACKET OF INTEGER             //{printf("declaration -> identifiers COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER\n");}
+                R_SQUARE_BRACKET OF INTEGER
                 {
                     code += ".[] ";
                     code += $1; //id
@@ -152,7 +153,7 @@ declaration:    identifiers COLON ENUM L_PAREN
                     code += $5; //number
                     code += "\n";
                 }
-           |    identifiers COLON INTEGER               //{printf("declaration -> identifiers COLON INTEGER\n");}
+           |    identifiers COLON INTEGER
                 {
                     code += ". ";
                     string str($1);
@@ -178,7 +179,7 @@ declaration:    identifiers COLON ENUM L_PAREN
                 }
            ;
 
-identifiers:    IDENTIFIER		                //{printf("identifiers -> IDENTIFIER\n");}
+identifiers:    IDENTIFIER
                 {
                     string t;
                     if (isFunc) {
@@ -218,37 +219,37 @@ identifiers:    IDENTIFIER		                //{printf("identifiers -> IDENTIFIER
                     }
                     code += "\n"; idTable.push_back(t); idNum++;
                 }
-           |    IDENTIFIER COMMA identifiers            //{printf("identifiers -> IDENTIFIER COMMA identifiers\n");}
+           |    IDENTIFIER COMMA identifiers
                 {}
            ;
 
-statements:     statement SEMICOLON                     //{printf("statements -> statement SEMICOLON\n");}
+statements:     statement SEMICOLON
                 {}
-          |     statement SEMICOLON statements          //{printf("statements -> statement SEMICOLON statements\n");}
+          |     statement SEMICOLON statements
                 {}
           ;
 
-statement:      					//{printf("statement -> epsilon\n");}
+statement:
                 {}
-        |	    var ASSIGN expressions                  //{printf("statement -> var ASSIGN expressions\n");}
+        |	    var ASSIGN expressions
                 {
                     assignFlag = true;
                     code += "= " + string(idTable.at(idNum-2)) + ", temp" + to_string(numTemp-1);
                 }
-        |       IF bool_expr THEN statements ENDIF      //{printf("statement -> IF bool_expr THEN statements ENDIF\n");}
+        |       IF bool_expr THEN statements ENDIF
                 {
                     code += ": label"+ to_string(numLabel-1) + "\n";
                 }
         |       IF bool_expr THEN statements ELSE
-                statements ENDIF                        //{printf("statement -> IF bool_expr THEN statements ELSE statements ENDIF\n");}
+                statements ENDIF
                 {}
         |       WHILE bool_expr BEGINLOOP statements
-                ENDLOOP                                 //{printf("statement -> WHILE bool_expr BEGINLOOP statements ENDLOOP\n");}
+                ENDLOOP
                 {}
         |       DO BEGINLOOP statements ENDLOOP
-                WHILE bool_expr                         //{printf("statement -> DO BEGINLOOP stmt_loop ENDLOOP WHILE bool_expr\n");}
+                WHILE bool_expr
                 {}
-        |       READ vars                           	//{printf("statement -> READ vars\n");}
+        |       READ vars
                 {
                     readTag = true;
                     if (readTag) {
@@ -256,7 +257,7 @@ statement:      					//{printf("statement -> epsilon\n");}
                         code += ".< " + string(idTable.at(idNum-1)) + "\n";
                     }
                 }
-        |       WRITE vars                          	//{printf("statement -> WRITE vars\n");}
+        |       WRITE vars
                 {
                     writeTag = true;
                     if (writeTag) {
@@ -264,111 +265,161 @@ statement:      					//{printf("statement -> epsilon\n");}
                         code += ".> " + string(idTable.at(idNum-2)) + "\n";
                     }
                 }
-        |       CONTINUE                                //{printf("statement -> CONTINUE\n");}
+        |       CONTINUE
                 {
                     code += "CONTINUE\n";
                 }
-        |       RETURN expressions                      //{printf("statement -> RETURN expressions\n");}
+        |       RETURN expressions
                 {
                     code += "RETURN ";
                     code += "temp" + to_string(numTemp-1) + "\n";
                 }
         ;
 
-vars:                                                   //{printf("vars -> epsilon\n");}
+vars:
                 {}
-    |           var                                     //{printf("vars -> var\n");}
+    |           var
                 {}
-    |           var COMMA vars                          //{printf("vars -> var COMMA vars\n");}
+    |           var COMMA vars
                 {}
     ;
 
-var:            IDENTIFIER                              //{printf("var -> IDENTIFIER\n");}
+var:            IDENTIFIER
+                {
 
+                }
    |            IDENTIFIER L_SQUARE_BRACKET expression
-                R_SQUARE_BRACKET                        //{printf("var -> IDENTIFIER L_SQUARE_BRACKET expression R_SQUARE_BRACKET\n");}
+                R_SQUARE_BRACKET
+                {
+                    code += ". ";
+                    code += $1; // id
+                    code += "=[] ";
+                    code += $3; // id
+                    code += ", ";
+                    code += $5; // id
+                    code += "\n";
+                }
 
    ;
 
-bool_expr:      relation_and_expr                       //{printf("bool_expr -> relation_and_expr\n");}
-                {}
-        |       relation_and_expr OR relation_and_expr  //{printf("bool_expr -> relation_and_expr OR relation_and_expr\n");}
+bool_expr:      relation_and_expr
+                {
+                    code += "|| "
+                    code += $1; //id
+                    code += ", ";
+                    code += $3; //id
+                    code += ", ";
+                    code += $5; //id
+                    code += "\n";
+                }
+        |       relation_and_expr OR relation_and_expr
                 {}
         ;
 
-relation_and_expr:  relation_exprs                       //{printf("relation_and_expr -> relation_exprs\n");}
-                    {}
-                 |  relation_exprs AND relation_and_expr //{printf("relation_and_expr -> relation_exprs AND relation_and_expr\n");}
+relation_and_expr:  relation_exprs
+                    {
+                        code += "&& "
+                        code += $1; //id
+                        code += ", ";
+                        code += $3; //id
+                        code += ", ";
+                        code += $5; //id
+                        code += "\n";
+                    }
+                 |  relation_exprs AND relation_and_expr
                     {}
                  ;
 
-relation_exprs:     relation_expr			//{printf("relation_exprs -> relation_expr\n");}
+relation_exprs:     relation_expr
                     {}
-              |     NOT relation_expr             	//{printf("relation_exprs -> NOT relation_expr\n");}
+              |     NOT relation_expr
                     {}
               ;
 
-relation_expr:      expressions comp expressions        //{printf("relation_expr -> expressions comp expressions\n");}
-                    {}
-             |	    TRUE                                //{printf("relation_expr -> TRUE\n");}
-                    {}
-             |      FALSE                               //{printf("relation_expr -> FALSE\n");}
-                    {}
-             |      L_PAREN bool_expr R_PAREN           //{printf("relation_expr -> L_PAREN bool_expr R_PAREN\n");}
-                    {}
+relation_expr:      expressions comp expressions
+                    {
+                        code += ". "
+                        code += $1; //id
+                        code += ", ";
+                        code += $3; //id
+                        code += ", ";
+                        code += $5; //id
+                        code += "\n";
+                    }
+             |	    TRUE
+                    {
+
+                    }
+             |      FALSE
+                    {
+
+                    }
+             |      L_PAREN bool_expr R_PAREN
+                    {
+
+                    }
              ;
 
-comp:           EQ                                      //{printf("comp -> EQ\n");}
+comp:           EQ
                 {eqFlag = true;}
-    |           NEQ                                     //{printf("comp -> NEQ\n");}
+    |           NEQ
                 {neqFlag = true;}
-    |           LT                                      //{printf("comp -> LT\n");}
+    |           LT
                 {ltFlag = true;}
-    |           GT                                      //{printf("comp -> GT\n");}
+    |           GT
                 {gtFlag = true;}
-    |           LTE                                     //{printf("comp -> LTE\n");}
+    |           LTE
                 {lteFlag = true;}
-    |           GTE                                     //{printf("comp -> GTE\n");}
+    |           GTE
                 {gteFlag = true;}
     ;
 
-expressions:                                            //{printf("expressions -> epsilon\n");}
+expressions:
                 {}
-           |    expression				//{printf("expressions -> expression\n");}
+           |    expression
                 {}
-           |    expression COMMA expressions            //{printf("expressions -> expression COMMA expressions\n");}
+           |    expression COMMA expressions
                 {}
            ;
 
-expression:     multiplicative_expr                     //{printf("expression -> multiplicative_expr\n");}
+expression:     multiplicative_expr
                 {}
-          |     multiplicative_expr ADD expression      //{printf("expression -> multiplicative_expr ADD expression\n");}
+          |     multiplicative_expr ADD expression
                 {addFlag = true;}
-          |     multiplicative_expr SUB expression      //{printf("expression -> multiplicative_expr SUB expression\n");}
-                {subFlag = true;}}
+          |     multiplicative_expr SUB expression
+                {subFlag = true;}
           ;
 
-multiplicative_expr:    term                            //{printf("multiplicative_expr -> term\n");}
+multiplicative_expr:    term
                         {}
-                   | 	term MULT multiplicative_expr   //{printf("multiplicative_expr -> term MULT multiplicative_expr\n");}
+                   | 	term MULT multiplicative_expr
                         {multFlag = true;}
-                   | 	term DIV multiplicative_expr    //{printf("multiplicative_expr -> term DIV multiplicative_expr\n");}
+                   | 	term DIV multiplicative_expr
                         {divFlag = true;}
-                   | 	term MOD multiplicative_expr    //{printf("multiplicative_expr -> term MOD multiplicative_expr\n");}
+                   | 	term MOD multiplicative_expr
                         {modFlag = true;}
                    ;
 
-terms:          var					//{printf("terms -> vars\n");}
+terms:          var
 
-     |		    NUMBER					//{printf("terms -> NUMBER\n");}
+     |		    NUMBER
 
-     |          L_PAREN expression R_PAREN              //{printf("terms -> L_PAREN expression R_PAREN\n");}
+     |          L_PAREN expression R_PAREN
 
      ;
 
-term:           terms                                   //{printf("term -> terms\n");}
-    |           SUB terms                               //{printf("term -> SUB terms\n");}
-    |           IDENTIFIER L_PAREN expressions R_PAREN  //{printf("term -> IDENTIFIER L_PAREN expressions R_PAREN\n");}
+term:           terms
+                {
+
+                }
+    |           SUB terms
+                {
+
+                }
+    |           IDENTIFIER L_PAREN expressions R_PAREN
+                {
+
+                }
     ;
 
 %%
