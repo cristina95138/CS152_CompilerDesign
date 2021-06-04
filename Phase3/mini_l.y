@@ -114,7 +114,7 @@
 program:        functions
                 {
                     if (find(functionTable.begin(), functionTable.end(), "main") == functionTable.end()) {
-                        cout << "Error line " << currLine << " : no main function declared." << endl;
+                        printf("Error line %d : no main function declared.\n, currLines);
                         isError = true;
                     }
 
