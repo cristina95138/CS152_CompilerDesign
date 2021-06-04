@@ -162,7 +162,7 @@ declaration:    identifiers COLON ENUM L_PAREN
                     code += ". ";
                     string str($1);
                     string t = "";
-                    for (int i = 0; i < str.size(); i++) {
+                    for (int i = 0; i < str.size(); i++) { // getting first identifier
                         if (str.at(i) == '(' || str.at(i) == ')' || str.at(i) == ' ' || str.at(i) == ';') {
                             i = 100; // breaks for loop
                         }
@@ -451,7 +451,16 @@ int main(int argc, char* argv[]) {
 
   yyparse();
 
-  
+  // checks if multiple functions share same name
+  for (int i = 0; i < functionTable.size() - 1; ++i) {
+		for (int j = i+1; j < funcTable.size(); ++j) {
+			if (functionTable.at(i) == funcTable.at(j)) {
+				isError = false;
+				cerr << "Multiple functions with same name detected. \n";
+			}
+		}
+	}
+
 
   return 0;
 }
