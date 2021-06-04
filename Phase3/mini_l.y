@@ -48,27 +48,27 @@
     }
 
     // tags to see what actions need to be performed
-    bool isFunc = true;
-    bool eqFlag = false;
-    bool neqFlag = false;
-    bool ltFlag = false;
-    bool gtFlag = false;
-    bool lteFlag = false;
-    bool gteFlag = false;
-    bool multFlag = false;
-    bool divFlag = false;
-    bool modFlag = false;
-    bool addFlag = false;
-    bool subFlag = false;
-    bool trueFlag = false;
-    bool falseFlag = false;
+    bool isFunc = true; // checks if function end is reached
+    bool eqTag = false;
+    bool neqTag = false;
+    bool ltTag = false;
+    bool gtTag = false;
+    bool lteTag = false;
+    bool gteTag = false;
+    bool multTag = false;
+    bool divTag = false;
+    bool modTag = false;
+    bool addTag = false;
+    bool subTag = false;
+    bool trueTag = false;
+    bool falseTag = false;
     bool root = true;
-    bool assignFlag = false;
+    bool assignTag = false;
     bool readTag = false;
     bool writeTag = false;
     int regNum = 0;
     int idNum = 0;
-    string code; // string for code in program
+    string code; // string for code representation in program
 
 %}
 
@@ -199,8 +199,8 @@ identifiers:    IDENTIFIER
                             }
                         }
                     }
-                    else if (assignFlag) {
-                        assignFlag = false;
+                    else if (assignTag) {
+                        assignTag = false;
                         idNum--;
                     }
                     else {
@@ -235,7 +235,7 @@ statement:
                 {}
         |	    var ASSIGN expressions
                 {
-                    assignFlag = true;
+                    assignTag = true;
                     code += "= " + string(idTable.at(idNum-2)) + ", temp" + to_string(numTemp-1);
                 }
         |       IF bool_expr THEN statements ENDIF
@@ -349,9 +349,9 @@ relation_expr:      expressions comp expressions
                         code += "\n";
                     }
              |	    TRUE
-                    {trueFlag = true;}
+                    {trueTag = true;}
              |      FALSE
-                    {falseFlag = false;}
+                    {falseTag = false;}
              |      L_PAREN bool_expr R_PAREN
                     {
 
@@ -359,17 +359,17 @@ relation_expr:      expressions comp expressions
              ;
 
 comp:           EQ
-                {eqFlag = true;}
+                {eqTag = true;}
     |           NEQ
-                {neqFlag = true;}
+                {neqTag = true;}
     |           LT
-                {ltFlag = true;}
+                {ltTag = true;}
     |           GT
-                {gtFlag = true;}
+                {gtTag = true;}
     |           LTE
-                {lteFlag = true;}
+                {lteTag = true;}
     |           GTE
-                {gteFlag = true;}
+                {gteTag = true;}
     ;
 
 expressions:
@@ -383,19 +383,19 @@ expressions:
 expression:     multiplicative_expr
                 {}
           |     multiplicative_expr ADD expression
-                {addFlag = true;}
+                {addTag = true;}
           |     multiplicative_expr SUB expression
-                {subFlag = true;}
+                {subTag = true;}
           ;
 
 multiplicative_expr:    term
                         {}
                    | 	term MULT multiplicative_expr
-                        {multFlag = true;}
+                        {multTag = true;}
                    | 	term DIV multiplicative_expr
-                        {divFlag = true;}
+                        {divTag = true;}
                    | 	term MOD multiplicative_expr
-                        {modFlag = true;}
+                        {modTag = true;}
                    ;
 
 terms:          var
