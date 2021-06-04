@@ -451,24 +451,7 @@ int main(int argc, char* argv[]) {
 
   yyparse();
 
-  // Error-handling in progress
-  for (int i = 0; i < functionTable.size() - 1; ++i) {
-		for (int j = i+1; j < funcTable.size(); ++j) {
-			if (functionTable.at(i) == funcTable.at(j)) {
-				isError = false;
-				cerr << "Multiple functions with same name detected. \n";
-			}
-		}
-	}
-	if (isError) {
-                ofstream file;
-                file.open("CODE.mil");
-                file << code;
-                file.close();
-        }
-	else {
-		cout << "Error encountered while generating code." << endl;
-	}
+  
 
   return 0;
 }
