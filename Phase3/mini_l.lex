@@ -1,7 +1,7 @@
 /* Include Variables */
 %{
     #include "y.tab.h"
-    #include "main.c"
+    extern "C" int yylex();
     int currLine = 1, currPos = 1;
 %}
 
