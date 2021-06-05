@@ -1,6 +1,7 @@
 /* Include Variables */
 %{
     #include "y.tab.h"
+    #include "main.c"
     int currLine = 1, currPos = 1;
 %}
 
