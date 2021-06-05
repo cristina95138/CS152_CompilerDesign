@@ -10,7 +10,7 @@ using namespace std;
 #include <fstream>
 #include <algorithm>
 
-int yyparse();
+//int yyparse();
 
 extern bool isError;
 extern string code;
