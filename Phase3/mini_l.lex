@@ -1,6 +1,7 @@
 /* Include Variables */
 %{
     #include "y.tab.h"
+    #include "mini_l.y"
     int currLine = 1, currPos = 1;
 %}
 
@@ -103,9 +104,18 @@ int main(int argc, char* argv[]) {
     yyin = stdin;
   }
 
-  yylex();
+    if (isError) {
+        cout << "Error! Couldn't properly generate code." << endl;
+    }
+    else {
+        ofstream file;
+        file.open("CODE.mil");
+        file << code;
+        file.close();
+    }
+    yylex();
 
-  return 0;
+    return 0;
 }
 
 void yyerror (const char* msg) {
