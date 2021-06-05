@@ -153,9 +153,9 @@ declarations:
 declaration:    identifiers COLON ENUM L_PAREN
                 identifiers R_PAREN
                 {
-                    code += $1; //id
+                    code += idTable.back(); //id
                     code += ", ";
-                    code += $5; //id
+                    code += idTable.back(); //id
                     code += "\n";
                 }
            |    identifiers COLON ARRAY
@@ -163,15 +163,15 @@ declaration:    identifiers COLON ENUM L_PAREN
                 R_SQUARE_BRACKET OF INTEGER
                 {
                     code += ".[] ";
-                    code += $1; //id
+                    code += idTable.back(); //id
                     code += ", ";
-                    code += $5; //number
+                    code += idTable.back(); //number
                     code += "\n";
                 }
            |    identifiers COLON INTEGER
                 {
                     code += ". ";
-                    string str($1);
+                    string str(idTable.back());
                     string t = "";
                     for (int i = 0; i < str.size(); i++) { // getting first identifier
                         if (str.at(i) == '(' || str.at(i) == ')' || str.at(i) == ' ' || str.at(i) == ';') {
@@ -308,11 +308,11 @@ var:            IDENTIFIER
                 R_SQUARE_BRACKET
                 {
                     code += ". ";
-                    code += $1; // id
+                    code += idTable.back(); // id
                     code += "=[] ";
-                    code += $3; // id
+                    code += idTable.back(); // id
                     code += ", ";
-                    code += $5; // id
+                    code += idTable.back(); // id
                     code += "\n";
                 }
 
@@ -321,11 +321,11 @@ var:            IDENTIFIER
 bool_expr:      relation_and_expr
                 {
                     code += "|| "
-                    code += $1; //id
+                    code += idTable.back(); //id
                     code += ", ";
-                    code += $3; //id
+                    code += idTable.back(); //id
                     code += ", ";
-                    code += $5; //id
+                    code += idTable.back(); //id
                     code += "\n";
                 }
         |       relation_and_expr OR relation_and_expr
@@ -335,11 +335,11 @@ bool_expr:      relation_and_expr
 relation_and_expr:  relation_exprs
                     {
                         code += "&& "
-                        code += $1; //id
+                        code += idTable.back(); //id
                         code += ", ";
-                        code += $3; //id
+                        code += idTable.back(); //id
                         code += ", ";
-                        code += $5; //id
+                        code += idTable.back(); //id
                         code += "\n";
                     }
                  |  relation_exprs AND relation_and_expr
@@ -355,11 +355,11 @@ relation_exprs:     relation_expr
 relation_expr:      expressions comp expressions
                     {
                         code += ". "
-                        code += $1; //id
+                        code += idTable.back(); //id
                         code += ", ";
-                        code += $3; //id
+                        code += idTable.back(); //id
                         code += ", ";
-                        code += $5; //id
+                        code += idTable.back(); //id
                         code += "\n";
                     }
              |	    TRUE
@@ -424,7 +424,7 @@ terms:          var
                 {
                     code += "param temp " + to_string(numTemp - 1) + "\n";
                     code += "call ";
-                    string str($1);
+                    string str(idTable.back());
                     for (int i = 0; i< str.size(); i++) {
                         if (str.at(i) == '(' || str.at(i) == ' ') {
                             i = 100; // breaks for loop
