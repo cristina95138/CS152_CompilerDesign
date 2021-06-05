@@ -586,12 +586,11 @@ char *yytext;
 /* Include Variables */
 #line 3 "mini_l.lex"
     #include "y.tab.h"
-    #include "mini_l.y"
     int currLine = 1, currPos = 1;
 /* Define Rules */
 /* Define Tokens */
 /* Reserved Words */
-#line 595 "lex.yy.c"
+#line 594 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -773,10 +772,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 18 "mini_l.lex"
+#line 17 "mini_l.lex"
 
 
-#line 780 "lex.yy.c"
+#line 779 "lex.yy.c"
 
 	if ( !(yy_init) )
 		{
@@ -861,291 +860,291 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 20 "mini_l.lex"
+#line 19 "mini_l.lex"
 {currLine += yyleng; return FUNCTION;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 21 "mini_l.lex"
+#line 20 "mini_l.lex"
 {currLine += yyleng; return BEGIN_PARAMS;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 22 "mini_l.lex"
+#line 21 "mini_l.lex"
 {currLine += yyleng; return END_PARAMS;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 23 "mini_l.lex"
+#line 22 "mini_l.lex"
 {currLine += yyleng; return BEGIN_LOCALS;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 24 "mini_l.lex"
+#line 23 "mini_l.lex"
 {currLine += yyleng; return END_LOCALS;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 25 "mini_l.lex"
+#line 24 "mini_l.lex"
 {currLine += yyleng; return BEGIN_BODY;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 26 "mini_l.lex"
+#line 25 "mini_l.lex"
 {currLine += yyleng; return END_BODY;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 27 "mini_l.lex"
+#line 26 "mini_l.lex"
 {currLine += yyleng; return INTEGER;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 28 "mini_l.lex"
+#line 27 "mini_l.lex"
 {currLine += yyleng; return ARRAY;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 29 "mini_l.lex"
+#line 28 "mini_l.lex"
 {currLine += yyleng; return ENUM;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 30 "mini_l.lex"
+#line 29 "mini_l.lex"
 {currLine += yyleng; return OF;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 31 "mini_l.lex"
+#line 30 "mini_l.lex"
 {currLine += yyleng; return IF;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 32 "mini_l.lex"
+#line 31 "mini_l.lex"
 {currLine += yyleng; return THEN;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 33 "mini_l.lex"
+#line 32 "mini_l.lex"
 {currLine += yyleng; return ENDIF;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 34 "mini_l.lex"
+#line 33 "mini_l.lex"
 {currLine += yyleng; return ELSE;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 35 "mini_l.lex"
+#line 34 "mini_l.lex"
 {currLine += yyleng; return WHILE;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 36 "mini_l.lex"
+#line 35 "mini_l.lex"
 {currLine += yyleng; return DO;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 37 "mini_l.lex"
+#line 36 "mini_l.lex"
 {currLine += yyleng; return BEGINLOOP;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 38 "mini_l.lex"
+#line 37 "mini_l.lex"
 {currLine += yyleng; return ENDLOOP;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 39 "mini_l.lex"
+#line 38 "mini_l.lex"
 {currLine += yyleng; return CONTINUE;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 40 "mini_l.lex"
+#line 39 "mini_l.lex"
 {currLine += yyleng; return READ;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 41 "mini_l.lex"
+#line 40 "mini_l.lex"
 {currLine += yyleng; return WRITE;}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 42 "mini_l.lex"
+#line 41 "mini_l.lex"
 {currLine += yyleng; return AND;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 43 "mini_l.lex"
+#line 42 "mini_l.lex"
 {currLine += yyleng; return OR;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 44 "mini_l.lex"
+#line 43 "mini_l.lex"
 {currLine += yyleng; return NOT;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 45 "mini_l.lex"
+#line 44 "mini_l.lex"
 {currLine += yyleng; return TRUE;}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 46 "mini_l.lex"
+#line 45 "mini_l.lex"
 {currLine += yyleng; return FALSE;}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 47 "mini_l.lex"
+#line 46 "mini_l.lex"
 {currLine += yyleng; return RETURN;}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 49 "mini_l.lex"
+#line 48 "mini_l.lex"
 {currLine += yyleng; return SUB;}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 50 "mini_l.lex"
+#line 49 "mini_l.lex"
 {currLine += yyleng; return ADD;}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 51 "mini_l.lex"
+#line 50 "mini_l.lex"
 {currLine += yyleng; return MULT;}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 52 "mini_l.lex"
+#line 51 "mini_l.lex"
 {currLine += yyleng; return DIV;}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 53 "mini_l.lex"
+#line 52 "mini_l.lex"
 {currLine += yyleng; return MOD;}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 55 "mini_l.lex"
+#line 54 "mini_l.lex"
 {currLine += yyleng; return EQ;}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 56 "mini_l.lex"
+#line 55 "mini_l.lex"
 {currLine += yyleng; return NEQ;}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 57 "mini_l.lex"
+#line 56 "mini_l.lex"
 {currLine += yyleng; return LT;}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 58 "mini_l.lex"
+#line 57 "mini_l.lex"
 {currLine += yyleng; return GT;}
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 59 "mini_l.lex"
+#line 58 "mini_l.lex"
 {currLine += yyleng; return LTE;}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 60 "mini_l.lex"
+#line 59 "mini_l.lex"
 {currLine += yyleng; return GTE;}
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 62 "mini_l.lex"
+#line 61 "mini_l.lex"
 {printf("NUMBER %s\n", yytext); currLine += yyleng; return NUMBER;}
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 64 "mini_l.lex"
+#line 63 "mini_l.lex"
 {currLine += yyleng; return SEMICOLON;}
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 65 "mini_l.lex"
+#line 64 "mini_l.lex"
 {currLine += yyleng; return COLON;}
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 66 "mini_l.lex"
+#line 65 "mini_l.lex"
 {currLine += yyleng; return COMMA;}
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 67 "mini_l.lex"
+#line 66 "mini_l.lex"
 {currLine += yyleng; return L_PAREN;}
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 68 "mini_l.lex"
+#line 67 "mini_l.lex"
 {currLine += yyleng; return R_PAREN;}
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 69 "mini_l.lex"
+#line 68 "mini_l.lex"
 {currLine += yyleng; return L_SQUARE_BRACKET;}
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 70 "mini_l.lex"
+#line 69 "mini_l.lex"
 {currLine += yyleng; return R_SQUARE_BRACKET;}
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 71 "mini_l.lex"
+#line 70 "mini_l.lex"
 {currLine += yyleng; return ASSIGN;}
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 73 "mini_l.lex"
+#line 72 "mini_l.lex"
 {currPos++; currLine = 1;}
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 76 "mini_l.lex"
+#line 75 "mini_l.lex"
 {printf("Error at line %d, column %d: identifier \"%s\" must begin with a letter\n", currLine, currPos, yytext); exit(0);}
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 77 "mini_l.lex"
+#line 76 "mini_l.lex"
 {printf("Error at line %d, column %d: identifier \"%s\" cannot end with an underscore\n", currLine, currPos, yytext); exit(0);}
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 79 "mini_l.lex"
+#line 78 "mini_l.lex"
 {printf("identifier -> IDENTIFIER %s\n", yytext); currLine += yyleng; return IDENTIFIER;}
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 82 "mini_l.lex"
+#line 81 "mini_l.lex"
 {currLine += yyleng;}
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 83 "mini_l.lex"
+#line 82 "mini_l.lex"
 {currLine += yyleng;}
 	YY_BREAK
 case 55:
 /* rule 55 can match eol */
 YY_RULE_SETUP
-#line 84 "mini_l.lex"
+#line 83 "mini_l.lex"
 {currPos++; currLine = 1;}
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 86 "mini_l.lex"
+#line 85 "mini_l.lex"
 {printf("Error at line %d, column %d: unrecognized token %s.\n", currLine, currPos, yytext); exit(0);}
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 88 "mini_l.lex"
+#line 87 "mini_l.lex"
 ECHO;
 	YY_BREAK
-#line 1149 "lex.yy.c"
+#line 1148 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2142,43 +2141,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 88 "mini_l.lex"
+#line 87 "mini_l.lex"
 
 
-
-int yywrap() {
-    return 1;
-
-}
-
-int main(int argc, char* argv[]) {
-  if (argc >= 2) {
-    yyin = fopen(argv[1], "r");
-    if (yyin == NULL) {
-      printf("Error opening file: %s\n", argv[1]);
-      exit(1);
-    }
-  }
-  else {
-    yyin = stdin;
-  }
-
-  yylex();
-
-    if (isError) {
-        cout << "Error! Couldn't properly generate code." << endl;
-    }
-    else {
-        ofstream file;
-        file.open("mil_code.mil");
-        file << code;
-        file.close();
-    }
-
-    return 0;
-}
-
-void yyerror (const char* msg) {
-    printf("Line %d, position %d: %s\n", currPos, currLine, msg);
-}
 
