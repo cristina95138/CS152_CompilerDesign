@@ -449,7 +449,7 @@ term:           terms
     ;
 
 %%
-//  //checks if multiple functions share same name
+//  checks if multiple functions share same name
 //  for (int i = 0; i < functionTable.size() - 1; ++i) {
 //		for (int j = i+1; j < idFuncTable.size(); ++j) {
 //			if (functionTable.at(i) == idFuncTable.at(j)) {

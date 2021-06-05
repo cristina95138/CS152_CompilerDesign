@@ -104,6 +104,8 @@ int main(int argc, char* argv[]) {
     yyin = stdin;
   }
 
+  yylex();
+
     if (isError) {
         cout << "Error! Couldn't properly generate code." << endl;
     }
@@ -113,7 +115,6 @@ int main(int argc, char* argv[]) {
         file << code;
         file.close();
     }
-    yylex();
 
     return 0;
 }
