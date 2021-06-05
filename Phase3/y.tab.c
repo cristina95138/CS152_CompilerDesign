@@ -187,8 +187,7 @@
 
     int yylex();
     void yyerror(const char *msg);
-    int currLine, currPos;
-    FILE* yyin;
+    extern int currPos, currLine;
 
     bool isError = true;
 
@@ -265,13 +264,13 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 78 "mini_l.y"
+#line 77 "mini_l.y"
 {
     int intVal;
     char* identVal;
 }
 /* Line 193 of yacc.c.  */
-#line 275 "y.tab.c"
+#line 274 "y.tab.c"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -284,7 +283,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 288 "y.tab.c"
+#line 287 "y.tab.c"
 
 #ifdef short
 # undef short
@@ -596,13 +595,13 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   116,   116,   130,   131,   135,   148,   149,   153,   161,
-     171,   197,   237,   241,   243,   248,   249,   254,   258,   261,
-     264,   267,   275,   283,   287,   295,   296,   298,   302,   307,
-     321,   331,   335,   345,   349,   351,   355,   365,   367,   369,
-     373,   375,   377,   379,   381,   383,   388,   389,   391,   395,
-     397,   399,   403,   405,   407,   409,   413,   415,   423,   440,
-     442,   444
+       0,   115,   115,   129,   130,   134,   147,   148,   152,   160,
+     170,   196,   236,   240,   242,   247,   248,   253,   257,   260,
+     263,   266,   274,   282,   286,   294,   295,   297,   301,   306,
+     320,   330,   334,   344,   348,   350,   354,   364,   366,   368,
+     372,   374,   376,   378,   380,   382,   387,   388,   390,   394,
+     396,   398,   402,   404,   406,   408,   412,   414,   422,   439,
+     441,   443
 };
 #endif
 
@@ -1592,7 +1591,7 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 117 "mini_l.y"
+#line 116 "mini_l.y"
     {
                     if (find(functionTable.begin(), functionTable.end(), "main") == functionTable.end()) {
                         cout << "Error line " << currLine << " : no main function declared." << endl;
@@ -1606,17 +1605,17 @@ yyreduce:
     break;
 
   case 3:
-#line 130 "mini_l.y"
+#line 129 "mini_l.y"
     {;}
     break;
 
   case 4:
-#line 132 "mini_l.y"
+#line 131 "mini_l.y"
     {;}
     break;
 
   case 5:
-#line 139 "mini_l.y"
+#line 138 "mini_l.y"
     {
                     if(!isFunc) {
                         code += "endfunc\n\n";
@@ -1626,17 +1625,17 @@ yyreduce:
     break;
 
   case 6:
-#line 148 "mini_l.y"
+#line 147 "mini_l.y"
     {;}
     break;
 
   case 7:
-#line 150 "mini_l.y"
+#line 149 "mini_l.y"
     {;}
     break;
 
   case 8:
-#line 155 "mini_l.y"
+#line 154 "mini_l.y"
     {
                     code += idTable.back(); //id
                     code += ", ";
@@ -1646,7 +1645,7 @@ yyreduce:
     break;
 
   case 9:
-#line 164 "mini_l.y"
+#line 163 "mini_l.y"
     {
                     code += ".[] ";
                     code += idTable.back(); //id
@@ -1657,7 +1656,7 @@ yyreduce:
     break;
 
   case 10:
-#line 172 "mini_l.y"
+#line 171 "mini_l.y"
     {
                     code += ". ";
                     string str(idTable.back());
@@ -1684,7 +1683,7 @@ yyreduce:
     break;
 
   case 11:
-#line 198 "mini_l.y"
+#line 197 "mini_l.y"
     {
                     string t;
                     if (isFunc) {
@@ -1707,7 +1706,7 @@ yyreduce:
                         idNum--;
                     }
                     else {
-                        string temp = make_temp();
+                        string temp = new_temp();
                         code += ". " + temp;
                         code += "\n= ";
                         code += temp + ", ";
@@ -1727,27 +1726,27 @@ yyreduce:
     break;
 
   case 12:
-#line 238 "mini_l.y"
+#line 237 "mini_l.y"
     {;}
     break;
 
   case 13:
-#line 242 "mini_l.y"
+#line 241 "mini_l.y"
     {;}
     break;
 
   case 14:
-#line 244 "mini_l.y"
+#line 243 "mini_l.y"
     {;}
     break;
 
   case 15:
-#line 248 "mini_l.y"
+#line 247 "mini_l.y"
     {;}
     break;
 
   case 16:
-#line 250 "mini_l.y"
+#line 249 "mini_l.y"
     {
                     assignTag = true;
                     code += "= " + string(idTable.at(idNum-2)) + ", temp" + to_string(numTemp-1);
@@ -1755,29 +1754,29 @@ yyreduce:
     break;
 
   case 17:
-#line 255 "mini_l.y"
+#line 254 "mini_l.y"
     {
                     code += ": label"+ to_string(numLabel-1) + "\n";
                 ;}
     break;
 
   case 18:
-#line 260 "mini_l.y"
+#line 259 "mini_l.y"
     {;}
     break;
 
   case 19:
-#line 263 "mini_l.y"
+#line 262 "mini_l.y"
     {;}
     break;
 
   case 20:
-#line 266 "mini_l.y"
+#line 265 "mini_l.y"
     {;}
     break;
 
   case 21:
-#line 268 "mini_l.y"
+#line 267 "mini_l.y"
     {
                     readTag = true;
                     if (readTag) {
@@ -1788,7 +1787,7 @@ yyreduce:
     break;
 
   case 22:
-#line 276 "mini_l.y"
+#line 275 "mini_l.y"
     {
                     writeTag = true;
                     if (writeTag) {
@@ -1799,14 +1798,14 @@ yyreduce:
     break;
 
   case 23:
-#line 284 "mini_l.y"
+#line 283 "mini_l.y"
     {
                     code += "CONTINUE\n";
                 ;}
     break;
 
   case 24:
-#line 288 "mini_l.y"
+#line 287 "mini_l.y"
     {
                     code += "RETURN ";
                     code += "temp" + to_string(numTemp-1) + "\n";
@@ -1814,22 +1813,22 @@ yyreduce:
     break;
 
   case 25:
-#line 295 "mini_l.y"
+#line 294 "mini_l.y"
     {;}
     break;
 
   case 26:
-#line 297 "mini_l.y"
+#line 296 "mini_l.y"
     {;}
     break;
 
   case 27:
-#line 299 "mini_l.y"
+#line 298 "mini_l.y"
     {;}
     break;
 
   case 28:
-#line 303 "mini_l.y"
+#line 302 "mini_l.y"
     {
                     varTable.push_back(idTable.back());
                     idTable.pop_back();
@@ -1837,7 +1836,7 @@ yyreduce:
     break;
 
   case 29:
-#line 309 "mini_l.y"
+#line 308 "mini_l.y"
     {
                     code += ". ";
                     code += idTable.back(); // id
@@ -1850,9 +1849,9 @@ yyreduce:
     break;
 
   case 30:
-#line 322 "mini_l.y"
+#line 321 "mini_l.y"
     {
-                    code += "|| "
+                    code += "|| ";
                     code += idTable.back(); //id
                     code += ", ";
                     code += idTable.back(); //id
@@ -1863,14 +1862,14 @@ yyreduce:
     break;
 
   case 31:
-#line 332 "mini_l.y"
+#line 331 "mini_l.y"
     {;}
     break;
 
   case 32:
-#line 336 "mini_l.y"
+#line 335 "mini_l.y"
     {
-                        code += "&& "
+                        code += "&& ";
                         code += idTable.back(); //id
                         code += ", ";
                         code += idTable.back(); //id
@@ -1881,24 +1880,24 @@ yyreduce:
     break;
 
   case 33:
-#line 346 "mini_l.y"
+#line 345 "mini_l.y"
     {;}
     break;
 
   case 34:
-#line 350 "mini_l.y"
+#line 349 "mini_l.y"
     {;}
     break;
 
   case 35:
-#line 352 "mini_l.y"
+#line 351 "mini_l.y"
     {;}
     break;
 
   case 36:
-#line 356 "mini_l.y"
+#line 355 "mini_l.y"
     {
-                        code += ". "
+                        code += ". ";
                         code += idTable.back(); //id
                         code += ", ";
                         code += idTable.back(); //id
@@ -1909,110 +1908,110 @@ yyreduce:
     break;
 
   case 37:
-#line 366 "mini_l.y"
+#line 365 "mini_l.y"
     {trueTag = true;;}
     break;
 
   case 38:
-#line 368 "mini_l.y"
+#line 367 "mini_l.y"
     {falseTag = false;;}
     break;
 
   case 39:
-#line 370 "mini_l.y"
+#line 369 "mini_l.y"
     {;}
     break;
 
   case 40:
-#line 374 "mini_l.y"
+#line 373 "mini_l.y"
     {eqTag = true;;}
     break;
 
   case 41:
-#line 376 "mini_l.y"
+#line 375 "mini_l.y"
     {neqTag = true;;}
     break;
 
   case 42:
-#line 378 "mini_l.y"
+#line 377 "mini_l.y"
     {ltTag = true;;}
     break;
 
   case 43:
-#line 380 "mini_l.y"
+#line 379 "mini_l.y"
     {gtTag = true;;}
     break;
 
   case 44:
-#line 382 "mini_l.y"
+#line 381 "mini_l.y"
     {lteTag = true;;}
     break;
 
   case 45:
-#line 384 "mini_l.y"
+#line 383 "mini_l.y"
     {gteTag = true;;}
     break;
 
   case 46:
-#line 388 "mini_l.y"
+#line 387 "mini_l.y"
     {;}
     break;
 
   case 47:
-#line 390 "mini_l.y"
+#line 389 "mini_l.y"
     {;}
     break;
 
   case 48:
-#line 392 "mini_l.y"
+#line 391 "mini_l.y"
     {;}
     break;
 
   case 49:
-#line 396 "mini_l.y"
+#line 395 "mini_l.y"
     {;}
     break;
 
   case 50:
-#line 398 "mini_l.y"
+#line 397 "mini_l.y"
     {;}
     break;
 
   case 51:
-#line 400 "mini_l.y"
+#line 399 "mini_l.y"
     {;}
     break;
 
   case 52:
-#line 404 "mini_l.y"
+#line 403 "mini_l.y"
     {;}
     break;
 
   case 53:
-#line 406 "mini_l.y"
+#line 405 "mini_l.y"
     {multTag = true;;}
     break;
 
   case 54:
-#line 408 "mini_l.y"
+#line 407 "mini_l.y"
     {divTag = true;;}
     break;
 
   case 55:
-#line 410 "mini_l.y"
+#line 409 "mini_l.y"
     {modTag = true;;}
     break;
 
   case 56:
-#line 414 "mini_l.y"
+#line 413 "mini_l.y"
     {;}
     break;
 
   case 57:
-#line 416 "mini_l.y"
+#line 415 "mini_l.y"
     {
                     if (!isSub) {
-                        string t = make_temp();
+                        string t = new_temp();
                         code += ". " + t + "\n= " + t + ", ";
                         code += to_string((yyvsp[(1) - (1)].intVal)) + "\n";
                     }
@@ -2020,7 +2019,7 @@ yyreduce:
     break;
 
   case 58:
-#line 424 "mini_l.y"
+#line 423 "mini_l.y"
     {
                     code += "param temp " + to_string(numTemp - 1) + "\n";
                     code += "call ";
@@ -2038,17 +2037,17 @@ yyreduce:
     break;
 
   case 59:
-#line 441 "mini_l.y"
+#line 440 "mini_l.y"
     {isSub = false;;}
     break;
 
   case 60:
-#line 443 "mini_l.y"
+#line 442 "mini_l.y"
     {isSub = true;;}
     break;
 
   case 61:
-#line 445 "mini_l.y"
+#line 444 "mini_l.y"
     {
                    if (find(functionTable.begin(), functionTable.end(), "main") == functionTable.end()) {
 
@@ -2058,7 +2057,7 @@ yyreduce:
 
 
 /* Line 1267 of yacc.c.  */
-#line 2062 "y.tab.c"
+#line 2061 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2272,42 +2271,15 @@ yyreturn:
 }
 
 
-#line 452 "mini_l.y"
+#line 451 "mini_l.y"
 
-
-int yywrap() {
-    return 1;
-}
-
-int main(int argc, char* argv[]) {
-  if (argc >= 2) {
-    yyin = fopen(argv[1], "r");
-    if (yyin == NULL) {
-      printf("Error opening file: %s\n", argv[1]);
-      exit(1);
-    }
-  }
-  else {
-    yyin = stdin;
-  }
-
-  yyparse();
-
-  // checks if multiple functions share same name
-  for (int i = 0; i < functionTable.size() - 1; ++i) {
-		for (int j = i+1; j < funcTable.size(); ++j) {
-			if (functionTable.at(i) == funcTable.at(j)) {
-				isError = false;
-				cerr << "Multiple functions with same name detected. \n";
-			}
-		}
-	}
-
-
-  return 0;
-}
-
-void yyerror (const char* msg) {
-    printf("Line %d, position %d: %s\n", currPos, currLine, msg);
-}
+//  //checks if multiple functions share same name
+//  for (int i = 0; i < functionTable.size() - 1; ++i) {
+//		for (int j = i+1; j < idFuncTable.size(); ++j) {
+//			if (functionTable.at(i) == idFuncTable.at(j)) {
+//				isError = false;
+//				cerr << "Multiple functions with same name detected. \n";
+//			}
+//		}
+//	}
 

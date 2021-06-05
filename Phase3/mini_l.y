@@ -17,8 +17,7 @@
 
     int yylex();
     void yyerror(const char *msg);
-    int currLine, currPos;
-    FILE* yyin;
+    extern int currPos, currLine;
 
     bool isError = true;
 
@@ -217,7 +216,7 @@ identifiers:    IDENTIFIER
                         idNum--;
                     }
                     else {
-                        string temp = make_temp();
+                        string temp = new_temp();
                         code += ". " + temp;
                         code += "\n= ";
                         code += temp + ", ";
@@ -320,7 +319,7 @@ var:            IDENTIFIER
 
 bool_expr:      relation_and_expr
                 {
-                    code += "|| "
+                    code += "|| ";
                     code += idTable.back(); //id
                     code += ", ";
                     code += idTable.back(); //id
@@ -334,7 +333,7 @@ bool_expr:      relation_and_expr
 
 relation_and_expr:  relation_exprs
                     {
-                        code += "&& "
+                        code += "&& ";
                         code += idTable.back(); //id
                         code += ", ";
                         code += idTable.back(); //id
@@ -354,7 +353,7 @@ relation_exprs:     relation_expr
 
 relation_expr:      expressions comp expressions
                     {
-                        code += ". "
+                        code += ". ";
                         code += idTable.back(); //id
                         code += ", ";
                         code += idTable.back(); //id
@@ -415,7 +414,7 @@ terms:          var
      |		    NUMBER
                 {
                     if (!isSub) {
-                        string t = make_temp();
+                        string t = new_temp();
                         code += ". " + t + "\n= " + t + ", ";
                         code += to_string($1) + "\n";
                     }
@@ -450,39 +449,12 @@ term:           terms
     ;
 
 %%
-
-int yywrap() {
-    return 1;
-}
-
-int main(int argc, char* argv[]) {
-  if (argc >= 2) {
-    yyin = fopen(argv[1], "r");
-    if (yyin == NULL) {
-      printf("Error opening file: %s\n", argv[1]);
-      exit(1);
-    }
-  }
-  else {
-    yyin = stdin;
-  }
-
-  yyparse();
-
-  // checks if multiple functions share same name
-  for (int i = 0; i < functionTable.size() - 1; ++i) {
-		for (int j = i+1; j < funcTable.size(); ++j) {
-			if (functionTable.at(i) == funcTable.at(j)) {
-				isError = false;
-				cerr << "Multiple functions with same name detected. \n";
-			}
-		}
-	}
-
-
-  return 0;
-}
-
-void yyerror (const char* msg) {
-    printf("Line %d, position %d: %s\n", currPos, currLine, msg);
-}
+//  //checks if multiple functions share same name
+//  for (int i = 0; i < functionTable.size() - 1; ++i) {
+//		for (int j = i+1; j < idFuncTable.size(); ++j) {
+//			if (functionTable.at(i) == idFuncTable.at(j)) {
+//				isError = false;
+//				cerr << "Multiple functions with same name detected. \n";
+//			}
+//		}
+//	}
