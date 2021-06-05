@@ -450,9 +450,10 @@ term:           terms
 
 %%
 
-int yywrap() {
-    return 1;
+void yyerror (const char* msg) {
+    printf("Line %d, position %d: %s\n", currPos, currLine, msg);
 }
+
 
 //  checks if multiple functions share same name
 //  for (int i = 0; i < functionTable.size() - 1; ++i) {
@@ -464,33 +465,3 @@ int yywrap() {
 //		}
 //	}
 
-int main(int argc, char* argv[]) {
-  if (argc >= 2) {
-    yyin = fopen(argv[1], "r");
-    if (yyin == NULL) {
-      printf("Error opening file: %s\n", argv[1]);
-      exit(1);
-    }
-  }
-  else {
-    yyin = stdin;
-  }
-
-  yyparse();
-
-    if (isError) {
-        cout << "Error! Couldn't properly generate code." << endl;
-    }
-    else {
-        ofstream file;
-        file.open("mil_code.mil");
-        file << code;
-        file.close();
-    }
-
-    return 0;
-}
-
-void yyerror (const char* msg) {
-    printf("Line %d, position %d: %s\n", currPos, currLine, msg);
-}

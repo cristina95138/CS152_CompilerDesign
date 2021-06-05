@@ -2145,7 +2145,3 @@ void yyfree (void * ptr )
 
 
 
-int yywrap() {
-    return 1;
-}
-
