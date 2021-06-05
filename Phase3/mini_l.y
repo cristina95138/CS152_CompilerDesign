@@ -13,12 +13,13 @@
     #include <iostream>
     #include <vector>
     #include <cstdlib>
+    #include <algorithm>
     using namespace std;
 
-    int yylex();
+    extern int "C" int yylex();
     void yyerror(const char *msg);
     extern int currPos, currLine;
-    FILE* yyin;
+    //FILE* yyin;
 
     bool isError = true;
 
@@ -464,4 +465,3 @@ void yyerror (const char* msg) {
 //			}
 //		}
 //	}
-
