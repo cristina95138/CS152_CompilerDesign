@@ -7,6 +7,7 @@ using namespace std;
 #include <stdio.h>
 #include <string>
 #include <stdlib.h>
+#include <fstream>
 
 int yyparse();
 
