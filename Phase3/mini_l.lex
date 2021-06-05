@@ -109,7 +109,7 @@ int main(int argc, char* argv[]) {
     }
     else {
         ofstream file;
-        file.open("CODE.mil");
+        file.open("mil_code.mil");
         file << code;
         file.close();
     }
