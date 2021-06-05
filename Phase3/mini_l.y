@@ -35,6 +35,7 @@
     vector<string> idTable; // holder table for identifiers
     vector<string> exprTable; // holder table for expressions
     vector<string> varTable; // holder table for variables
+    vector<string> idFuncTable; // holder table for function identifiers
     string new_temp() {
         string tmp = "temp" + to_string(numTemp);
         tempTable.push_back(tmp);
@@ -441,7 +442,11 @@ term:           terms
     |           SUB terms
                 {isSub = true;}
     |           IDENTIFIER L_PAREN expressions R_PAREN
-                {}
+                {
+                   if (find(functionTable.begin(), functionTable.end(), "main") == functionTable.end()) {
+
+                   }
+                }
     ;
 
 %%
