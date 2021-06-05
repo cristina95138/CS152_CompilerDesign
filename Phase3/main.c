@@ -10,6 +10,8 @@ using namespace std;
 
 int yyparse();
 
+extern bool isError;
+extern string code;
 extern FILE * yyin;
 
 int yywrap() {

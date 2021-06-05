@@ -15,7 +15,7 @@
     #include <cstdlib>
     using namespace std;
 
-    int yylex();
+    extern int "C" int yylex();
     void yyerror(const char *msg);
     extern int currPos, currLine;
     FILE* yyin;
@@ -464,4 +464,3 @@ void yyerror (const char* msg) {
 //			}
 //		}
 //	}
-
