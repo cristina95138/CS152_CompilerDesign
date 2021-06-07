@@ -78,6 +78,11 @@
 %union {
     int intVal;
     char* identVal;
+    struct startprog {
+	} startprog;
+	struct grammar {
+		char code;
+	} grammar;
 }
 
 %error-verbose
@@ -92,6 +97,8 @@
 %token <intVal> NUMBER
 %token <identVal> IDENTIFIER
 %token <intVal> INTEGER
+%type <startprog> program
+%type <grammar> program functions function declarations declaration identifiers statements statement vars var bool_expr relation_and_expr relation_expr comp expressions expression multiplicative_expr terms term
 %right ASSIGN
 %left SUB ADD
 %left AND OR
@@ -387,7 +394,17 @@ comp:           EQ
 expressions:
                 {}
            |    expression
-                {}
+                {
+                    if (addTag == true) {addTag = false; string temp = new_temp(); code += ". __temp__" + to_string(numTemp-1); code += "\n+ __temp__" + to_string(numTemp-1) + ", "; code += "__temp__" + to_string(numTemp - 6); code += ", __temp__" + to_string(numTemp - 2) + "\n";}
+                    if (subTag == true) {subTag = false; string temp = new_temp(); code += ". __temp__" + to_string(numTemp-1); code += "\n- __temp__" + to_string(numTemp-1) + ", "; code += "__temp__" + to_string(numTemp - 3); code += ", __temp__" + to_string(numTemp - 2) + "\n";/* code += "param __temp__" + to_string(numTemp-1); code += "\n";*/}
+                    if (multTag == true) {multTag = false; string temp = new_temp(); code += ". __temp__" + to_string(numTemp-1); code += "\n* __temp__" + to_string(numTemp-1) + ", "; code += "__temp__" + to_string(numTemp - 3); code += ", __temp__" + to_string(numTemp - 2) + "\n";}
+                    if (divTag == true) {divTag = false; string temp = new_temp(); code += ". __temp__" + to_string(numTemp-1); code += "\n/ __temp__" + to_string(numTemp-1) + ", "; code += "__temp__" + to_string(numTemp - 3); code += ", __temp__" + to_string(numTemp - 2) + "\n";}
+                    if (modTag == true) {modTag = false; string temp = new_temp(); code += ". __temp__" + to_string(numTemp-1); code += "\n% __temp__" + to_string(numTemp-1) + ", "; code += "__temp__" + to_string(numTemp - 3); code += ", __temp__" + to_string(numTemp - 2) + "\n";}
+                    if (lteTag == true) {lteTag = false; string lab = new_label(); string temp = new_temp(); code += ". __temp__" + to_string(numTemp-1); code += "\n<= __temp__" + to_string(numTemp-1) + ", "; code += "__temp__" + to_string(numTemp - 3); code += ", __temp__" + to_string(numTemp - 2) + "\n?:= " + lab + ", __temp__" + to_string(numTemp-1) + "\n"; string lab2 = new_label(); code += ":= " + lab2 + "\n" + ": " + lab + "\n";}
+                    if (gteTag == true) {gteTag = false; string lab = new_label(); string temp = new_temp(); code += ". __temp__" + to_string(numTemp-1); code += "\n>= __temp__" + to_string(numTemp-1) + ", "; code += "__temp__" + to_string(numTemp - 3); code += ", __temp__" + to_string(numTemp - 2) + "\n?:= " + lab + ", __temp__" + to_string(numTemp-1) + "\n"; string lab2 = new_label(); code += ":= " + lab2 + "\n" + ": " + lab + "\n";}
+                    if (ltTag == true) {ltTag = false; string lab = new_label(); string temp = new_temp(); code += ". __temp__" + to_string(numTemp-1); code += "\n< __temp__" + to_string(numTemp-1) + ", "; code += "__temp__" + to_string(numTemp - 3); code += ", __temp__" + to_string(numTemp - 2) + "\n?:= " + lab + ", __temp__" + to_string(numTemp-1) + "\n"; string lab2 = new_label(); code += ":= " + lab2 + "\n" + ": " + lab + "\n";}
+                    if (gtTag == true) {gtTag = false; string lab = new_label(); string temp = new_temp(); code += ". __temp__" + to_string(numTemp-1); code += "\n> __temp__" + to_string(numTemp-1) + ", "; code += "__temp__" + to_string(numTemp - 3); code += ", __temp__" + to_string(numTemp - 2) + "\n?:= " + lab + ", __temp__" + to_string(numTemp-1) + "\n"; string lab2 = new_label(); code += ":= " + lab2 + "\n" + ": " + lab + "\n";}
+                }
            |    expression COMMA expressions
                 {}
            ;
