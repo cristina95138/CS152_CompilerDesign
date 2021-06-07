@@ -112,14 +112,6 @@
  * Code Representation: https://www.cs.ucr.edu/~mafar001/compiler/webpages3/mil.html
  */
 
- /* Still need to do:
-  * var
-  * term
-  * expression
-  * check to make sure proper code representation is achieved i.e "ret" vs "RETURN"
-  * testing
-  */
-
 startprogram:	program
                 {}
   	    	;
@@ -297,7 +289,7 @@ statement:
                 }
         |       RETURN expressions
                 {
-                    code += "RETURN ";
+                    code += "ret ";
                     code += "temp" + to_string(numTemp-1) + "\n";
                 }
         ;
