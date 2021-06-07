@@ -176,7 +176,7 @@ declaration:    identifiers COLON ENUM L_PAREN
                     code += ". ";
                     string str(idTable.back());
                     string t = "";
-                    for (int i = 0; i < str.size(); i++) { // getting first identifier
+                    for (unsigned i = 0; i < str.size(); i++) { // getting first identifier
                         if (str.at(i) == '(' || str.at(i) == ')' || str.at(i) == ' ' || str.at(i) == ';') {
                             i = 100; // breaks for loop
                         }
@@ -205,7 +205,7 @@ identifiers:    IDENTIFIER
                         isFunc = false;
                         code += "FUNCTION";
                         string str($1);
-                        for (int i = 0; i< str.size(); i++) {
+                        for (unsigned i = 0; i< str.size(); i++) {
                             if (str.at(i) == '(' || str.at(i) == ')' || str.at(i) == ' ' || str.at(i) == ';') {
                                 i = 100; // breaks for loop
                             }
@@ -225,7 +225,7 @@ identifiers:    IDENTIFIER
                         code += "\n= ";
                         code += temp + ", ";
                         string str($1);
-                        for (int i = 0; i< str.size(); i++) {
+                        for (unsigned i = 0; i< str.size(); i++) {
                             if (str.at(i) == '(' || str.at(i) == ')' || str.at(i) == ' ' || str.at(i) == ';') {
                                 i = 100; // breaks for loop
                             }
@@ -438,7 +438,7 @@ terms:          var
                     code += "param temp " + to_string(numTemp - 1) + "\n";
                     code += "call ";
                     string str(idTable.back());
-                    for (int i = 0; i< str.size(); i++) {
+                    for (unsigned i = 0; i< str.size(); i++) {
                         if (str.at(i) == '(' || str.at(i) == ' ') {
                             i = 100; // breaks for loop
                         }
@@ -498,8 +498,8 @@ void yyerror (const char* msg) {
 
 
 //  checks if multiple functions share same name
-//  for (int i = 0; i < functionTable.size() - 1; ++i) {
-//		for (int j = i+1; j < idFuncTable.size(); ++j) {
+//  for (unsigned i = 0; i < functionTable.size() - 1; ++i) {
+//		for (unsigned j = i+1; j < idFuncTable.size(); ++j) {
 //			if (functionTable.at(i) == idFuncTable.at(j)) {
 //				isError = false;
 //				cerr << "Multiple functions with same name detected. \n";
