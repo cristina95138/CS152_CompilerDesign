@@ -38,13 +38,13 @@
     vector<string> varTable; // holder table for variables
     vector<string> idFuncTable; // holder table for function identifiers
     string new_temp() {
-        string tmp = "temp" + to_string(numTemp);
+        string tmp = "__temp__" + to_string(numTemp);
         tempTable.push_back(tmp);
         numTemp++;
         return tmp;
     }
     string new_label() {
-        string lbl = "label" + to_string(numLabel);
+        string lbl = "__label__" + to_string(numLabel);
         labelTable.push_back(lbl);
         numLabel++;
         return lbl;
@@ -290,7 +290,7 @@ statement:
         |       RETURN expressions
                 {
                     code += "ret ";
-                    code += "temp" + to_string(numTemp-1) + "\n";
+                    code += "__temp__" + to_string(numTemp-1) + "\n";
                 }
         ;
 
