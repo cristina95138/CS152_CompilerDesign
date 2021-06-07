@@ -408,9 +408,9 @@ expressions:
 expression:     multiplicative_expr
                 {}
           |     multiplicative_expr ADD expression
-                {}
+                {addTag = true;}
           |     multiplicative_expr SUB expression
-                {}
+                {subTag = true;}
           ;
 
 multiplicative_expr:    term
@@ -459,6 +459,7 @@ term:           terms
                    if (find(functionTable.begin(), functionTable.end(), "main") == functionTable.end()) {
 
                    }
+
                 }
     ;
 

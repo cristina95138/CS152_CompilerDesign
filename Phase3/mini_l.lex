@@ -18,7 +18,7 @@ COMMENT    ##.*
 %%
 
 "function"     {currLine += yyleng; return FUNCTION;}
-    "beginparams"  {currLine += yyleng; return BEGIN_PARAMS;}
+"beginparams"  {currLine += yyleng; return BEGIN_PARAMS;}
 "endparams"    {currLine += yyleng; return END_PARAMS;}
 "beginlocals"  {currLine += yyleng; return BEGIN_LOCALS;}
 "endlocals"    {currLine += yyleng; return END_LOCALS;}
