@@ -16,12 +16,12 @@
     #include <algorithm>
     using namespace std;
 
-    int yylex();
+    extern "C" int yylex();
     void yyerror(const char *msg);
     extern int currPos, currLine;
     extern FILE* yyin;
 
-    bool isError = true;
+    bool no_error = true;
 
     // adding to symbol table
     vector<string> functionTable;
@@ -63,8 +63,7 @@
     bool modTag = false;
     bool addTag = false;
     bool subTag = false;
-    bool trueTag = false;
-    bool falseTag = false;
+
     bool root = true;
     bool assignTag = false;
     bool readTag = false;
@@ -88,14 +87,14 @@
 %error-verbose
 
 %start startprogram
-%token FUNCTION BEGIN_PARAMS END_PARAMS BEGIN_LOCALS END_LOCALS BEGIN_BODY END_BODY
+%token FUNCTION BEGINPARAMS ENDPARAMS BEGINLOCALS ENDLOCALS BEGINBODY ENDBODY
 %token ARRAY ENUM OF IF THEN ENDIF ELSE WHILE DO BEGINLOOP ENDLOOP CONTINUE
 %token READ WRITE AND OR NOT TRUE FALSE RETURN
 %token SUB ADD MULT DIV MOD
 %token EQ NEQ LT GT LTE GTE
-%token SEMICOLON COLON COMMA L_PAREN R_PAREN L_SQUARE_BRACKET R_SQUARE_BRACKET ASSIGN
+%token SEMICOLON COLON COMMA LPAREN RPAREN L_SQUARE_BRACKET R_SQUARE_BRACKET ASSIGN
 %token <intVal> NUMBER
-%token <identVal> IDENTIFIER
+%token <identVal> IDENT
 %token <intVal> INTEGER
 %type <startprog> startprogram
 %type <grammar> program functions function declarations declaration identifiers statements statement vars var bool_expr relation_and_expr relation_expr comp expressions expression multiplicative_expr terms term
@@ -118,14 +117,14 @@ startprogram:	program
 
 program:        functions
                 {
-                    if (find(functionTable.begin(), functionTable.end(), "main") == functionTable.end()) {
+                    /*if (find(functionTable.begin(), functionTable.end(), "main") == functionTable.end()) {
                         cout << "Error line " << currLine << " : no main function declared." << endl;
-                        isError = true;
+                        no_error = true;
                     }
 
-                    if (isError) {
+                    if (no_error) {
                         return -1;
-                    }
+                    }*/
                 }
        ;
 
@@ -135,10 +134,10 @@ functions:      /* epsilon*/
                 {}
          ;
 
-function:       FUNCTION IDENTIFIER SEMICOLON
-                BEGIN_PARAMS declarations END_PARAMS
-                BEGIN_LOCALS declarations END_LOCALS
-                BEGIN_BODY statements END_BODY
+function:       FUNCTION IDENT SEMICOLON
+                BEGINPARAMS declarations ENDPARAMS
+                BEGINLOCALS declarations ENDLOCALS
+                BEGINBODY statements ENDBODY
                 {
                     if(!isFunc) {
                         code += "endfunc\n\n";
@@ -153,8 +152,8 @@ declarations:
                 {}
             ;
 
-declaration:    identifiers COLON ENUM L_PAREN
-                identifiers R_PAREN
+declaration:    identifiers COLON ENUM LPAREN
+                identifiers RPAREN
                 {
                     code += idTable.back(); //id
                     code += ", ";
@@ -176,9 +175,9 @@ declaration:    identifiers COLON ENUM L_PAREN
                     code += ". ";
                     string str(idTable.back());
                     string t = "";
-                    for (unsigned i = 0; i < str.size(); i++) { // getting first identifier
+                    for (unsigned i =0; i < str.size(); i++) { // getting first identifier
                         if (str.at(i) == '(' || str.at(i) == ')' || str.at(i) == ' ' || str.at(i) == ';') {
-                            i = 100; // breaks for loop
+                            i =100; // breaks for loop
                         }
                         else {
                             code += str.at(i);
@@ -197,7 +196,7 @@ declaration:    identifiers COLON ENUM L_PAREN
                 }
            ;
 
-identifiers:    IDENTIFIER
+identifiers:    IDENT
                 {
                     string t;
                     if (isFunc) {
@@ -205,9 +204,9 @@ identifiers:    IDENTIFIER
                         isFunc = false;
                         code += "FUNCTION";
                         string str($1);
-                        for (unsigned i = 0; i< str.size(); i++) {
+                        for (unsigned i =0; i< str.size(); i++) {
                             if (str.at(i) == '(' || str.at(i) == ')' || str.at(i) == ' ' || str.at(i) == ';') {
-                                i = 100; // breaks for loop
+                                i =100; // breaks for loop
                             }
                             else {
                                 code += str.at(i);
@@ -225,9 +224,9 @@ identifiers:    IDENTIFIER
                         code += "\n= ";
                         code += temp + ", ";
                         string str($1);
-                        for (unsigned i = 0; i< str.size(); i++) {
+                        for (unsigned i =0; i< str.size(); i++) {
                             if (str.at(i) == '(' || str.at(i) == ')' || str.at(i) == ' ' || str.at(i) == ';') {
-                                i = 100; // breaks for loop
+                                i =100; // breaks for loop
                             }
                             else {
                                 code += str.at(i);
@@ -237,7 +236,7 @@ identifiers:    IDENTIFIER
                     }
                     code += "\n"; idTable.push_back(t); idNum++;
                 }
-           |    IDENTIFIER COMMA identifiers
+           |    IDENT COMMA identifiers
                 {}
            ;
 
@@ -302,14 +301,28 @@ vars:
                 {}
     ;
 
-var:            IDENTIFIER
+var:            IDENT
                 {
+                    /*
                     varTable.push_back(idTable.back());
                     idTable.pop_back();
+                    */
                 }
-   |            IDENTIFIER L_SQUARE_BRACKET expression
+   |            IDENT L_SQUARE_BRACKET expression
                 R_SQUARE_BRACKET
                 {
+                    code += ".[] "; string str($1);
+                    for (int i =0; i < str.size(); ++i) {
+                            if (str.at(i) == ' ' || str.at(i) == '('){
+                                    i = 100;
+                            }
+                            else {
+                                    code += str.at(i);
+                            }
+                    }
+                    code += ",\n";
+
+                    /*
                     code += ". ";
                     code += idTable.back(); // id
                     code += "=[] ";
@@ -317,12 +330,14 @@ var:            IDENTIFIER
                     code += ", ";
                     code += idTable.back(); // id
                     code += "\n";
+                    */
                 }
 
    ;
 
 bool_expr:      relation_and_expr
                 {
+                    /*
                     code += "|| ";
                     code += idTable.back(); //id
                     code += ", ";
@@ -330,6 +345,7 @@ bool_expr:      relation_and_expr
                     code += ", ";
                     code += idTable.back(); //id
                     code += "\n";
+                    */
                 }
         |       relation_and_expr OR relation_and_expr
                 {}
@@ -337,6 +353,7 @@ bool_expr:      relation_and_expr
 
 relation_and_expr:  relation_exprs
                     {
+                        /*
                         code += "&& ";
                         code += idTable.back(); //id
                         code += ", ";
@@ -344,6 +361,7 @@ relation_and_expr:  relation_exprs
                         code += ", ";
                         code += idTable.back(); //id
                         code += "\n";
+                        */
                     }
                  |  relation_exprs AND relation_and_expr
                     {}
@@ -357,6 +375,7 @@ relation_exprs:     relation_expr
 
 relation_expr:      expressions comp expressions
                     {
+                        /*
                         code += ". ";
                         code += idTable.back(); //id
                         code += ", ";
@@ -364,12 +383,13 @@ relation_expr:      expressions comp expressions
                         code += ", ";
                         code += idTable.back(); //id
                         code += "\n";
+                        */
                     }
              |	    TRUE
-                    {trueTag = true;}
+                    {}
              |      FALSE
-                    {falseTag = false;}
-             |      L_PAREN bool_expr R_PAREN
+                    {}
+             |      LPAREN bool_expr RPAREN
                     {}
              ;
 
@@ -433,14 +453,14 @@ terms:          var
                         code += to_string($1) + "\n";
                     }
                 }
-     |          L_PAREN expression R_PAREN
+     |          LPAREN expression RPAREN
                 {
                     code += "param temp " + to_string(numTemp - 1) + "\n";
                     code += "call ";
                     string str(idTable.back());
-                    for (unsigned i = 0; i< str.size(); i++) {
+                    for (unsigned i =0; i< str.size(); i++) {
                         if (str.at(i) == '(' || str.at(i) == ' ') {
-                            i = 100; // breaks for loop
+                            i =100; // breaks for loop
                         }
                         else {
                             code += str.at(i);
@@ -454,11 +474,26 @@ term:           terms
                 {isSub = false;}
     |           SUB terms
                 {isSub = true;}
-    |           IDENTIFIER L_PAREN expressions R_PAREN
+    |           IDENT LPAREN expressions RPAREN
                 {
-                   if (find(functionTable.begin(), functionTable.end(), "main") == functionTable.end()) {
+                    code += "param __temp__" + to_string(numTemp-1) + "\n";
 
-                   }
+                    string temp = new_temp(); code += ". " + temp + "\n"; code += "call "; string pls($1);
+                    for (int i = 0; i < str.size(); ++i) {
+                             if (str.at(i) == ' ' || str.at(i) == '('){
+                                     i = 100;
+                             }
+                             else {
+                                     code += str.at(i);
+                             }
+                     }
+                     code += ", __temp__" + to_string(numTemp-1) + "\n";
+
+                     /*
+                     if (find(functionTable.begin(), functionTable.end(), "main") == functionTable.end()) {
+
+                     }
+                     */
 
                 }
     ;
@@ -479,14 +514,24 @@ int main(int argc, char* argv[]) {
 
   yyparse();
 
-    if (isError) {
-        cout << "Error! Couldn't properly generate code." << endl;
-    }
-    else {
+  //  checks if multiple functions share same name
+    for (unsigned i =0; i < functionTable.size() - 1; ++i) {
+  		for (unsigned j = i+1; j < idFuncTable.size(); ++j) {
+  			if (functionTable.at(i) == idFuncTable.at(j)) {
+  				no_error = false;
+  				cerr << "Multiple functions with same name detected. \n";
+  			}
+  		}
+  	}
+
+    if (no_error) {
         ofstream file;
-        file.open("mil_code.mil");
+        file.open("CODE.mil");
         file << code;
         file.close();
+    }
+    else {
+        cout << "Error! Couldn't properly generate code." << endl;
     }
 
     return 0;
@@ -495,14 +540,3 @@ int main(int argc, char* argv[]) {
 void yyerror (const char* msg) {
     printf("Line %d, position %d: %s\n", currPos, currLine, msg);
 }
-
-
-//  checks if multiple functions share same name
-//  for (unsigned i = 0; i < functionTable.size() - 1; ++i) {
-//		for (unsigned j = i+1; j < idFuncTable.size(); ++j) {
-//			if (functionTable.at(i) == idFuncTable.at(j)) {
-//				isError = false;
-//				cerr << "Multiple functions with same name detected. \n";
-//			}
-//		}
-//	}
