@@ -1,7 +1,6 @@
 /* Include Variables */
 %{
     #include "y.tab.h"
-    extern "C" int yylex();
     int currLine = 1, currPos = 1;
 %}
 
@@ -79,7 +78,7 @@ COMMENT    ##.*
 ({LETTER}|{DIGIT}|{UNDERSCORE})*({LETTER}|{DIGIT})*                                       {printf("identifier -> IDENTIFIER %s\n", yytext); currLine += yyleng; return IDENTIFIER;}
 
 
-[ ]+                  {currLine += yyleng;}
+[ ]                   {currLine += yyleng;}
 {WHITESPACE}+         {currLine += yyleng;}
 {NEWLINE}+            {currPos++; currLine = 1;}
 

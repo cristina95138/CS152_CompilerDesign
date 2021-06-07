@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="6ed5316b-e1eb-4a64-950f-9c0a346ab7a4" name="claws004" url="http://sledge.cs.ucr.edu">
+        <fileTransfer rootFolder="/home/csmajs/claws004" accessType="SFTP" host="sledge.cs.ucr.edu" port="22" sshConfigId="23603467-d3b0-441f-bd3b-3454f89f2b4d" sshConfig="claws004@sledge.cs.ucr.edu:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
