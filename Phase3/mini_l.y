@@ -478,7 +478,7 @@ term:           terms
                 {
                     code += "param __temp__" + to_string(numTemp-1) + "\n";
 
-                    string temp = new_temp(); code += ". " + temp + "\n"; code += "call "; string pls($1);
+                    string temp = new_temp(); code += ". " + temp + "\n"; code += "call "; string str($1);
                     for (int i = 0; i < str.size(); ++i) {
                              if (str.at(i) == ' ' || str.at(i) == '('){
                                      i = 100;
