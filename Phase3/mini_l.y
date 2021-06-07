@@ -38,13 +38,13 @@
     vector<string> varTable; // holder table for variables
     vector<string> idFuncTable; // holder table for function identifiers
     string new_temp() {
-        string tmp = "temp" + to_string(numTemp);
+        string tmp = "__temp__" + to_string(numTemp);
         tempTable.push_back(tmp);
         numTemp++;
         return tmp;
     }
     string new_label() {
-        string lbl = "label" + to_string(numLabel);
+        string lbl = "__label__" + to_string(numLabel);
         labelTable.push_back(lbl);
         numLabel++;
         return lbl;
@@ -78,11 +78,16 @@
 %union {
     int intVal;
     char* identVal;
+    struct startprog {
+	} startprog;
+	struct grammar {
+		char code;
+	} grammar;
 }
 
 %error-verbose
 
-%start program
+%start startprogram
 %token FUNCTION BEGIN_PARAMS END_PARAMS BEGIN_LOCALS END_LOCALS BEGIN_BODY END_BODY
 %token ARRAY ENUM OF IF THEN ENDIF ELSE WHILE DO BEGINLOOP ENDLOOP CONTINUE
 %token READ WRITE AND OR NOT TRUE FALSE RETURN
@@ -92,6 +97,8 @@
 %token <intVal> NUMBER
 %token <identVal> IDENTIFIER
 %token <intVal> INTEGER
+%type <startprog> startprogram
+%type <grammar> program functions function declarations declaration identifiers statements statement vars var bool_expr relation_and_expr relation_expr comp expressions expression multiplicative_expr terms term
 %right ASSIGN
 %left SUB ADD
 %left AND OR
@@ -105,13 +112,9 @@
  * Code Representation: https://www.cs.ucr.edu/~mafar001/compiler/webpages3/mil.html
  */
 
- /* Still need to do:
-  * var
-  * term
-  * expression
-  * check to make sure proper code representation is achieved i.e "ret" vs "RETURN"
-  * testing
-  */
+startprogram:	program
+                {}
+  	    	;
 
 program:        functions
                 {
@@ -286,8 +289,8 @@ statement:
                 }
         |       RETURN expressions
                 {
-                    code += "RETURN ";
-                    code += "temp" + to_string(numTemp-1) + "\n";
+                    code += "ret ";
+                    code += "__temp__" + to_string(numTemp-1) + "\n";
                 }
         ;
 
@@ -387,7 +390,17 @@ comp:           EQ
 expressions:
                 {}
            |    expression
-                {}
+                {
+                    if (addTag == true) {addTag = false; string temp = new_temp(); code += ". __temp__" + to_string(numTemp-1); code += "\n+ __temp__" + to_string(numTemp-1) + ", "; code += "__temp__" + to_string(numTemp - 6); code += ", __temp__" + to_string(numTemp - 2) + "\n";}
+                    if (subTag == true) {subTag = false; string temp = new_temp(); code += ". __temp__" + to_string(numTemp-1); code += "\n- __temp__" + to_string(numTemp-1) + ", "; code += "__temp__" + to_string(numTemp - 3); code += ", __temp__" + to_string(numTemp - 2) + "\n";/* code += "param __temp__" + to_string(numTemp-1); code += "\n";*/}
+                    if (multTag == true) {multTag = false; string temp = new_temp(); code += ". __temp__" + to_string(numTemp-1); code += "\n* __temp__" + to_string(numTemp-1) + ", "; code += "__temp__" + to_string(numTemp - 3); code += ", __temp__" + to_string(numTemp - 2) + "\n";}
+                    if (divTag == true) {divTag = false; string temp = new_temp(); code += ". __temp__" + to_string(numTemp-1); code += "\n/ __temp__" + to_string(numTemp-1) + ", "; code += "__temp__" + to_string(numTemp - 3); code += ", __temp__" + to_string(numTemp - 2) + "\n";}
+                    if (modTag == true) {modTag = false; string temp = new_temp(); code += ". __temp__" + to_string(numTemp-1); code += "\n% __temp__" + to_string(numTemp-1) + ", "; code += "__temp__" + to_string(numTemp - 3); code += ", __temp__" + to_string(numTemp - 2) + "\n";}
+                    if (lteTag == true) {lteTag = false; string lab = new_label(); string temp = new_temp(); code += ". __temp__" + to_string(numTemp-1); code += "\n<= __temp__" + to_string(numTemp-1) + ", "; code += "__temp__" + to_string(numTemp - 3); code += ", __temp__" + to_string(numTemp - 2) + "\n?:= " + lab + ", __temp__" + to_string(numTemp-1) + "\n"; string lab2 = new_label(); code += ":= " + lab2 + "\n" + ": " + lab + "\n";}
+                    if (gteTag == true) {gteTag = false; string lab = new_label(); string temp = new_temp(); code += ". __temp__" + to_string(numTemp-1); code += "\n>= __temp__" + to_string(numTemp-1) + ", "; code += "__temp__" + to_string(numTemp - 3); code += ", __temp__" + to_string(numTemp - 2) + "\n?:= " + lab + ", __temp__" + to_string(numTemp-1) + "\n"; string lab2 = new_label(); code += ":= " + lab2 + "\n" + ": " + lab + "\n";}
+                    if (ltTag == true) {ltTag = false; string lab = new_label(); string temp = new_temp(); code += ". __temp__" + to_string(numTemp-1); code += "\n< __temp__" + to_string(numTemp-1) + ", "; code += "__temp__" + to_string(numTemp - 3); code += ", __temp__" + to_string(numTemp - 2) + "\n?:= " + lab + ", __temp__" + to_string(numTemp-1) + "\n"; string lab2 = new_label(); code += ":= " + lab2 + "\n" + ": " + lab + "\n";}
+                    if (gtTag == true) {gtTag = false; string lab = new_label(); string temp = new_temp(); code += ". __temp__" + to_string(numTemp-1); code += "\n> __temp__" + to_string(numTemp-1) + ", "; code += "__temp__" + to_string(numTemp - 3); code += ", __temp__" + to_string(numTemp - 2) + "\n?:= " + lab + ", __temp__" + to_string(numTemp-1) + "\n"; string lab2 = new_label(); code += ":= " + lab2 + "\n" + ": " + lab + "\n";}
+                }
            |    expression COMMA expressions
                 {}
            ;

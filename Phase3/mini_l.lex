@@ -18,7 +18,7 @@ COMMENT    ##.*
 %%
 
 "function"     {currLine += yyleng; return FUNCTION;}
-"beginparams"  {currLine += yyleng; return BEGIN_PARAMS;}
+    "beginparams"  {currLine += yyleng; return BEGIN_PARAMS;}
 "endparams"    {currLine += yyleng; return END_PARAMS;}
 "beginlocals"  {currLine += yyleng; return BEGIN_LOCALS;}
 "endlocals"    {currLine += yyleng; return END_LOCALS;}
@@ -79,7 +79,7 @@ COMMENT    ##.*
 ({LETTER}|{DIGIT}|{UNDERSCORE})*({LETTER}|{DIGIT})*                                       {printf("identifier -> IDENTIFIER %s\n", yytext); currLine += yyleng; return IDENTIFIER;}
 
 
-[ ]                   {currLine += yyleng;}
+[ ]+                  {currLine += yyleng;}
 {WHITESPACE}+         {currLine += yyleng;}
 {NEWLINE}+            {currPos++; currLine = 1;}
 
