@@ -87,7 +87,7 @@
 
 %error-verbose
 
-%start program
+%start startprogram
 %token FUNCTION BEGIN_PARAMS END_PARAMS BEGIN_LOCALS END_LOCALS BEGIN_BODY END_BODY
 %token ARRAY ENUM OF IF THEN ENDIF ELSE WHILE DO BEGINLOOP ENDLOOP CONTINUE
 %token READ WRITE AND OR NOT TRUE FALSE RETURN
@@ -97,7 +97,7 @@
 %token <intVal> NUMBER
 %token <identVal> IDENTIFIER
 %token <intVal> INTEGER
-%type <startprog> program
+%type <startprog> startprogram
 %type <grammar> program functions function declarations declaration identifiers statements statement vars var bool_expr relation_and_expr relation_expr comp expressions expression multiplicative_expr terms term
 %right ASSIGN
 %left SUB ADD
@@ -119,6 +119,10 @@
   * check to make sure proper code representation is achieved i.e "ret" vs "RETURN"
   * testing
   */
+
+startprogram:	program
+                {}
+  	    	;
 
 program:        functions
                 {
